@@ -12754,13 +12754,21 @@ spawn(function()
     end
 end)
 
-RaceV4:AddButton("Teleport PVP Zone",false,function(value)
-    toTarget(CFrame.new(28766.681640625, 14967.1455078125, -164.13290405273438))
+RaceV4:AddButton("Teleport Zone PVP", false, function(value)
+    local player = game.Players.LocalPlayer
+    if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+        player.Character.HumanoidRootPart.CFrame = CFrame.new(28766.681640625, 14967.1455078125, -164.13290405273438)
+    end
 end)
 
+
 RaceV4:AddButton("Safe Zone PVP Trial", false, function(value)
-    toTarget(CFrame.new(28273.0859375, 14896.5078125, 157.42063903808594))
+    local player = game.Players.LocalPlayer
+    if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+        player.Character.HumanoidRootPart.CFrame = CFrame.new(28273.0859375, 14896.5078125, 157.42063903808594)
+    end
 end)
+
 
 RaceV4:AddSeperator("Auto Quest Train V4")
 
