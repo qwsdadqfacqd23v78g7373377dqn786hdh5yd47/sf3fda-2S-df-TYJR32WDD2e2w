@@ -6708,22 +6708,48 @@ spawn(function()
     end)
     end)
 
-    SNt:AddToggle("Auto Hop Server Mirage Island",_G.Hopfinddao,function(value)
-        _G.Hopfinddao = value
-       end)
-        spawn(function()
-            while wait() do
-            if _G.Hopfinddao then
-                if game:GetService("Workspace").Map:FindFirstChild("MysticIsland") or game:GetService("Workspace").Map:FindFirstChild("MysticIsland") then
-                    if HighestPointRealCFrame and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - HighestPointRealCFrame.Position).Magnitude > 10 then
-                    topos(getHighestPoint().CFrame * CFrame.new(0, 211.88, 0))
-                        end
-                elseif not game:GetService("Workspace").Map:FindFirstChild("MysticIsland") or not game:GetService("Workspace").Map:FindFirstChild("MysticIsland") then
-                    Hop()
+    local function GetServers()
+        local PlaceID = game.PlaceId
+        local servers = {}
+        local req = game:GetService("HttpService"):JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100'))
+        
+        for _, server in pairs(req.data) do
+            if server.playing < server.maxPlayers and server.id ~= game.JobId then
+                table.insert(servers, server.id)
+            end
+        end
+        
+        return servers
+    end
+    
+    
+    SNt:AddToggle("Auto Hop Server Mirage Island (Public)", _G.HopFindMirage, function(value)
+        _G.HopFindMirage = value
+    end)
+
+    local function TeleportToPublicServer()
+        local servers = GetServers()
+        if #servers > 0 then
+            game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, servers[math.random(1, #servers)])
+        else
+            print("Tidak ada server publik yang tersedia.")
+        end
+    end
+    
+    spawn(function()
+        while wait() do
+            if _G.HopFindMirage then
+                if game:GetService("Workspace").Map:FindFirstChild("MysticIsland") then
+                    if HighestPointRealCFrame and 
+                       (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - HighestPointRealCFrame.Position).Magnitude > 10 then
+                        topos(getHighestPoint().CFrame * CFrame.new(0, 211.88, 0))
                     end
+                else
+                    TeleportToPublicServer()
                 end
             end
-        end)
+        end
+    end)
 if World1 or world2 then
     M:AddLine()
 end
