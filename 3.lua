@@ -15442,7 +15442,7 @@ end)
 
     Mh:AddSeperator("Visual Music")
 
-    Mh:AddButton("Play Music Chaos", function()
+    Mh:AddButton("Play Music PHONK", function()
         pcall(function()
             require(game.ReplicatedStorage.Notification).new("<Color=Red> 1<Color=/>"):Display()
             wait(1)
@@ -15492,8 +15492,8 @@ end)
             
             wait(0.01)
             local sound = Instance.new("Sound", workspace)
-            sound.Name = "Chaos"
-            sound.SoundId = "rbxassetid://1843497734" --sound space
+            sound.Name = "Phonk Vol. 2 - Black Seed"
+            sound.SoundId = "rbxassetid://14145622615" --sound space
             sound:Play()
             sound.Looped = true
             repeat wait(1) until sound.IsLoaded == true
