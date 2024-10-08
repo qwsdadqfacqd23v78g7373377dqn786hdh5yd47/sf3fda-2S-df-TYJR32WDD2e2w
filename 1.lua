@@ -13120,28 +13120,28 @@ local AimSection = P:AddSection({
 })
 
 -- Weapon Type Toggles
-AimSection:AddToggle("Melee Lock", false, function(value)
+P:AddToggle("Melee Lock", false, function(value)
     _G.AimLockConfig.AimTypes.Melee = value
 end)
 
-AimSection:AddToggle("Fruit Lock", false, function(value)
+P:AddToggle("Fruit Lock", false, function(value)
     _G.AimLockConfig.AimTypes.Fruit = value
 end)
 
-AimSection:AddToggle("Sword Lock", false, function(value)
+P:AddToggle("Sword Lock", false, function(value)
     _G.AimLockConfig.AimTypes.Sword = value
 end)
 
-AimSection:AddToggle("Gun Lock", false, function(value)
+P:AddToggle("Gun Lock", false, function(value)
     _G.AimLockConfig.AimTypes.Gun = value
 end)
 
 -- General Settings
-AimSection:AddSlider("Lock Distance", 100, 1000, 300, function(value)
+P:AddSlider("Lock Distance", 100, 1000, 300, function(value)
     _G.AimLockConfig.MaxDistance = value
 end)
 
-AimSection:AddSlider("Lock Smoothness", 1, 100, 50, function(value)
+P:AddSlider("Lock Smoothness", 1, 100, 50, function(value)
     _G.AimLockConfig.Smoothness = value/100
 end)
 
