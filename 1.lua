@@ -8638,13 +8638,13 @@ end)
             pcall(function()
                 if _G.WalkWaterBoat then
                     -- Mengubah tinggi air untuk efek berjalan di atas air
-                    game:GetService("Workspace").Map["WaterBase-Plane"].Size = Vector3.new(1000,112,1000)
+                    game:GetService("Workspace").Map["WaterBase-Plane"].Size = Vector3.new(1000,200,1000)
     
                     -- Menyesuaikan posisi semua boat agar tetap berada di permukaan air
                     for _, boat in pairs(game:GetService("Workspace").Boats:GetChildren()) do
                         if boat:IsA("Model") and boat:FindFirstChild("PrimaryPart") then
                             -- Menentukan tinggi baru yang sesuai agar boat tetap di atas permukaan air
-                            local newPosition = Vector3.new(boat.PrimaryPart.Position.X, 112, boat.PrimaryPart.Position.Z)
+                            local newPosition = Vector3.new(boat.PrimaryPart.Position.X, 200, boat.PrimaryPart.Position.Z)
                             boat:SetPrimaryPartCFrame(CFrame.new(newPosition))
                         end
                     end
