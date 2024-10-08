@@ -13071,16 +13071,28 @@ end
     
     P:AddSeperator("Aimbot")
     
-    -- Configuration
+    -- Services
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+-- Variables
+local LocalPlayer = Players.LocalPlayer
+local Camera = game.Workspace.CurrentCamera
+
+-- Configuration
 _G.AimLockConfig = {
-    Enabled = false,
-    SelectedTarget = nil,
     MaxDistance = 300,
     TeamCheck = false,
     VisibilityCheck = true,
     PredictionEnabled = true,
     PredictionAmount = 0.135,
     Smoothness = 0.5,
+    AimTypes = {
+        Melee = false,
+        Fruit = false,
+        Sword = false,
+        Gun = false
+    }
 }
 
 -- Player List Management
@@ -13092,7 +13104,6 @@ end
 
 local SelectedPly = P:AddDropdown("Select Player",Playerslist,function(value)
     _G.SelectPly = value
-    _G.AimLockConfig.SelectedTarget = value
 end)
 
 P:AddButton("Refresh Player",function()
@@ -13103,17 +13114,34 @@ P:AddButton("Refresh Player",function()
     end
 end)
 
--- Aim Lock Toggle
-P:AddToggle("Target Lock", false, function(value)
-    _G.AimLockConfig.Enabled = value
+-- Aim Lock Settings Section
+local AimSection = P:AddSection({
+    Name = "Aim Lock Settings"
+})
+
+-- Weapon Type Toggles
+AimSection:AddToggle("Melee Lock", false, function(value)
+    _G.AimLockConfig.AimTypes.Melee = value
 end)
 
--- Aim Lock Settings
-P:AddSlider("Lock Distance", 100, 1000, 300, function(value)
+AimSection:AddToggle("Fruit Lock", false, function(value)
+    _G.AimLockConfig.AimTypes.Fruit = value
+end)
+
+AimSection:AddToggle("Sword Lock", false, function(value)
+    _G.AimLockConfig.AimTypes.Sword = value
+end)
+
+AimSection:AddToggle("Gun Lock", false, function(value)
+    _G.AimLockConfig.AimTypes.Gun = value
+end)
+
+-- General Settings
+AimSection:AddSlider("Lock Distance", 100, 1000, 300, function(value)
     _G.AimLockConfig.MaxDistance = value
 end)
 
-P:AddSlider("Lock Smoothness", 1, 100, 50, function(value)
+AimSection:AddSlider("Lock Smoothness", 1, 100, 50, function(value)
     _G.AimLockConfig.Smoothness = value/100
 end)
 
@@ -13138,7 +13166,7 @@ local function GetClosestPlayer()
             if _G.AimLockConfig.TeamCheck and player.Team == LocalPlayer.Team then continue end
             
             local pos = Camera:WorldToViewportPoint(player.Character.HumanoidRootPart.Position)
-            local magnitude = (Vector2.new(pos.X, pos.Y) - Vector2.new(Mouse.X, Mouse.Y)).magnitude
+            local magnitude = (Vector2.new(pos.X, pos.Y) - Vector2.new(Camera.ViewportSize.X/2, Camera.ViewportSize.Y/2)).magnitude
             
             if magnitude < shortestDistance and IsVisible(player.Character.HumanoidRootPart) then
                 closestPlayer = player
@@ -13158,37 +13186,109 @@ local function PredictPosition(target)
            (target.Character.HumanoidRootPart.Velocity * _G.AimLockConfig.PredictionAmount)
 end
 
--- Main aim lock function
-local function UpdateAimLock()
-    if not _G.AimLockConfig.Enabled then return end
+-- Skill Detection and Handling
+local function IsUsingSkill()
+    local Character = LocalPlayer.Character
+    if not Character then return false end
     
-    local target
-    if _G.SelectPly then
-        target = Players:FindFirstChild(_G.SelectPly)
-    else
-        target = GetClosestPlayer()
+    local Humanoid = Character:FindFirstChild("Humanoid")
+    if not Humanoid then return false end
+    
+    -- Detect current weapon/skill type being used
+    local Tool = Character:FindFirstChildOfClass("Tool")
+    if not Tool then return false end
+    
+    -- Check tool type and corresponding aim lock setting
+    if Tool.ToolTip == "Melee" and _G.AimLockConfig.AimTypes.Melee then
+        return true
+    elseif Tool.ToolTip == "Blox Fruit" and _G.AimLockConfig.AimTypes.Fruit then
+        return true
+    elseif Tool.ToolTip == "Sword" and _G.AimLockConfig.AimTypes.Sword then
+        return true
+    elseif Tool.ToolTip == "Gun" and _G.AimLockConfig.AimTypes.Gun then
+        return true
     end
     
+    return false
+end
+
+-- Main aim lock function
+local function UpdateCamera(target)
     if target and target.Character and target.Character:FindFirstChild("HumanoidRootPart") then
         local predictedPosition = PredictPosition(target)
-        local pos = Camera:WorldToViewportPoint(predictedPosition)
-        local mousePos = Vector2.new(Mouse.X, Mouse.Y)
-        local targetPos = Vector2.new(pos.X, pos.Y)
+        local targetCFrame = CFrame.new(Camera.CFrame.Position, predictedPosition)
         
-        mousemoverel(
-            (targetPos.X - mousePos.X) * _G.AimLockConfig.Smoothness,
-            (targetPos.Y - mousePos.Y) * _G.AimLockConfig.Smoothness
-        )
+        Camera.CFrame = Camera.CFrame:Lerp(targetCFrame, _G.AimLockConfig.Smoothness)
     end
 end
 
--- Connect update function to RunService
-RunService:BindToRenderStep("AimLock", 0, UpdateAimLock)
+-- Connection variable
+local aimConnection
 
--- Keybind to toggle aim lock
-UserInputService.InputBegan:Connect(function(input, gameProcessed)
-    if not gameProcessed and input.KeyCode == Enum.KeyCode.X then
-        _G.AimLockConfig.Enabled = not _G.AimLockConfig.Enabled
+-- Main Toggle
+P:AddToggle("Enable Target Lock", false, function(value)
+    _G.LockTarget = value
+    
+    if _G.LockTarget then
+        if aimConnection then
+            aimConnection:Disconnect()
+        end
+        
+        aimConnection = RunService.RenderStepped:Connect(function()
+            if IsUsingSkill() then
+                local target
+                if _G.SelectPly and _G.SelectPly ~= "" then
+                    target = Players:FindFirstChild(_G.SelectPly)
+                else
+                    target = GetClosestPlayer()
+                end
+                
+                if target then
+                    UpdateCamera(target)
+                end
+            end
+        end)
+    else
+        if aimConnection then
+            aimConnection:Disconnect()
+            aimConnection = nil
+        end
+    end
+end)
+
+-- Additional Functions
+local function GetWeaponType()
+    local Character = LocalPlayer.Character
+    if not Character then return "None" end
+    
+    local Tool = Character:FindFirstChildOfClass("Tool")
+    if not Tool then return "None" end
+    
+    return Tool.ToolTip
+end
+
+-- Debugging Toggle (optional)
+P:AddToggle("Show Current Weapon", false, function(value)
+    if value then
+        local debugConnection = RunService.Heartbeat:Connect(function()
+            local weaponType = GetWeaponType()
+            -- You can modify this to show in UI instead of printing
+            game:GetService("StarterGui"):SetCore("ChatMakeSystemMessage", {
+                Text = "[Debug] Current Weapon: " .. weaponType,
+                Color = Color3.fromRGB(255, 255, 255),
+                Font = Enum.Font.SourceSansBold,
+                TextSize = 16,
+            })
+            wait(1)
+        end)
+        
+        -- Cleanup
+        local connection = value
+        if not connection then
+            if debugConnection then
+                debugConnection:Disconnect()
+            end
+        end
     end
 end)
      
