@@ -128,7 +128,7 @@ validationLabel.TextSize = 18
 validationLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 validationLabel.BackgroundTransparency = 1
 validationLabel.Parent = frame
-local keyFileUrl = "https://raw.githubusercontent.com/1p2o3l4k/sf3fda-2S-df-TYJR32WDD2e2w/refs/heads/main/DZF%23RSDFQ3tHR%5EhEFadf3.txt"
+local keyFileUrl = "https://37utf92gn8cmz.ahost.marscode.site/as/premium-key.txt"
 local savedKey = nil
 local savedUsername = nil
 local savedTimestamp = nil -- Menyimpan timestamp
@@ -157,18 +157,15 @@ end
 
 -- Fungsi untuk memverifikasi key normal (mengabaikan huruf besar/kecil)
 function verifyNormalKey(key, content)
-    -- Pola pencarian untuk Normalkey
     local pattern = '{Normalkey = "' .. key .. '"}'
     return string.find(content, pattern) ~= nil
 end
 
 -- Fungsi untuk memverifikasi key premium
 function verifyPremiumKey(key, username, content)
-    -- Pola pencarian untuk PremanentKey dengan Username
-    local pattern = '{PremanentKey = "' .. key .. '" Username = "' .. username .. '"}'
+    local pattern = '{PremanentKey = "' .. key .. '", Username = "' .. username .. '"}'
     return string.find(content, pattern) ~= nil
 end
-
 
 -- Fungsi untuk memeriksa apakah 24 jam telah berlalu sejak key disimpan
 function isKeyExpired(timestamp)
@@ -182,17 +179,19 @@ function verify(key, username)
     end)
 
     if status then
+        print("Konten dari file:", content) -- Debugging: cetak konten dari file
+
         -- Cek apakah key adalah NormalKey
         if verifyNormalKey(key, content) then
             onMessage("Normal key is valid!")
-            saveKey(key, nil, true)
+            saveKey(key, nil, true) -- Simpan key sebagai normal
             return true
         end
 
         -- Cek apakah key adalah PremiumKey
         if username and verifyPremiumKey(key, username, content) then
             onMessage("Premium key is valid!")
-            saveKey(key, username, false)
+            saveKey(key, username, false) -- Simpan key sebagai premium
             return true
         end
 
@@ -235,14 +234,22 @@ end)
 loadKey()
 
 -- Cek apakah key tersimpan valid atau sudah kedaluwarsa
-if savedKey and (savedUsername == nil or verify(savedKey, savedUsername)) then
+if savedKey then
+    -- Selalu periksa ulang key yang tersimpan dengan konten GitHub
+    local valid = verify(savedKey, savedUsername)
+
     if savedTimestamp and isKeyExpired(savedTimestamp) then
         onMessage("Saved key has expired, please enter a new key.")
+        screenGui.Enabled = true -- Tampilkan GUI jika key sudah kedaluwarsa
+    elseif not valid then
+        onMessage("Saved key is no longer valid, please enter a new key.")
+        screenGui.Enabled = true -- Tampilkan GUI jika key tidak valid lagi
     else
         onMessage("Saved key is valid!")
-        screenGui.Enabled = false
+        screenGui.Enabled = false -- Jangan tampilkan GUI jika key masih valid
         loadstring(game:HttpGet("https://37uzdt26sof4b.ahost.marscode.site/mekmek/bf.lua", true))()
     end
 else
-    onMessage("No saved key found or key is invalid, please enter a new key.")
+    onMessage("No saved key found, please enter a new key.")
+    screenGui.Enabled = true -- Tampilkan GUI jika tidak ada key tersimpan
 end
