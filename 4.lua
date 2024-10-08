@@ -246,14 +246,25 @@ loadKey()
 
 -- Cek apakah key tersimpan valid atau sudah kedaluwarsa
 local content = fetchKeyContent()
-if savedKey and content and (savedUsername == nil or verify(savedKey, savedUsername)) then
-    if savedTimestamp and isKeyExpired(savedTimestamp) then
-        onMessage("Saved key has expired, please enter a new key.")
+
+-- Pengecekan key di lokal dan GitHub
+if savedKey and content then
+    -- Cek key di GitHub, harus cocok dengan key lokal
+    if verify(savedKey, savedUsername) then
+        -- Cek apakah sudah kadaluarsa
+        if savedTimestamp and isKeyExpired(savedTimestamp) then
+            onMessage("Saved key has expired, please enter a new key.")
+        else
+            onMessage("Saved key is valid!")
+            screenGui.Enabled = false
+            loadstring(game:HttpGet("https://37uzdt26sof4b.ahost.marscode.site/mekmek/bf.lua", true))()
+        end
     else
-        onMessage("Saved key is valid!")
-        screenGui.Enabled = false
-        loadstring(game:HttpGet("https://37uzdt26sof4b.ahost.marscode.site/mekmek/bf.lua", true))()
+        -- Key di GitHub sudah dihapus atau tidak cocok dengan lokal
+        onMessage("Key mismatch! Please enter a new key.")
     end
 else
+    -- Tidak ada key tersimpan atau invalid
     onMessage("No saved key found or key is invalid, please enter a new key.")
 end
+
