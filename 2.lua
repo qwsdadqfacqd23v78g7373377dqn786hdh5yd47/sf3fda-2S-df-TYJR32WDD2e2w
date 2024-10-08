@@ -8580,7 +8580,7 @@ M:AddToggle("Auto Finish Zone 5 (fix bug)",_G.dao,function(state)
                 end
             end
         end)
-]]
+
 local boatList = {
     "Speedboat",
     "Enforcer",
@@ -8674,10 +8674,27 @@ spawn(function()
         end)
     end
 end)
+]]
+SetSpeedBoat = 400
+SNt:AddSlider("Speed Boat",0,400,1000 function(value)
+    SetSpeedBoat = value
+end)
 
 
 
-    
+SNt:AddToggle("Speed Boat",_G.SpeedBoat, function(state)
+    _G.SpeedBoat = state
+end)
+
+game:GetService("RunService").RenderStepped:Connect(function()
+    if _G.SpeedBoat then
+        for i, v in pairs(game:GetService("Workspace").Boats:GetChildren()) do
+            if game:GetService("Players").LocalPlayer.Character.Humanoid.Sit then
+                v:FindFirstChild("VehicleSeat").MaxSpeed = SetSpeedBoat
+            end
+        end
+    end
+end)
 
 
 SNt:AddToggle("Auto Sail Rough Sea",_G.BiirTrax,function(state)
@@ -8824,7 +8841,7 @@ spawn(function()
                     local targetModel = workspace:FindFirstChild(targetModelName)
 
                     if targetModel then
-                        local speed = 350
+                        local speed = SetSpeedBoat --350
                         local forwardDirection = targetModel.PrimaryPart.CFrame.lookVector
                         local targetPosition = targetModel.PrimaryPart.Position + forwardDirection * 10
                         
