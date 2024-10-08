@@ -261,10 +261,12 @@ if savedKey and content then
         end
     else
         -- Key di GitHub sudah dihapus atau tidak cocok dengan lokal
-        onMessage("Key mismatch! Please enter a new key.")
+        onMessage("Key mismatch or deleted from GitHub! Please enter a new key.")
+        screenGui.Enabled = true -- Tampilkan GUI untuk input key baru
     end
 else
     -- Tidak ada key tersimpan atau invalid
     onMessage("No saved key found or key is invalid, please enter a new key.")
+    screenGui.Enabled = true -- Tampilkan GUI
 end
 
