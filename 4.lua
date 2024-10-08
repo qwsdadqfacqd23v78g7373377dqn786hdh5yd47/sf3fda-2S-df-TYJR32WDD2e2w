@@ -12733,18 +12733,22 @@ spawn(function()
     while wait() do 
         pcall(function()
             if _G.KillAfterTrials then
-                for i,v in pairs(game:GetService("Workspace").Characters:GetChildren()) do
+                for i, v in pairs(game:GetService("Workspace").Characters:GetChildren()) do
                     if v.Name ~= game.Players.LocalPlayer.Name and (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
                         if v.Humanoid.Health > 0 then
                             repeat wait()
                                 AutoHaki()
                                 EquipWeapon(_G.SelectWeapon)
                                 NameTarget = v.Name
-                                TP1(v.HumanoidRootPart.CFrame * CFrame.new(0,0,5))
+                                TP1(v.HumanoidRootPart.CFrame * CFrame.new(0, 0, 5))
                                 v.HumanoidRootPart.CanCollide = false
                                 v.Head.CanCollide = false
                                 v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
-                                Click()
+                                
+                                -- AutoClick Loop
+                                for j = 1, 10 do -- klik 10 kali dalam satu loop untuk mempercepat kill
+                                    Click()
+                                end
                             until not _G.KillAfterTrials or not v.Parent or v.Humanoid.Health <= 0 
                         end
                     end
@@ -12754,16 +12758,6 @@ spawn(function()
     end
 end)
 
-RaceV4:AddButton("Teleport Zone PVP", false, function(value)
-    Game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(28766.681640625, 14967.1455078125, -164.13290405273438)
-end)
-
-RaceV4:AddButton("Safe Zone PVP Trial", false, function(value)
-    local player = game.Players.LocalPlayer
-    if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-        player.Character.HumanoidRootPart.CFrame = CFrame.new(28273.0859375, 14896.5078125, 157.42063903808594)
-    end
-end)
 
 
 RaceV4:AddSeperator("Auto Quest Train V4")
