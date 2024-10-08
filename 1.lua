@@ -8838,24 +8838,29 @@ spawn(function()
     while wait() do
         pcall(function()
             if _G.BiirTrax then
-                wait(0.8) 
-                local targetModelNames = "PirateBrigade"
-                local models = workspace.Boats:GetChildren()
+                wait(0.8)
+                
+                -- Memastikan target boat yang ingin dipercepat
+                local targetModelName = "PirateBrigade"
+                local targetModel = workspace.Boats:FindFirstChild(targetModelName)
 
-                for _, targetModelName in ipairs(targetModelNames) do
-                    local targetModel = workspace:FindFirstChild(targetModelName)
+                if targetModel and targetModel:FindFirstChild("VehicleSeat") then
+                    -- Set kecepatan dari slider
+                    local speed = SetSpeedBoat or 350 -- Default speed jika SetSpeedBoat belum diatur
 
-                    if targetModel then
-                        local speed = SetSpeedBoat --350
-                        local forwardDirection = targetModel.PrimaryPart.CFrame.lookVector
-                        local targetPosition = targetModel.PrimaryPart.Position + forwardDirection * 10
-                        
-                        while (targetModel.PrimaryPart.Position - targetPosition).Magnitude > 0.1 do
-                            targetModel:SetPrimaryPartCFrame(targetModel.PrimaryPart.CFrame + forwardDirection * speed)
-                            task.wait()
-                            if not _G.BiirTrax then
-                                break
-                            end
+                    -- Mengatur kecepatan boat melalui VehicleSeat
+                    targetModel.VehicleSeat.MaxSpeed = speed
+                    
+                    -- Maju dalam arah lookVector
+                    local forwardDirection = targetModel.PrimaryPart.CFrame.lookVector
+                    local targetPosition = targetModel.PrimaryPart.Position + forwardDirection * 10
+
+                    -- Melakukan pergerakan boat
+                    while (targetModel.PrimaryPart.Position - targetPosition).Magnitude > 0.1 do
+                        targetModel:SetPrimaryPartCFrame(targetModel.PrimaryPart.CFrame + forwardDirection * speed * 0.01) -- Skala gerakan
+                        task.wait()
+                        if not _G.BiirTrax then
+                            break
                         end
                     end
                 end
@@ -8863,6 +8868,7 @@ spawn(function()
         end)
     end
 end)
+
 
 SNt:AddSeperator("Frozen Dimension")
 
