@@ -8,3 +8,4 @@
 {Normalkey = "BrutalityHubV4_NC9Vexem"}
 {Normalkey = "BrutalityHubV4_ktBZcl8b"}
 {Normalkey = "BrutalityHubV4_vmFqfxfC"}
+{PremiumKey = "Permanent_Key1" Username = "Memek28222"}
