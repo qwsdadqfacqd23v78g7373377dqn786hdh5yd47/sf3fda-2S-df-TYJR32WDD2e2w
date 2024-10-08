@@ -12755,12 +12755,8 @@ spawn(function()
 end)
 
 RaceV4:AddButton("Teleport Zone PVP", false, function(value)
-    local player = game.Players.LocalPlayer
-    if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-        player.Character.HumanoidRootPart.CFrame = CFrame.new(28766.681640625, 14967.1455078125, -164.13290405273438)
-    end
+    Game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(28766.681640625, 14967.1455078125, -164.13290405273438)
 end)
-
 
 RaceV4:AddButton("Safe Zone PVP Trial", false, function(value)
     local player = game.Players.LocalPlayer
