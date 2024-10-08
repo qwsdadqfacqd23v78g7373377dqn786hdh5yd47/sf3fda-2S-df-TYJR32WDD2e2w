@@ -4347,10 +4347,12 @@ local Misc = Library:AddTab("MISC","18477908150")
 
 NguyenTien:AddSeperator("Status New Update")
 
-NguyenTien:AddLabel("Farm Gun Mastery : Auto use skill")
+NguyenTien:AddLabel("Sail Rough Sea : Work Again")
+NguyenTien:AddLabel("Add Visual : Workspace Image")
 NguyenTien:AddLabel("Leviathan : Auto Kill Leviathan")
-NguyenTien:AddLabel("Anti Detect System : Reduce report player, anti reset system, anti banned")
-NguyenTien:AddLabel("Sail Rough Sea : Work again")
+NguyenTien:AddLabel("Farm Gun Mastery : Auto use skill")
+NguyenTien:AddLabel("Add Play Music : PHONK V.2 & CHAOS")
+NguyenTien:AddLabel("Anti Detect System : Anti reset + Anti report")
 NguyenTien:AddLabel("Add Notify : FOD & God's chalice, mirage, fruit spawn")
 
 NguyenTien:AddSeperator("Nice To Meet You")
