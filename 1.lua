@@ -15492,7 +15492,7 @@ end)
             
             wait(0.01)
             local sound = Instance.new("Sound", workspace)
-            sound.Name = "Phonk Vol. 2 - Black Seed"
+            sound.Name = "Phonk Vol. 2"
             sound.SoundId = "rbxassetid://14145622615" --sound space
             sound:Play()
             sound.Looped = true
