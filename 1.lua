@@ -15439,6 +15439,78 @@ end)
             end 
         end
     end)
+
+    Mh:AddSeperator("Visual Music")
+
+    Mh:AddButton("Play Music Chaos", function()
+        pcall(function()
+            require(game.ReplicatedStorage.Notification).new("<Color=Red> 1<Color=/>"):Display()
+            wait(1)
+            require(game.ReplicatedStorage.Notification).new("<Color=Red> 2<Color=/>"):Display()
+            wait(1)
+            require(game.ReplicatedStorage.Notification).new("<Color=Red> 3<Color=/>"):Display()
+            wait(1)
+            
+            local ID = 107679910024355 --id logo space
+            
+            function spamDecal(v)
+                if v:IsA("Part") then
+                    for i = 0, 5 do
+                        local D = Instance.new("Decal")
+                        D.Name = "Brutality Hub"
+                        D.Face = i
+                        D.Parent = v
+                        D.Texture = "http://www.roblox.com/asset/?id="..Id
+                    end
+                elseif v:IsA("Model") then
+                    for _, b in pairs(v:GetChildren()) do
+                        spamDecal(b)
+                    end
+                end
+            end
+            
+            function decalspam(id)
+                Id = id
+                for _, v in pairs(game.Workspace:GetChildren()) do
+                    if v:IsA("Part") then
+                        for i = 0, 5 do
+                            local D = Instance.new("Decal")
+                            D.Name = "Brutality Hub"
+                            D.Face = i
+                            D.Parent = v
+                            D.Texture = "http://www.roblox.com/asset/?id="--..id
+                        end
+                    elseif v:IsA("Model") then
+                        for _, b in pairs(v:GetChildren()) do
+                            spamDecal(b)
+                        end
+                    end
+                end
+            end
+            
+            decalspam(ID)
+            
+            wait(0.01)
+            local sound = Instance.new("Sound", workspace)
+            sound.Name = "Chaos"
+            sound.SoundId = "rbxassetid://1843497734" --sound space
+            sound:Play()
+            sound.Looped = true
+            repeat wait(1) until sound.IsLoaded == true
+            
+            wait(5)
+            local de = Instance.new("DistortionSoundEffect", sound)
+            de.Level = 0.8
+            sound.Volume = 50 -- Contoh pengaturan volume
+            
+            local sky = Instance.new("Sky", game:GetService("Lighting"))
+            sky.SkyboxBk = "http://www.roblox.com/asset/?id="--..ID
+            sky.SkyboxFt = "http://www.roblox.com/asset/?id="--..ID
+            sky.SkyboxLf = "http://www.roblox.com/asset/?id="--..ID
+            sky.SkyboxRt = "http://www.roblox.com/asset/?id="--..ID
+            sky.SkyboxUp = "http://www.roblox.com/asset/?id="--..ID
+        end)
+    end)
     
     Mh:AddSeperator("Graphic")
 
@@ -15561,8 +15633,8 @@ end)
             
             wait(0.01)
             local sound = Instance.new("Sound", workspace)
-            sound.Name = "xịn hok cưng :>>"
-            sound.SoundId = "rbxassetid://6129291390" --sound space
+            sound.Name = "Chaos"
+            sound.SoundId = "rbxassetid://1843497734" --sound space
             sound:Play()
             sound.Looped = true
             repeat wait(1) until sound.IsLoaded == true
@@ -15572,10 +15644,10 @@ end)
             de.Level = 0.8
             
             local sky = Instance.new("Sky", game:GetService("Lighting"))
-            sky.SkyboxBk = "http://www.roblox.com/asset/?id="..ID
-            sky.SkyboxFt = "http://www.roblox.com/asset/?id="..ID
-            sky.SkyboxLf = "http://www.roblox.com/asset/?id="..ID
-            sky.SkyboxRt = "http://www.roblox.com/asset/?id="..ID
+            sky.SkyboxBk = "http://www.roblox.com/asset/?id="--..ID
+            sky.SkyboxFt = "http://www.roblox.com/asset/?id="--..ID
+            sky.SkyboxLf = "http://www.roblox.com/asset/?id="--..ID
+            sky.SkyboxRt = "http://www.roblox.com/asset/?id="--..ID
             sky.SkyboxUp = "http://www.roblox.com/asset/?id="--..ID
         end)
     end)
