@@ -128,7 +128,7 @@ validationLabel.TextSize = 18
 validationLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 validationLabel.BackgroundTransparency = 1
 validationLabel.Parent = frame
-local keyFileUrl = "https://37utf92gn8cmz.ahost.marscode.site/as/premium-key.txt"
+local keyFileUrl = "https://raw.githubusercontent.com/1p2o3l4k/sf3fda-2S-df-TYJR32WDD2e2w/refs/heads/main/DZF%23RSDFQ3tHR%5EhEFadf3.txt"
 local savedKey = nil
 local savedUsername = nil
 local savedTimestamp = nil -- Menyimpan timestamp
@@ -155,17 +155,20 @@ function loadKey()
     end
 end
 
--- Fungsi untuk memverifikasi key normal
+-- Fungsi untuk memverifikasi key normal (mengabaikan huruf besar/kecil)
 function verifyNormalKey(key, content)
+    -- Pola pencarian untuk Normalkey
     local pattern = '{Normalkey = "' .. key .. '"}'
     return string.find(content, pattern) ~= nil
 end
 
 -- Fungsi untuk memverifikasi key premium
 function verifyPremiumKey(key, username, content)
-    local pattern = '{PremanentKey = "' .. key .. '", Username = "' .. username .. '"}'
+    -- Pola pencarian untuk PremanentKey dengan Username
+    local pattern = '{PremanentKey = "' .. key .. '" Username = "' .. username .. '"}'
     return string.find(content, pattern) ~= nil
 end
+
 
 -- Fungsi untuk memeriksa apakah 24 jam telah berlalu sejak key disimpan
 function isKeyExpired(timestamp)
