@@ -160,7 +160,7 @@ end
 
 -- Fungsi untuk memverifikasi key premium
 function verifyPremiumKey(key, username, content)
-    local pattern = '{PremiumKey = "' .. key .. '", Username = "' .. username .. '"}'
+    local pattern = '{PermanentKey = "' .. key .. '", Username = "' .. username .. '"}'
     return string.find(content, pattern) ~= nil
 end
 
