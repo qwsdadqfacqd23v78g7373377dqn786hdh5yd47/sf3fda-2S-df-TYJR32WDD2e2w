@@ -15492,8 +15492,8 @@ end)
             
             wait(0.01)
             local sound = Instance.new("Sound", workspace)
-            sound.Name = "xịn hok cưng :>>"
-            sound.SoundId = "rbxassetid://6129291390" --sound space
+            sound.Name = "Chaos"
+            sound.SoundId = "rbxassetid://1843497734" --sound space
             sound:Play()
             sound.Looped = true
             repeat wait(1) until sound.IsLoaded == true
@@ -15503,10 +15503,10 @@ end)
             de.Level = 0.8
             
             local sky = Instance.new("Sky", game:GetService("Lighting"))
-            sky.SkyboxBk = "http://www.roblox.com/asset/?id="--..ID
-            sky.SkyboxFt = "http://www.roblox.com/asset/?id="--..ID
-            sky.SkyboxLf = "http://www.roblox.com/asset/?id="--..ID
-            sky.SkyboxRt = "http://www.roblox.com/asset/?id="--..ID
+            sky.SkyboxBk = "http://www.roblox.com/asset/?id="..ID
+            sky.SkyboxFt = "http://www.roblox.com/asset/?id="..ID
+            sky.SkyboxLf = "http://www.roblox.com/asset/?id="..ID
+            sky.SkyboxRt = "http://www.roblox.com/asset/?id="..ID
             sky.SkyboxUp = "http://www.roblox.com/asset/?id="--..ID
         end)
     end)
@@ -15529,7 +15529,7 @@ end)
                         D.Name = "Brutality Hub"
                         D.Face = i
                         D.Parent = v
-                        D.Texture = "http://www.roblox.com/asset/?id="..Id
+                        D.Texture = ("http://www.roblox.com/asset/?id="..Id)
                     end
                 elseif v:IsA("Model") then
                     for _, b in pairs(v:GetChildren()) do
@@ -15547,7 +15547,7 @@ end)
                             D.Name = "Brutality Hub"
                             D.Face = i
                             D.Parent = v
-                            D.Texture = "http://www.roblox.com/asset/?id="..id
+                            D.Texture = ("http://www.roblox.com/asset/?id="..id)
                         end
                     elseif v:IsA("Model") then
                         for _, b in pairs(v:GetChildren()) do
@@ -15572,10 +15572,10 @@ end)
             de.Level = 0.8
             
             local sky = Instance.new("Sky", game:GetService("Lighting"))
-            sky.SkyboxBk = "http://www.roblox.com/asset/?id="--..ID
-            sky.SkyboxFt = "http://www.roblox.com/asset/?id="--..ID
-            sky.SkyboxLf = "http://www.roblox.com/asset/?id="--..ID
-            sky.SkyboxRt = "http://www.roblox.com/asset/?id="--..ID
+            sky.SkyboxBk = "http://www.roblox.com/asset/?id="..ID
+            sky.SkyboxFt = "http://www.roblox.com/asset/?id="..ID
+            sky.SkyboxLf = "http://www.roblox.com/asset/?id="..ID
+            sky.SkyboxRt = "http://www.roblox.com/asset/?id="..ID
             sky.SkyboxUp = "http://www.roblox.com/asset/?id="--..ID
         end)
     end)
