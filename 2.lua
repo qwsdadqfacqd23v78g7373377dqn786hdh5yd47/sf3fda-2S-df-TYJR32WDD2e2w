@@ -13,8 +13,15 @@ frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 frame.BorderSizePixel = 2
 frame.BorderColor3 = Color3.fromRGB(255, 0, 0)
 frame.Active = true
-frame.Draggable = true
+frame.Draggable = false -- Nonaktifkan kemampuan untuk memindahkan frame
 frame.Parent = screenGui
+
+local function updateFramePosition()
+    frame.Position = UDim2.new(0.5, 0, 0.5, 0) -- Tetapkan kembali posisi ke tengah saat ukuran layar berubah
+end
+
+-- Event listener untuk mengupdate posisi frame jika ukuran layar berubah
+screenGui:GetPropertyChangedSignal("AbsoluteSize"):Connect(updateFramePosition)
 
 local headerLabel = Instance.new("TextLabel")
 headerLabel.Size = UDim2.new(1, 0, 0, 30)
@@ -45,6 +52,7 @@ closeButton.MouseButton1Click:Connect(function()
     end)
 end)
 
+-- Tambahan elemen lainnya
 local label = Instance.new("TextLabel")
 label.Size = UDim2.new(1, 0, 0, 50)
 label.Position = UDim2.new(0, 0, 0, 20) 
@@ -70,7 +78,7 @@ label.Parent = frame
 local label = Instance.new("TextLabel")
 label.Size = UDim2.new(1, 0, 0, 50)
 label.Position = UDim2.new(0, 0, 0, 55) 
-label.Text = ""--.. identifyexecutor()
+label.Text = ""
 label.Font = Enum.Font.SourceSansBold
 label.TextSize = 20
 label.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -96,7 +104,7 @@ getKeyButton.Text = "Get Key"
 getKeyButton.Font = Enum.Font.SourceSansBold
 getKeyButton.TextSize = 18
 getKeyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-getKeyButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0) --0, 170, 0
+getKeyButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 getKeyButton.Parent = frame
 
 local checkKeyButton = Instance.new("TextButton")
@@ -106,7 +114,7 @@ checkKeyButton.Text = "Check Key"
 checkKeyButton.Font = Enum.Font.SourceSansBold
 checkKeyButton.TextSize = 18
 checkKeyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-checkKeyButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0) --0, 170, 0
+checkKeyButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 checkKeyButton.Parent = frame
 
 local DiscordButton = Instance.new("TextButton")
@@ -128,6 +136,7 @@ validationLabel.TextSize = 18
 validationLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 validationLabel.BackgroundTransparency = 1
 validationLabel.Parent = frame
+
 local accountId = 44126; -- Plato account id [IMPORTANT]
 local allowPassThrough = false; -- Allow user through if error occurs, may reduce security
 local allowKeyRedeeming = true; -- Automatically check keys to redeem if valid
