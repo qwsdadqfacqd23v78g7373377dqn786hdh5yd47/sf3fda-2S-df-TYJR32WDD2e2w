@@ -15352,6 +15352,7 @@ end)
         end
     end)
 
+
     local HttpService = game:GetService("HttpService")
 local TeleportService = game:GetService("TeleportService")
 
@@ -15404,25 +15405,20 @@ local function TeleportToPublicServer()
     local maxAttempts = #servers
     
     while attempts < maxAttempts do
-        if #servers == 0 then
-            print("Tidak ada server tersedia yang memenuhi kriteria.")
             break
         end
         
         local randomIndex = math.random(1, #servers)
         local targetJobId = servers[randomIndex]
-        
-        print("Mencoba server: " .. targetJobId)
+
         
         local success = pcall(function()
             TeleportService:TeleportToPlaceInstance(game.PlaceId, targetJobId)
         end)
         
         if success then
-            print("Berhasil memulai teleportasi ke server baru.")
             break
         else
-            print("Gagal berpindah ke server. Mencoba server lain...")
             table.remove(servers, randomIndex)
         end
         
@@ -15431,11 +15427,11 @@ local function TeleportToPublicServer()
     end
     
     if attempts >= maxAttempts then
-        print("Gagal menemukan server yang sesuai setelah " .. maxAttempts .. " percobaan.")
     end
 end
 
-Mh:AddToggle("Auto Hop Server Rip Indra", _G.HopFindRipIndra, function(value)
+-- Toggle untuk Auto Hop
+SNt:AddToggle("Auto Hop Server Rip Indra", _G.HopFindRipIndra, function(value)
     _G.HopFindRipIndra = value
 end)
 
@@ -15446,17 +15442,20 @@ spawn(function()
             if IsRipIndraSpawned() then
                 local ripIndraModel = game:GetService("Workspace").Enemies:FindFirstChild("rip_indra True Form") or
                                      game:GetService("Workspace").Enemies:FindFirstChild("rip_indra [Lv. 5000] [Raid Boss]")
+                
                 if ripIndraModel and 
                    (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - ripIndraModel.HumanoidRootPart.Position).Magnitude > 300 then
                     topos(ripIndraModel.HumanoidRootPart.CFrame * CFrame.new(0, 20, 0))
                 end
             else
                 TeleportToPublicServer()
-                wait(5)
+                wait(5) -- Tunggu sebentar sebelum mencoba server berikutnya
             end
         end
     end
 end)
+
+
 
     
 
@@ -15483,7 +15482,7 @@ end)
             spawn(function()
                  while wait() do
                      if _G.AutoFindFullmoon then
-                     if game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709149052" or game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709149431" then
+                     if game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709149052" or game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709149052" then
                          wait(2.0)
                          game.StarterGui:SetCore("SendNotification", {
                              Title = "BRUTALITY HUB", 
@@ -15491,7 +15490,7 @@ end)
                              Icon = "http://www.roblox.com/asset/?id=107679910024355",
                              Duration = 2.5
                          })
-                     elseif game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709143733" then
+                     elseif game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709149052" then
                          Hop()
                          game.StarterGui:SetCore("SendNotification", {
                              Title = "BRUTALITY HUB", 
@@ -15499,7 +15498,7 @@ end)
                              Icon = "http://www.roblox.com/asset/?id=107679910024355",
                              Duration = 2.5
                          })
-                     elseif game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709150401" then
+                     elseif game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709149052" then
                          Hop()
                          game.StarterGui:SetCore("SendNotification", {
                              Title = "BRUTALITY HUB", 
@@ -15507,7 +15506,7 @@ end)
                              Icon = "http://www.roblox.com/asset/?id=107679910024355",
                              Duration = 2.5
                          })
-                     elseif game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709149680" then
+                     elseif game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709149052" then
                          Hop()
                          game.StarterGui:SetCore("SendNotification", {
                              Title = "BRUTALITY HUB", 
