@@ -8633,36 +8633,41 @@ SNt:AddToggle("Boat Fly (beta)",_G.WalkWaterBoat,function(state)
     _G.WalkWaterBoat = state
 end)
 
-    spawn(function()
-        while task.wait() do
-            pcall(function()
-                if _G.WalkWaterBoat then
-                    -- Mengubah tinggi air untuk efek berjalan di atas air
-                    game:GetService("Workspace").Map["WaterBase-Plane"].Size = Vector3.new(1000,500,1000)
-    
-                    -- Menyesuaikan posisi semua boat agar tetap berada di permukaan air
-                    for _, boat in pairs(game:GetService("Workspace").Boats:GetChildren()) do
-                        if boat:IsA("Model") and boat:FindFirstChild("PrimaryPart") then
-                            -- Menentukan tinggi baru yang sesuai agar boat tetap di atas permukaan air
-                            local newPosition = Vector3.new(boat.PrimaryPart.Position.X, 500, boat.PrimaryPart.Position.Z)
-                            boat:SetPrimaryPartCFrame(CFrame.new(newPosition))
-                        end
-                    end
-                else
-                    -- Kembali ke tinggi air normal
-                    game:GetService("Workspace").Map["WaterBase-Plane"].Size = Vector3.new(1000,80,1000)
-                    
-                    -- Mengembalikan posisi boat ke tinggi air normal
-                    for _, boat in pairs(game:GetService("Workspace").Boats:GetChildren()) do
-                        if boat:IsA("Model") and boat:FindFirstChild("PrimaryPart") then
-                            local newPosition = Vector3.new(boat.PrimaryPart.Position.X, 80, boat.PrimaryPart.Position.Z)
-                            boat:SetPrimaryPartCFrame(CFrame.new(newPosition))
-                        end
+spawn(function()
+    while task.wait() do
+        pcall(function()
+            if _G.WalkWaterBoat then
+                -- Mengubah tinggi air untuk efek berjalan di atas air
+                local waterHeight = 500
+                game:GetService("Workspace").Map["WaterBase-Plane"].Size = Vector3.new(1000, waterHeight, 1000)
+
+                -- Menyesuaikan posisi semua boat agar tetap berada di permukaan air
+                for _, boat in pairs(game:GetService("Workspace").Boats:GetChildren()) do
+                    if boat:IsA("Model") and boat:FindFirstChild("PrimaryPart") then
+                        -- Menentukan tinggi baru yang sesuai agar boat tetap di atas permukaan air
+                        local boatHeightOffset = 10 -- offset untuk memastikan boat di atas permukaan air
+                        local newPosition = Vector3.new(boat.PrimaryPart.Position.X, waterHeight + boatHeightOffset, boat.PrimaryPart.Position.Z)
+                        boat:SetPrimaryPartCFrame(CFrame.new(newPosition))
                     end
                 end
-            end)
-        end
-    end)
+            else
+                -- Kembali ke tinggi air normal
+                local normalWaterHeight = 80
+                game:GetService("Workspace").Map["WaterBase-Plane"].Size = Vector3.new(1000, normalWaterHeight, 1000)
+                
+                -- Mengembalikan posisi boat ke tinggi air normal
+                for _, boat in pairs(game:GetService("Workspace").Boats:GetChildren()) do
+                    if boat:IsA("Model") and boat:FindFirstChild("PrimaryPart") then
+                        local boatHeightOffset = 10 -- offset untuk memastikan boat tetap di atas permukaan air
+                        local newPosition = Vector3.new(boat.PrimaryPart.Position.X, normalWaterHeight + boatHeightOffset, boat.PrimaryPart.Position.Z)
+                        boat:SetPrimaryPartCFrame(CFrame.new(newPosition))
+                    end
+                end
+            end
+        end)
+    end
+end)
+
     
 
 
