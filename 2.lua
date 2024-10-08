@@ -1,41 +1,3 @@
--- Fungsi untuk menerapkan fake graphics (efek visual)
-local function applyFakeGraphics()
-    local lighting = game:GetService("Lighting")
-    
-    -- Membuat efek Bloom (cahaya yang lembut)
-    local bloom = Instance.new("BloomEffect")
-    bloom.Intensity = 1.2  -- Intensitas bloom (cahaya)
-    bloom.Threshold = 0.9  -- Batas cahaya yang terpengaruh
-    bloom.Size = 24        -- Ukuran efek bloom
-    bloom.Parent = lighting -- Menambahkan efek ke Lighting
-
-    -- Membuat efek ColorCorrection (peningkatan kecerahan dan saturasi)
-    local colorCorrection = Instance.new("ColorCorrectionEffect")
-    colorCorrection.Brightness = 0.1  -- Peningkatan kecerahan
-    colorCorrection.Contrast = 0.4    -- Peningkatan kontras
-    colorCorrection.Saturation = 0.3  -- Peningkatan saturasi warna
-    colorCorrection.TintColor = Color3.fromRGB(255, 255, 255) -- Warna putih natural
-    colorCorrection.Parent = lighting
-
-    -- Membuat efek SunRays (sinar matahari palsu)
-    local sunRays = Instance.new("SunRaysEffect")
-    sunRays.Intensity = 0.1  -- Intensitas sinar matahari
-    sunRays.Spread = 1       -- Sebaran sinar matahari
-    sunRays.Parent = lighting
-
-    -- Membuat efek Blur halus untuk menambah kesan HD
-    local blur = Instance.new("BlurEffect")
-    blur.Size = 2 -- Ukuran blur halus
-    blur.Parent = lighting
-
-    -- Print log untuk memastikan efek fake graphics telah diterapkan
-    print("Done optimizing anti kick system")
-    print("Done optimizing anti detect system")
-    print("Done optimizing anti reset system")
-end
-
--- Menjalankan fungsi fake graphics
-applyFakeGraphics()
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Fungsi anti-ban yang diperbaiki
@@ -4412,93 +4374,6 @@ setclipboard("https://www.instagram.com/medusafrzly/")
 Notif.New("Copying To Clipboard Done", 3)
 end)
 
-Qwe:AddSeperator("Status Server & Player")
-
-local Time1 = Qwe:AddLabel("Run Time Script")
-function UpdateTime()
-local GameTime = math.floor(workspace.DistributedGameTime+0.5)
-local Hour = math.floor(GameTime/(60^2))%24
-local Minute = math.floor(GameTime/(60^1))%60
-local Second = math.floor(GameTime/(60^0))%60
-Time1:Set("GameTime : Hours : "..Hour.." Min : "..Minute.." Sec : "..Second)
-end
-
-spawn(function()
-while task.wait() do
-pcall(function()
-UpdateTime()
-end)
-end
-end)
-
-local Client = Qwe:AddLabel("Client")
-
-function UpdateClient()
-local Fps = workspace:GetRealPhysicsFPS()
-Client:Set("Fps : "..Fps)
-end
-
-spawn(function()
-while true do wait(.1)
-UpdateClient()
-end
-end)
-
-local Client1 = Qwe:AddLabel("Client")
-
-function UpdateClient1()
-local Ping = game:GetService("Stats").Network.ServerStatsItem["Data Ping"]:GetValueString()
-Client1:Set("Ping : "..Ping)
-end
-
-spawn(function()
-while true do wait(.1)
-UpdateClient1()
-end
-end)
-
-Qwe:AddLabel("Executor : ".. identifyexecutor())
-Qwe:AddLabel("Name : ".. game.Players.LocalPlayer.Name)
-
-local locallv = Qwe:AddLabel("Level :")
-    
-    spawn(function()
-        while wait() do
-            pcall(function()
-                locallv:Set("Level :".." "..game:GetService("Players").LocalPlayer.Data.Level.Value)
-            end)
-        end
-    end)
-    
-    local localrace = Qwe:AddLabel("Race :")
-    
-    spawn(function()
-        while wait() do
-            pcall(function()
-                localrace:Set("Race :".." "..game:GetService("Players").LocalPlayer.Data.Race.Value)
-            end)
-        end
-    end)
-    
-    local localbeli = Qwe:AddLabel("Beli :")
-    
-    spawn(function()
-        while wait() do
-            pcall(function()
-                localbeli:Set("Beli :".." "..game:GetService("Players").LocalPlayer.Data.Beli.Value)
-            end)
-        end
-    end)
-    local localfrag = Qwe:AddLabel("Fragment")
-    
-    spawn(function()
-        while wait() do
-            pcall(function()
-                localfrag:Set("Fragments :".." "..game:GetService("Players").LocalPlayer.Data.Fragments.Value)
-            end)
-        end
-    end)
-
 Qwe:AddSeperator("Status Train V4")
 
 local bL = Qwe:AddLabel("Ancient One : " .. tostring(CheckAcientOneStatus()))
@@ -4580,6 +4455,126 @@ spawn(function()
                 end
             end)
 
+    Qwe:AddSeperator("Legendary Item Chest")
+
+    NotifyItemFound_Chalice = Qwe:AddLabel("God's Chalice : 🔴")
+    NotifyItemFound_Fish = Qwe:AddLabel("Fish of Darkness : 🔴")
+
+local function IsItemHeldByPlayer(itemName)
+    for _, player in pairs(game.Players:GetPlayers()) do
+        local character = player.Character
+        if character and character:FindFirstChild(itemName) then
+            return true
+        end
+    end
+    return false
+end
+
+spawn(function()
+    while wait(5) do
+        if IsItemHeldByPlayer("God's Chalice") then
+            NotifyItemFound_Chalice:Set("God's Chalice : 🟢")
+        else
+            NotifyItemFound_Chalice:Set("God's Chalice : 🔴")
+        end
+
+        if IsItemHeldByPlayer("Fish of Darkness") then
+            NotifyItemFound_Fish:Set("Fish of Darkness : 🟢")
+        else
+            NotifyItemFound_Fish:Set("Fish of Darkness : 🔴")
+        end
+    end
+end)
+
+
+
+            Qwe:AddSeperator("Status Server & Player")
+
+            local Time1 = Qwe:AddLabel("Run Time Script")
+            function UpdateTime()
+            local GameTime = math.floor(workspace.DistributedGameTime+0.5)
+            local Hour = math.floor(GameTime/(60^2))%24
+            local Minute = math.floor(GameTime/(60^1))%60
+            local Second = math.floor(GameTime/(60^0))%60
+            Time1:Set("GameTime : Hours : "..Hour.." Min : "..Minute.." Sec : "..Second)
+            end
+            
+            spawn(function()
+            while task.wait() do
+            pcall(function()
+            UpdateTime()
+            end)
+            end
+            end)
+            
+            local Client = Qwe:AddLabel("Client")
+            
+            function UpdateClient()
+            local Fps = workspace:GetRealPhysicsFPS()
+            Client:Set("Fps : "..Fps)
+            end
+            
+            spawn(function()
+            while true do wait(.1)
+            UpdateClient()
+            end
+            end)
+            
+            local Client1 = Qwe:AddLabel("Client")
+            
+            function UpdateClient1()
+            local Ping = game:GetService("Stats").Network.ServerStatsItem["Data Ping"]:GetValueString()
+            Client1:Set("Ping : "..Ping)
+            end
+            
+            spawn(function()
+            while true do wait(.1)
+            UpdateClient1()
+            end
+            end)
+            
+            Qwe:AddLabel("Executor : ".. identifyexecutor())
+            Qwe:AddLabel("Name : ".. game.Players.LocalPlayer.Name)
+            
+            local locallv = Qwe:AddLabel("Level :")
+                
+                spawn(function()
+                    while wait() do
+                        pcall(function()
+                            locallv:Set("Level :".." "..game:GetService("Players").LocalPlayer.Data.Level.Value)
+                        end)
+                    end
+                end)
+                
+                local localrace = Qwe:AddLabel("Race :")
+                
+                spawn(function()
+                    while wait() do
+                        pcall(function()
+                            localrace:Set("Race :".." "..game:GetService("Players").LocalPlayer.Data.Race.Value)
+                        end)
+                    end
+                end)
+                
+                local localbeli = Qwe:AddLabel("Beli :")
+                
+                spawn(function()
+                    while wait() do
+                        pcall(function()
+                            localbeli:Set("Beli :".." "..game:GetService("Players").LocalPlayer.Data.Beli.Value)
+                        end)
+                    end
+                end)
+                local localfrag = Qwe:AddLabel("Fragment")
+                
+                spawn(function()
+                    while wait() do
+                        pcall(function()
+                            localfrag:Set("Fragments :".." "..game:GetService("Players").LocalPlayer.Data.Fragments.Value)
+                        end)
+                    end
+                end)
+--[[
             Qwe:AddSeperator("Status Quest")
 
             local Bartilo_Quest = Qwe:AddLabel("Bartilo Quest : 🔴")
@@ -4720,7 +4715,7 @@ spawn(function()
                     end)
                 end
             end)
-
+--]]
 ---- Teks halaman utama
 Main:AddSeperator("Redeem Codes")
     
