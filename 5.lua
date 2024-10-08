@@ -150,12 +150,22 @@ end;
 -- Plato internals [START]
 local fRequest, fStringFormat, fSpawn, fWait = request or http.request or http_request or syn.request, string.format, task.spawn, task.wait;
 local localPlayerId = game:GetService("Players").LocalPlayer.UserId;
-local DataStoreService = game:GetService("DataStoreService")
-local keyStore = DataStoreService:GetDataStore("KeyStore")
-local savedKeyData
-local rateLimit, rateLimitCountdown, errorWait = false, 0, false;
 local TweenService = game:GetService("TweenService")
+local savedKey
 -- Plato internals [END]
+
+-- Fungsi untuk menyimpan key ke file
+function saveKey(key)
+    writefile("savedKey.txt", key)
+    savedKey = key
+end
+
+-- Fungsi untuk memuat key yang tersimpan dari file
+function loadKey()
+    if isfile("savedKey.txt") then
+        savedKey = readfile("savedKey.txt")
+    end
+end
 
 -- Plato global functions [START]
 function getLink()
@@ -224,32 +234,11 @@ function verify(key)
     else
         return allowPassThrough;
     end;
-end;
-
--- Function to save key with timestamp
-local function saveKey(key)
-    local timestamp = os.time() -- Timestamp in seconds
-    local dataToSave = {key = key, time = timestamp}
-    keyStore:SetAsync(tostring(localPlayerId), dataToSave)
 end
 
--- Function to load saved key
-local function loadSavedKey()
-    local success, data = pcall(function()
-        return keyStore:GetAsync(tostring(localPlayerId))
-    end)
-
-    if success and data then
-        savedKeyData = data
-        return data.key
-    else
-        return nil
-    end
-end
-
--- Check if key was already input
+-- Fungsi untuk mengecek apakah key sudah disimpan dan masih valid
 local function isKeySaved()
-    local savedKey = loadSavedKey()
+    loadKey()
     if savedKey then
         onMessage("Key already saved. Verifying...")
         if verify(savedKey) then
@@ -285,7 +274,7 @@ checkKeyButton.MouseButton1Click:Connect(function()
         if verify(key) then
             validationLabel.Text = "Key Is Valid!"
             validationLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
-            saveKey(key) -- Save the key and timestamp
+            saveKey(key) -- Save the key
             wait(2)
             validationLabel.Text = "Thanks For Use"
             validationLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -306,4 +295,3 @@ end)
 wait(3)
 local tween = TweenService:Create(frame, TweenInfo.new(0.5), {Position = UDim2.new(0.5, -150, 0.5, -100)})
 tween:Play()
-
