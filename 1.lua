@@ -150,6 +150,9 @@ end;
 -- Plato internals [START]
 local fRequest, fStringFormat, fSpawn, fWait = request or http.request or http_request or syn.request, string.format, task.spawn, task.wait;
 local localPlayerId = game:GetService("Players").LocalPlayer.UserId;
+local DataStoreService = game:GetService("DataStoreService")
+local keyStore = DataStoreService:GetDataStore("KeyStore")
+local savedKeyData
 local rateLimit, rateLimitCountdown, errorWait = false, 0, false;
 -- Plato internals [END]
 
@@ -195,7 +198,7 @@ function verify(key)
                 return false;
             end;
         else
-            onMessage("An error occured while contacting the server!");
+            onMessage("An error occurred while contacting the server!");
             return allowPassThrough;
         end;
     else
@@ -241,7 +244,7 @@ function verify(key)
                     rateLimitCountdown = 10;
                     fSpawn(function() 
                         while rateLimit do
-                            onMessage(fStringFormat("You are being rate-limited, please slow down. Try again in %i second(s).", rateLimitCountdown));
+                            onMessage(fStringFormat("Try again in %i second(s).", rateLimitCountdown));
                             fWait(1);
                             rateLimitCountdown = rateLimitCountdown - 1;
                             if rateLimitCountdown < 0 then
@@ -261,6 +264,54 @@ function verify(key)
     end;
 end;
 
+-- Function to save key with timestamp
+local function saveKey(key)
+    local timestamp = os.time() -- Timestamp in seconds
+    local dataToSave = {key = key, time = timestamp}
+    keyStore:SetAsync(tostring(localPlayerId), dataToSave)
+end
+
+-- Function to load saved key
+local function loadSavedKey()
+    local success, data = pcall(function()
+        return keyStore:GetAsync(tostring(localPlayerId))
+    end)
+
+    if success and data then
+        savedKeyData = data
+        return data.key
+    else
+        return nil
+    end
+end
+
+-- Check if key was already input
+local function isKeySaved()
+    local savedKey = loadSavedKey()
+    if savedKey then
+        onMessage("Key already saved")
+        if verify(savedKey) then
+            validationLabel.Text = "Key Is Valid!"
+            validationLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
+            wait(2)
+            validationLabel.Text = "Thanks For Use"
+            validationLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+            wait(2)
+            local tween = TweenService:Create(frame, TweenInfo.new(0.5), {Position = UDim2.new(0.5, -150, 1.5, -100)})
+            tween:Play()
+            tween.Completed:Connect(function()
+                screenGui:Destroy()
+            end)
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/vldtncywdlojtnvjlmvyrbszljd/asedesa/main/zxcv.lua",true))()
+        else
+            validationLabel.Text = "Saved Key Is Not Valid!"
+            validationLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
+        end
+        return true
+    end
+    return false
+end
+
 getKeyButton.MouseButton1Click:Connect(function()
     setclipboard(getLink())
     validationLabel.Text = "Link Key Copied!"
@@ -274,26 +325,29 @@ DiscordButton.MouseButton1Click:Connect(function()
 end)
 
 checkKeyButton.MouseButton1Click:Connect(function()
-    local key = textBox.Text
-    if verify(key) then
-        validationLabel.Text = "Key Is Valid!"
-        validationLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
-        wait(2)
-        validationLabel.Text = "Thanks For Use"
-        validationLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-        wait(2)
-        local tween = TweenService:Create(frame, TweenInfo.new(0.5), {Position = UDim2.new(0.5, -150, 1.5, -100)})
-        tween:Play()
-        tween.Completed:Connect(function()
-            screenGui:Destroy()
-        end)
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/vldtncywdlojtnvjlmvyrbszljd/asedesa/main/zxcv.lua",true))()
-    else
-        validationLabel.Text = "Checking Key..."
-        validationLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-        wait(1.7)
-        validationLabel.Text = "Key Is Not Valid!"
-        validationLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
+    if not isKeySaved() then
+        local key = textBox.Text
+        if verify(key) then
+            validationLabel.Text = "Key Is Valid!"
+            validationLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
+            saveKey(key) -- Save the key and timestamp
+            wait(2)
+            validationLabel.Text = "Thanks For Use"
+            validationLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+            wait(2)
+            local tween = TweenService:Create(frame, TweenInfo.new(0.5), {Position = UDim2.new(0.5, -150, 1.5, -100)})
+            tween:Play()
+            tween.Completed:Connect(function()
+                screenGui:Destroy()
+            end)
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/vldtncywdlojtnvjlmvyrbszljd/asedesa/main/zxcv.lua",true))()
+        else
+            validationLabel.Text = "Checking Key..."
+            validationLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+            wait(1.7)
+            validationLabel.Text = "Key Is Not Valid!"
+            validationLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
+        end
     end
 end)
 
