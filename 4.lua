@@ -8641,12 +8641,12 @@ spawn(function()
                 local waterHeight = 500
                 game:GetService("Workspace").Map["WaterBase-Plane"].Size = Vector3.new(1000, waterHeight, 1000)
 
-                -- Menyesuaikan posisi semua boat agar tetap berada di permukaan air
+                -- Menyesuaikan posisi semua boat agar tampak terbang di atas air tanpa animasi naik-turun
                 for _, boat in pairs(game:GetService("Workspace").Boats:GetChildren()) do
                     if boat:IsA("Model") and boat:FindFirstChild("PrimaryPart") then
-                        -- Menentukan tinggi baru yang sesuai agar boat tetap di atas permukaan air
-                        local boatHeightOffset = 10 -- offset untuk memastikan boat di atas permukaan air
-                        local newPosition = Vector3.new(boat.PrimaryPart.Position.X, waterHeight + boatHeightOffset, boat.PrimaryPart.Position.Z)
+                        -- Mengatur tinggi tetap agar boat terlihat seperti terbang tanpa perubahan ketinggian
+                        local flyingHeight = 550 -- ketinggian tetap di atas air (50 unit di atas waterHeight)
+                        local newPosition = Vector3.new(boat.PrimaryPart.Position.X, flyingHeight, boat.PrimaryPart.Position.Z)
                         boat:SetPrimaryPartCFrame(CFrame.new(newPosition))
                     end
                 end
@@ -8667,6 +8667,7 @@ spawn(function()
         end)
     end
 end)
+
 
     
 
