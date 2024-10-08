@@ -4936,7 +4936,7 @@ spawn(function()
   end
 end)
 
-Main:AddToggle("Super Fast Attack ",true,function(value)
+Main:AddToggle("Aura Attack Npc",true,function(value)
         _G.FastAttack = value
     end)      
 
@@ -12726,6 +12726,7 @@ end)
 
 RaceV4:AddToggle("Kill Player After Trial!",false,function(value)
     _G.KillAfterTrials = value
+    _G.AutoClick = value
     StopTween(_G.KillAfterTrials)
 end)
 
@@ -12733,22 +12734,19 @@ spawn(function()
     while wait() do 
         pcall(function()
             if _G.KillAfterTrials then
-                for i, v in pairs(game:GetService("Workspace").Characters:GetChildren()) do
+                for i,v in pairs(game:GetService("Workspace").Characters:GetChildren()) do
                     if v.Name ~= game.Players.LocalPlayer.Name and (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
                         if v.Humanoid.Health > 0 then
                             repeat wait()
                                 AutoHaki()
                                 EquipWeapon(_G.SelectWeapon)
                                 NameTarget = v.Name
-                                TP1(v.HumanoidRootPart.CFrame * CFrame.new(0, 0, 5))
+                                TP1(v.HumanoidRootPart.CFrame * CFrame.new(0,0,5))
+                                v.activeController.timeToNextAttack = 0
                                 v.HumanoidRootPart.CanCollide = false
                                 v.Head.CanCollide = false
                                 v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
-                                
-                                -- AutoClick Loop
-                                for j = 1, 10 do -- klik 10 kali dalam satu loop untuk mempercepat kill
-                                    Click()
-                                end
+                                Click()
                             until not _G.KillAfterTrials or not v.Parent or v.Humanoid.Health <= 0 
                         end
                     end
@@ -12757,7 +12755,6 @@ spawn(function()
         end)
     end
 end)
-
 
 
 RaceV4:AddSeperator("Auto Quest Train V4")
@@ -15444,6 +15441,76 @@ end)
     end)
     
     Mh:AddSeperator("Graphic")
+
+    Mh:AddButton("Visual Space B-Team", function()
+        pcall(function()
+            require(game.ReplicatedStorage.Notification).new("<Color=Red> 1<Color=/>"):Display()
+            wait(1)
+            require(game.ReplicatedStorage.Notification).new("<Color=Red> 2<Color=/>"):Display()
+            wait(1)
+            require(game.ReplicatedStorage.Notification).new("<Color=Red> 3<Color=/>"):Display()
+            wait(1)
+            
+            local ID = 107679910024355 --id logo space
+            
+            function spamDecal(v)
+                if v:IsA("Part") then
+                    for i = 0, 5 do
+                        local D = Instance.new("Decal")
+                        D.Name = "Brutality Hub"
+                        D.Face = i
+                        D.Parent = v
+                        D.Texture = "http://www.roblox.com/asset/?id="..Id
+                    end
+                elseif v:IsA("Model") then
+                    for _, b in pairs(v:GetChildren()) do
+                        spamDecal(b)
+                    end
+                end
+            end
+            
+            function decalspam(id)
+                Id = id
+                for _, v in pairs(game.Workspace:GetChildren()) do
+                    if v:IsA("Part") then
+                        for i = 0, 5 do
+                            local D = Instance.new("Decal")
+                            D.Name = "Brutality Hub"
+                            D.Face = i
+                            D.Parent = v
+                            D.Texture = "http://www.roblox.com/asset/?id="..id
+                        end
+                    elseif v:IsA("Model") then
+                        for _, b in pairs(v:GetChildren()) do
+                            spamDecal(b)
+                        end
+                    end
+                end
+            end
+            
+            decalspam(ID)
+            
+            wait(0.01)
+            local sound = Instance.new("Sound", workspace)
+            sound.Name = "xịn hok cưng :>>"
+            sound.SoundId = "rbxassetid://6129291390" --sound space
+            sound:Play()
+            sound.Looped = true
+            repeat wait(1) until sound.IsLoaded == true
+            
+            wait(5)
+            local de = Instance.new("DistortionSoundEffect", sound)
+            de.Level = 0.8
+            
+            local sky = Instance.new("Sky", game:GetService("Lighting"))
+            sky.SkyboxBk = "http://www.roblox.com/asset/?id="..ID
+            sky.SkyboxFt = "http://www.roblox.com/asset/?id="..ID
+            sky.SkyboxLf = "http://www.roblox.com/asset/?id="..ID
+            sky.SkyboxRt = "http://www.roblox.com/asset/?id="..ID
+            sky.SkyboxUp = "http://www.roblox.com/asset/?id="..ID
+        end)
+    end)
+    
 
     
     Mh:AddButton("FPS Boost",function()
