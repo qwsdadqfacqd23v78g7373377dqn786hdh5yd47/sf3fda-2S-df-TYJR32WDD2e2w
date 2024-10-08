@@ -6708,6 +6708,16 @@ spawn(function()
     end)
     end)
 
+
+
+
+
+
+
+    SNt:AddToggle("Auto Hop Server Rip Indra ", _G.HopFindRipIndra, function(value)
+        _G.HopFindRipIndra = value
+    end)
+
     local function GetServers()
         local PlaceID = game.PlaceId
         local servers = {}
@@ -6722,11 +6732,55 @@ spawn(function()
         return servers
     end
     
+    local function TeleportToPublicServer()
+        local servers = GetServers()
+        if #servers > 0 then
+            game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, servers[math.random(1, #servers)])
+        else
+            print("Tidak ada server publik yang tersedia.")
+        end
+    end
+    
+    spawn(function()
+        while wait() do
+            if _G.HopFindRipIndra then
+                local ripIndraModel = game:GetService("Workspace").Enemies:FindFirstChild("rip_indra True Form") or
+                                     game:GetService("Workspace").Enemies:FindFirstChild("rip_indra [Lv. 5000] [Raid Boss]")
+                
+                if ripIndraModel then
+                    print("Rip Indra ditemukan!")
+                    if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - ripIndraModel.HumanoidRootPart.Position).Magnitude > 300 then
+                        topos(ripIndraModel.HumanoidRootPart.CFrame * CFrame.new(0, 20, 0))
+                    end
+                else
+                    print("Rip Indra tidak ditemukan. Mencari server baru...")
+                    TeleportToPublicServer()
+                end
+            end
+        end
+    end)
+    
+
+
     
     SNt:AddToggle("Auto Hop Server Mirage Island (Public)", _G.HopFindMirage, function(value)
         _G.HopFindMirage = value
     end)
 
+    local function GetServers()
+        local PlaceID = game.PlaceId
+        local servers = {}
+        local req = game:GetService("HttpService"):JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100'))
+        
+        for _, server in pairs(req.data) do
+            if server.playing < server.maxPlayers and server.id ~= game.JobId then
+                table.insert(servers, server.id)
+            end
+        end
+        
+        return servers
+    end
+    
     local function TeleportToPublicServer()
         local servers = GetServers()
         if #servers > 0 then
@@ -6750,6 +6804,15 @@ spawn(function()
             end
         end
     end)
+
+
+
+
+
+
+
+
+
 if World1 or world2 then
     M:AddLine()
 end
