@@ -1,1 +1,5 @@
-123
+{Normalkey = "BrutalityHubV4_123"}
+{Normalkey = "BrutalityHubV4_A2"}
+{Normalkey = "BrutalityHubV4_6Q2"}
+{Normalkey = "BrutalityHubV4_Pk2"}
+{PremanentKey = "Permanent_Key1" Username = "Memekq28222"}
