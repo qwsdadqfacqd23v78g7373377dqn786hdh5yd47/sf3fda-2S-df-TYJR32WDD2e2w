@@ -131,37 +131,45 @@ validationLabel.Parent = frame
 local keyFileUrl = "https://37utf92gn8cmz.ahost.marscode.site/as/premium-key.txt"
 local savedKey = nil
 local savedUsername = nil
+local savedTimestamp = nil -- Menyimpan timestamp
 
 -- Fungsi untuk menampilkan pesan
 function onMessage(msg)
     print(msg)
 end
 
-function saveKey(key, username)
-    local keyData = key .. "|" .. (username or "")
+function saveKey(key, username, isNormalKey)
+    local keyData = key .. "|" .. (username or "") .. "|" .. (isNormalKey and os.time() or "")
     writefile("savedKey.txt", keyData)
     savedKey = key
     savedUsername = username
+    savedTimestamp = isNormalKey and os.time() or nil
 end
 
--- Fungsi untuk memuat key dan username yang tersimpan
+-- Fungsi untuk memuat key, username, dan timestamp yang tersimpan
 function loadKey()
     if isfile("savedKey.txt") then
         local keyData = readfile("savedKey.txt")
-        savedKey, savedUsername = keyData:match("([^|]+)|([^|]*)")
+        savedKey, savedUsername, savedTimestamp = keyData:match("([^|]+)|([^|]*)|([^|]*)")
+        savedTimestamp = tonumber(savedTimestamp) -- Konversi timestamp ke number
     end
 end
 
 -- Fungsi untuk memverifikasi key normal
 function verifyNormalKey(key, content)
-    local pattern = '{NormalKey = "' .. key .. '"}'
+    local pattern = '{Normalkey = "' .. key .. '"}'
     return string.find(content, pattern) ~= nil
 end
 
 -- Fungsi untuk memverifikasi key premium
 function verifyPremiumKey(key, username, content)
-    local pattern = '{PermanentKey = "' .. key .. '", Username = "' .. username .. '"}'
+    local pattern = '{PremanentKey = "' .. key .. '", Username = "' .. username .. '"}'
     return string.find(content, pattern) ~= nil
+end
+
+-- Fungsi untuk memeriksa apakah 24 jam telah berlalu sejak key disimpan
+function isKeyExpired(timestamp)
+    return (os.time() - timestamp) >= (24 * 60 * 60) -- 24 jam dalam detik
 end
 
 -- Fungsi utama untuk memverifikasi key
@@ -174,14 +182,14 @@ function verify(key, username)
         -- Cek apakah key adalah NormalKey
         if verifyNormalKey(key, content) then
             onMessage("Normal key is valid!")
-            saveKey(key, nil)
+            saveKey(key, nil, true)
             return true
         end
 
         -- Cek apakah key adalah PremiumKey
         if username and verifyPremiumKey(key, username, content) then
             onMessage("Premium key is valid!")
-            saveKey(key, username)
+            saveKey(key, username, false)
             return true
         end
 
@@ -196,7 +204,7 @@ end
 -- Event untuk tombol verifikasi key
 checkKeyButton.MouseButton1Click:Connect(function()
     local key = textBox.Text
-    local username = game.Players.LocalPlayer.Name  -- Mengambil username pemain
+    local username = game.Players.LocalPlayer.Name -- Mengambil username pemain
 
     if verify(key, username) then
         validationLabel.Text = "Key Is Valid!"
@@ -222,10 +230,16 @@ end)
 
 -- Memuat key dan username yang tersimpan saat awal dijalankan
 loadKey()
+
+-- Cek apakah key tersimpan valid atau sudah kedaluwarsa
 if savedKey and (savedUsername == nil or verify(savedKey, savedUsername)) then
-    onMessage("Saved key is valid!")
-    screenGui.Enabled = false
-    loadstring(game:HttpGet("https://37uzdt26sof4b.ahost.marscode.site/mekmek/bf.lua", true))()
+    if savedTimestamp and isKeyExpired(savedTimestamp) then
+        onMessage("Saved key has expired, please enter a new key.")
+    else
+        onMessage("Saved key is valid!")
+        screenGui.Enabled = false
+        loadstring(game:HttpGet("https://37uzdt26sof4b.ahost.marscode.site/mekmek/bf.lua", true))()
+    end
 else
     onMessage("No saved key found or key is invalid, please enter a new key.")
 end
