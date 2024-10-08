@@ -15460,7 +15460,7 @@ end)
                         D.Name = "Brutality Hub"
                         D.Face = i
                         D.Parent = v
-                        D.Texture = "http://www.roblox.com/asset/?id="..Id
+                        D.Texture = "http://www.roblox.com/asset/?id="--..Id
                     end
                 elseif v:IsA("Model") then
                     for _, b in pairs(v:GetChildren()) do
@@ -15501,7 +15501,6 @@ end)
             wait(5)
             local de = Instance.new("DistortionSoundEffect", sound)
             de.Level = 0.8
-            sound.Volume = 50 -- Contoh pengaturan volume
             
             local sky = Instance.new("Sky", game:GetService("Lighting"))
             sky.SkyboxBk = "http://www.roblox.com/asset/?id="--..ID
