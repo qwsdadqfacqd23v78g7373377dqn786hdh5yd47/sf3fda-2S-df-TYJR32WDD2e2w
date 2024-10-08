@@ -4339,12 +4339,12 @@ local Misc = Library:AddTab("MISC","18477908150")
 
 NguyenTien:AddSeperator("Status New Update")
 
-NguyenTien:AddLabel("Visual 4k: 🟢")
+NguyenTien:AddLabel("Visual 4k : 🟢")
 NguyenTien:AddLabel("Leviathan : 🟠")
-NguyenTien:AddLabel("Farm Kaitun: 🟢")
 NguyenTien:AddLabel("Play Music : 🟢")
 NguyenTien:AddLabel("Add Notify : 🟢")
 NguyenTien:AddLabel("Hop Server : 🟢")
+NguyenTien:AddLabel("Farm Kaitun : 🟢")
 NguyenTien:AddLabel("Sail Rough Sea : 🟠")
 NguyenTien:AddLabel("Farm Gun Mastery : 🟢")
 NguyenTien:AddLabel("Farm Fruit Mastery : 🟢")
@@ -8628,6 +8628,42 @@ spawn(function()
         end)
     end
 end)
+
+SNt:AddToggle("Boat Fly",_G.WalkWaterBoat,function(state)
+    _G.WalkWaterBoat = state
+end)
+
+    spawn(function()
+        while task.wait() do
+            pcall(function()
+                if _G.WalkWaterBoat then
+                    -- Mengubah tinggi air untuk efek berjalan di atas air
+                    game:GetService("Workspace").Map["WaterBase-Plane"].Size = Vector3.new(1000,112,1000)
+    
+                    -- Menyesuaikan posisi semua boat agar tetap berada di permukaan air
+                    for _, boat in pairs(game:GetService("Workspace").Boats:GetChildren()) do
+                        if boat:IsA("Model") and boat:FindFirstChild("PrimaryPart") then
+                            -- Menentukan tinggi baru yang sesuai agar boat tetap di atas permukaan air
+                            local newPosition = Vector3.new(boat.PrimaryPart.Position.X, 112, boat.PrimaryPart.Position.Z)
+                            boat:SetPrimaryPartCFrame(CFrame.new(newPosition))
+                        end
+                    end
+                else
+                    -- Kembali ke tinggi air normal
+                    game:GetService("Workspace").Map["WaterBase-Plane"].Size = Vector3.new(1000,80,1000)
+                    
+                    -- Mengembalikan posisi boat ke tinggi air normal
+                    for _, boat in pairs(game:GetService("Workspace").Boats:GetChildren()) do
+                        if boat:IsA("Model") and boat:FindFirstChild("PrimaryPart") then
+                            local newPosition = Vector3.new(boat.PrimaryPart.Position.X, 80, boat.PrimaryPart.Position.Z)
+                            boat:SetPrimaryPartCFrame(CFrame.new(newPosition))
+                        end
+                    end
+                end
+            end)
+        end
+    end)
+    
 
 
 SNt:AddToggle("Auto Sail Rough Sea",_G.BiirTrax,function(state)
