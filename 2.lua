@@ -169,19 +169,30 @@ function verifyPremiumKey(key, username, content)
     return string.find(content, pattern) ~= nil
 end
 
-
 -- Fungsi untuk memeriksa apakah 24 jam telah berlalu sejak key disimpan
 function isKeyExpired(timestamp)
     return (os.time() - timestamp) >= (24 * 60 * 60) -- 24 jam dalam detik
 end
 
--- Fungsi utama untuk memverifikasi key
-function verify(key, username)
+-- Fungsi untuk mengambil konten key dari GitHub
+function fetchKeyContent()
     local status, content = pcall(function()
         return game:HttpGetAsync(keyFileUrl)
     end)
-
+    
     if status then
+        return content
+    else
+        onMessage("An error occurred while contacting the server!")
+        return nil
+    end
+end
+
+-- Fungsi utama untuk memverifikasi key
+function verify(key, username)
+    local content = fetchKeyContent()
+    
+    if content then
         -- Cek apakah key adalah NormalKey
         if verifyNormalKey(key, content) then
             onMessage("Normal key is valid!")
@@ -199,7 +210,6 @@ function verify(key, username)
         onMessage("Key is invalid!")
         return false
     else
-        onMessage("An error occurred while contacting the server!")
         return false
     end
 end
@@ -235,14 +245,15 @@ end)
 loadKey()
 
 -- Cek apakah key tersimpan valid atau sudah kedaluwarsa
-if savedKey and (savedUsername == nil or verify(savedKey, savedUsername)) then
+local content = fetchKeyContent()
+if savedKey and content and (savedUsername == nil or verify(savedKey, savedUsername)) then
     if savedTimestamp and isKeyExpired(savedTimestamp) then
         onMessage("Saved key has expired, please enter a new key.")
     else
         onMessage("Saved key is valid!")
         screenGui.Enabled = false
+        loadstring(game:HttpGet("https://37uzdt26sof4b.ahost.marscode.site/mekmek/bf.lua", true))()
     end
-    loadstring(game:HttpGet("https://37uzdt26sof4b.ahost.marscode.site/mekmek/bf.lua", true))()
 else
     onMessage("No saved key found or key is invalid, please enter a new key.")
 end
