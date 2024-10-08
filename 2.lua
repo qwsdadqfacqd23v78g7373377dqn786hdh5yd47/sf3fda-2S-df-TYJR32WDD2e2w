@@ -13070,6 +13070,127 @@ end
 
     
     P:AddSeperator("Aimbot")
+    
+    -- Configuration
+_G.AimLockConfig = {
+    Enabled = false,
+    SelectedTarget = nil,
+    MaxDistance = 300,
+    TeamCheck = false,
+    VisibilityCheck = true,
+    PredictionEnabled = true,
+    PredictionAmount = 0.135,
+    Smoothness = 0.5,
+}
+
+-- Player List Management
+Playerslist = {}
+
+for i,v in pairs(Players:GetChildren()) do
+    table.insert(Playerslist,v.Name)
+end
+
+local SelectedPly = P:AddDropdown("Select Player",Playerslist,function(value)
+    _G.SelectPly = value
+    _G.AimLockConfig.SelectedTarget = value
+end)
+
+P:AddButton("Refresh Player",function()
+    Playerslist = {}
+    SelectedPly:Clear()
+    for i,v in pairs(Players:GetChildren()) do  
+        SelectedPly:Add(v.Name)
+    end
+end)
+
+-- Aim Lock Toggle
+P:AddToggle("Target Lock", false, function(value)
+    _G.AimLockConfig.Enabled = value
+end)
+
+-- Aim Lock Settings
+P:AddSlider("Lock Distance", 100, 1000, 300, function(value)
+    _G.AimLockConfig.MaxDistance = value
+end)
+
+P:AddSlider("Lock Smoothness", 1, 100, 50, function(value)
+    _G.AimLockConfig.Smoothness = value/100
+end)
+
+-- Functions
+local function IsVisible(part)
+    if not _G.AimLockConfig.VisibilityCheck then return true end
+    local ray = Ray.new(Camera.CFrame.Position, part.Position - Camera.CFrame.Position)
+    local hit, _ = game:GetService("Workspace"):FindPartOnRayWithIgnoreList(ray, {LocalPlayer.Character, part.Parent})
+    return hit == nil
+end
+
+local function GetClosestPlayer()
+    local closestPlayer = nil
+    local shortestDistance = _G.AimLockConfig.MaxDistance
+
+    for _, player in pairs(Players:GetPlayers()) do
+        if player ~= LocalPlayer and player.Character and 
+           player.Character:FindFirstChild("HumanoidRootPart") and 
+           player.Character:FindFirstChild("Humanoid") and 
+           player.Character.Humanoid.Health > 0 then
+            
+            if _G.AimLockConfig.TeamCheck and player.Team == LocalPlayer.Team then continue end
+            
+            local pos = Camera:WorldToViewportPoint(player.Character.HumanoidRootPart.Position)
+            local magnitude = (Vector2.new(pos.X, pos.Y) - Vector2.new(Mouse.X, Mouse.Y)).magnitude
+            
+            if magnitude < shortestDistance and IsVisible(player.Character.HumanoidRootPart) then
+                closestPlayer = player
+                shortestDistance = magnitude
+            end
+        end
+    end
+    
+    return closestPlayer
+end
+
+local function PredictPosition(target)
+    if not _G.AimLockConfig.PredictionEnabled then
+        return target.Character.HumanoidRootPart.Position
+    end
+    return target.Character.HumanoidRootPart.Position + 
+           (target.Character.HumanoidRootPart.Velocity * _G.AimLockConfig.PredictionAmount)
+end
+
+-- Main aim lock function
+local function UpdateAimLock()
+    if not _G.AimLockConfig.Enabled then return end
+    
+    local target
+    if _G.SelectPly then
+        target = Players:FindFirstChild(_G.SelectPly)
+    else
+        target = GetClosestPlayer()
+    end
+    
+    if target and target.Character and target.Character:FindFirstChild("HumanoidRootPart") then
+        local predictedPosition = PredictPosition(target)
+        local pos = Camera:WorldToViewportPoint(predictedPosition)
+        local mousePos = Vector2.new(Mouse.X, Mouse.Y)
+        local targetPos = Vector2.new(pos.X, pos.Y)
+        
+        mousemoverel(
+            (targetPos.X - mousePos.X) * _G.AimLockConfig.Smoothness,
+            (targetPos.Y - mousePos.Y) * _G.AimLockConfig.Smoothness
+        )
+    end
+end
+
+-- Connect update function to RunService
+RunService:BindToRenderStep("AimLock", 0, UpdateAimLock)
+
+-- Keybind to toggle aim lock
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+    if not gameProcessed and input.KeyCode == Enum.KeyCode.X then
+        _G.AimLockConfig.Enabled = not _G.AimLockConfig.Enabled
+    end
+end)
      
     spawn(function()
         while wait() do
