@@ -4713,7 +4713,30 @@ Main:AddSeperator("Redeem Codes")
         "SUB2FER999",
         "MAGICBIS",
         "TY_FOR_WATCHING",
-        "STARCODEHEO"
+        "STARCODEHEO",
+        "UPD16", --baru
+        "2BILLION",
+        "UPD15",
+        "StrawHatMaine",
+        "Sub2OfficialNoobie",
+        "SUB2NOOBMASTER123",
+        "Sub2Daigrock",
+        "Axiore",
+        "TantaiGaming",
+        "STRAWHATMAINE",
+        "GAMERROBOT_YT",
+        "EXP_5B",
+        "RESET_5B",
+        "KittGaming",
+        "Enyu_is_Pro",
+        "Sub2Fer999",
+        "Bluxxy",
+        "Magicbus",
+        "fudd10_v2 ",
+        "Starcodeheo",
+        "3BVISITS",
+        "1MLIKES_RESET",
+        "2BILLION"
     }
     
     Main:AddButton("Redeem All Codes",function()
@@ -4781,7 +4804,7 @@ task.spawn(function()
     end)
 
 local AttackList = {"0", "0.1", "0.15", "0.155", "0.16", "0.165", "0.17", "0.175", "0.18", "0.185"}
-_G.FastAttackDelay = "0.175"
+_G.FastAttackDelay = "0.18"
 Main:AddDropdown("Fast Attack Delay", AttackList,function(MakoGay)
     _G.FastAttackDelay = MakoGay
 end)
@@ -13088,7 +13111,7 @@ end
             PlayerSelectAimbot:Add(v.Name)
         end
     end)
-    P:AddButton("Target Lock",_G.LockTarget, function(value)
+    P:AddToggle("Target Lock",_G.LockTarget, function(value)
         _G.LockTarget = value
     end)
      
@@ -15373,7 +15396,103 @@ end)
         end
     end)
 
+
+
+SNt:AddToggle("Hop Server Rip Indra Or Low Server", _G.HopFindRipIndra, function(value)
+    _G.HopFindRipIndra = value
+end)
+
+    -- Fungsi untuk mengecek keberadaan Rip Indra di server saat ini
+    local function IsRipIndraSpawned()
+        local ripIndraModel = game:GetService("Workspace").Enemies:FindFirstChild("rip_indra True Form") or
+                              game:GetService("Workspace").Enemies:FindFirstChild("rip_indra [Lv. 5000] [Raid Boss]")
+        return ripIndraModel ~= nil
+    end
     
+    -- Fungsi untuk mendapatkan daftar server
+    local function GetServers()
+        local PlaceID = game.PlaceId
+        local servers = {}
+        local cursor = ""
+        local count = 0
+        
+        repeat
+            local success, result = pcall(function()
+                local apiUrl = string.format(
+                    'https://games.roblox.com/v1/games/%s/servers/Public?sortOrder=Desc&limit=100%s',
+                    PlaceID,
+                    cursor ~= "" and "&cursor=" .. cursor or ""
+                )
+                return HttpService:JSONDecode(game:HttpGet(apiUrl))
+            end)
+            
+            if success and result and result.data then
+                for _, server in ipairs(result.data) do
+                    if server.playing < server.maxPlayers and server.id ~= game.JobId then
+                        table.insert(servers, server.id)
+                    end
+                end
+                cursor = result.nextPageCursor or ""
+            else
+                cursor = ""
+            end
+            
+            count = count + 1
+            wait(0.5) -- Menambah delay untuk menghindari rate limit
+        until cursor == "" or count >= 10  -- Batasi pencarian hingga 10 halaman
+        
+        return servers
+    end
+    
+    -- Fungsi untuk berpindah server
+    local function TeleportToPublicServer()
+        local servers = GetServers()
+        local attempts = 0
+        local maxAttempts = #servers
+        
+        while attempts < maxAttempts do
+            if #servers == 0 then
+                break
+            end
+            
+            local randomIndex = math.random(1, #servers)
+            local targetJobId = servers[randomIndex]
+            
+            local success = pcall(function()
+                TeleportService:TeleportToPlaceInstance(game.PlaceId, targetJobId)
+            end)
+            
+            if success then
+                break
+            else
+                table.remove(servers, randomIndex)
+            end
+            
+            attempts = attempts + 1
+            wait(1)
+        end
+        
+        if attempts >= maxAttempts then
+        end
+    end
+
+spawn(function()
+    while wait(1) do
+        if _G.HopFindRipIndra then
+            if IsRipIndraSpawned() then
+                local ripIndraModel = game:GetService("Workspace").Enemies:FindFirstChild("rip_indra True Form") or
+                                     game:GetService("Workspace").Enemies:FindFirstChild("rip_indra [Lv. 5000] [Raid Boss]")
+                if ripIndraModel and 
+                   (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - ripIndraModel.HumanoidRootPart.Position).Magnitude > 300 then
+                    topos(ripIndraModel.HumanoidRootPart.CFrame * CFrame.new(0, 20, 0))
+                end
+            else
+                TeleportToPublicServer()
+                wait(5)
+            end
+        end
+    end
+end)
 
     Mh:AddToggle("Auto Hop Server Mirage Island",_G.Hopfinddao,function(value)
         _G.Hopfinddao = value
