@@ -8644,7 +8644,10 @@ spawn(function()
                 -- Menyesuaikan posisi semua boat agar tampak terbang di atas air tanpa animasi naik-turun
                 for _, boat in pairs(game:GetService("Workspace").Boats:GetChildren()) do
                     if boat:IsA("Model") and boat:FindFirstChild("PrimaryPart") then
-                        -- Mengatur tinggi tetap agar boat terlihat seperti terbang tanpa perubahan ketinggian
+                        -- Menonaktifkan gravitasi pada boat
+                        boat.PrimaryPart.Anchored = true
+                        
+                        -- Mengatur posisi boat agar "terbang" di atas air tanpa menyentuhnya
                         local flyingHeight = 550 -- ketinggian tetap di atas air (50 unit di atas waterHeight)
                         local newPosition = Vector3.new(boat.PrimaryPart.Position.X, flyingHeight, boat.PrimaryPart.Position.Z)
                         boat:SetPrimaryPartCFrame(CFrame.new(newPosition))
@@ -8658,6 +8661,10 @@ spawn(function()
                 -- Mengembalikan posisi boat ke tinggi air normal
                 for _, boat in pairs(game:GetService("Workspace").Boats:GetChildren()) do
                     if boat:IsA("Model") and boat:FindFirstChild("PrimaryPart") then
+                        -- Mengembalikan properti Anchored menjadi false untuk mengaktifkan gravitasi
+                        boat.PrimaryPart.Anchored = false
+                        
+                        -- Mengatur boat agar kembali ke permukaan air normal
                         local boatHeightOffset = 10 -- offset untuk memastikan boat tetap di atas permukaan air
                         local newPosition = Vector3.new(boat.PrimaryPart.Position.X, normalWaterHeight + boatHeightOffset, boat.PrimaryPart.Position.Z)
                         boat:SetPrimaryPartCFrame(CFrame.new(newPosition))
@@ -8667,6 +8674,7 @@ spawn(function()
         end)
     end
 end)
+
 
 
     
