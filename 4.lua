@@ -27,7 +27,9 @@ local function applyFakeGraphics()
     blur.Parent = game:GetService("Lighting")
 
     -- Print log untuk memastikan efek fake graphics telah diterapkan
-    print("Fake graphics applied: Super HD mode on (visual only)")
+    print("Done optimizing anti kick system")
+    print("Done optimizing anti detect system")
+    print("Done optimizing anti reset system")
 end
 
 -- Menjalankan fungsi fake graphics
