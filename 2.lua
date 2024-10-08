@@ -4339,13 +4339,16 @@ local Misc = Library:AddTab("MISC","18477908150")
 
 NguyenTien:AddSeperator("Status New Update")
 
-NguyenTien:AddLabel("Sail Rough Sea : Work Again")
-NguyenTien:AddLabel("Add Visual : Workspace Image")
-NguyenTien:AddLabel("Leviathan : Auto Kill Leviathan")
-NguyenTien:AddLabel("Farm Gun Mastery : Auto use skill")
-NguyenTien:AddLabel("Add Play Music : PHONK V.2 & CHAOS")
-NguyenTien:AddLabel("Anti Detect System : Anti reset + Anti report")
-NguyenTien:AddLabel("Add Notify : FOD & God's chalice, mirage, fruit spawn")
+NguyenTien:AddLabel("Visual 4k: 🟢")
+NguyenTien:AddLabel("Leviathan : 🟠")
+NguyenTien:AddLabel("Farm Kaitun: 🟢")
+NguyenTien:AddLabel("Play Music : 🟢")
+NguyenTien:AddLabel("Add Notify : 🟢")
+NguyenTien:AddLabel("Hop Server : 🟢")
+NguyenTien:AddLabel("Sail Rough Sea : 🟠")
+NguyenTien:AddLabel("Farm Gun Mastery : 🟢")
+NguyenTien:AddLabel("Farm Fruit Mastery : 🟢")
+NguyenTien:AddLabel("Anti Detect System : 🟢")
 
 NguyenTien:AddSeperator("Nice To Meet You")
 
@@ -4455,10 +4458,7 @@ spawn(function()
                 end
             end)
 
-    Qwe:AddSeperator("Legendary Item Chest")
-
-    NotifyItemFound_Chalice = Qwe:AddLabel("God's Chalice : 🔴")
-    NotifyItemFound_Fish = Qwe:AddLabel("Fish of Darkness : 🔴")
+    Qwe:AddSeperator("Legendary Item")
 
 local function IsItemHeldByPlayer(itemName)
     for _, player in pairs(game.Players:GetPlayers()) do
@@ -4486,6 +4486,26 @@ spawn(function()
     end
 end)
 
+    NotifyItemFound_Chalice = Qwe:AddLabel("God's Chalice : 🔴")
+    NotifyItemFound_Fish = Qwe:AddLabel("Fish of Darkness : 🔴")
+
+    spawn(function()
+        pcall(function()
+            while wait() do
+                if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LegendarySwordDealer", "1") then
+                    LegendSwords:Set("Legendary Sword : Shisui")
+                elseif game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LegendarySwordDealer","2") then
+                    LegendSwords:Set("Legendary Sword : Wando")
+                elseif game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LegendarySwordDealer","3") then
+                    LegendSwords:Set("Legendary Sword : Saddi")
+                else
+                    LegendSwords:Set("Sword Not Ready : 🔴")
+                end
+            end
+        end)
+       end)
+       
+       LegendSwords = Qwe:AddLabel("Sword Not Ready : 🔴")
 
 
             Qwe:AddSeperator("Status Server & Player")
@@ -11333,23 +11353,6 @@ end)
     
     M:AddSeperator("Legendary Sword")
 
-    spawn(function()
-        pcall(function()
-            while wait() do
-                if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LegendarySwordDealer", "1") then
-                    LegendSwords:Set("Legend Sword : Shisui")
-                elseif game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LegendarySwordDealer","2") then
-                    LegendSwords:Set("Legend Sword : Wando")
-                elseif game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LegendarySwordDealer","3") then
-                    LegendSwords:Set("Legend Sword : Saddi")
-                else
-                    LegendSwords:Set("Sword Not Ready : 🔴")
-                end
-            end
-        end)
-       end)
-       
-       LegendSwords = M:AddLabel("Sword Not Ready : 🔴")
     
     M:AddToggle("Buy Legendary Sword",_G.AutoBuyLegendarySword,function(value)
         _G.AutoBuyLegendarySword = value
