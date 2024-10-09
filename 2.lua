@@ -9173,7 +9173,7 @@ end)
      
      
 
-     _G.SetToTradeAureEmber = 20
+     _G.SetToTradeAureEmber = 24
      SNt:AddSlider("Set Trade Azure Ember", 10, 25, _G.SetToTradeAureEmber, function(v)
          _G.SetToTradeAureEmber = v
      end)
