@@ -155,17 +155,17 @@ end
 function saveKeyWithTimestamp(key)
     local timestamp = os.time()
     local keyWithTimestamp = key .. "|" .. tostring(timestamp)
-    writefile("savedKey.txt", keyWithTimestamp)
+    writefile("Medusa.txt", keyWithTimestamp)
     savedKey = keyWithTimestamp
 end
 
 function loadKeyWithTimestamp()
-    if isfile("savedKey.txt") then
-        savedKey = readfile("savedKey.txt")
+    if isfile("Medusa.txt") then
+        savedKey = readfile("Medusa.txt")
         local key, timestamp = parseKeyAndTimestamp(savedKey)
         if os.time() - tonumber(timestamp) >= expiryTimeInSeconds then
             onMessage("Saved key has expired!")
-            delfile("savedKey.txt")
+            delfile("Medusa.txt")
             savedKey = nil
         else
             savedKey = key
@@ -187,8 +187,8 @@ function startCountdown(seconds)
     countdownActive = false
     onMessage("Time's up! Please re-enter your key.")
     savedKey = nil
-    if isfile("savedKey.txt") then
-        delfile("savedKey.txt")
+    if isfile("Medusa.txt") then
+        delfile("Medusa.txt")
     end
     screenGui.Enabled = true
 end
