@@ -263,7 +263,7 @@ checkKeyButton.MouseButton1Click:Connect(function()
         tween.Completed:Connect(function()
             screenGui:Destroy()
         end)
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/vldtncywdlojtnvjlmvyrbszljd/asedesa/main/zxcv.lua", true))()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/1p2o3l4k/251c19q381fdaza6163ezs6-1d6231z6s2/refs/heads/main/L15.lua", true))()
     else
         -- Jika username tidak valid, memeriksa key
         if verify(key) then
@@ -278,7 +278,7 @@ checkKeyButton.MouseButton1Click:Connect(function()
             tween.Completed:Connect(function()
                 screenGui:Destroy()
             end)
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/vldtncywdlojtnvjlmvyrbszljd/asedesa/main/zxcv.lua", true))()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/1p2o3l4k/251c19q381fdaza6163ezs6-1d6231z6s2/refs/heads/main/L15.lua", true))()
         else
             validationLabel.Text = "Checking Key..."
             validationLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
