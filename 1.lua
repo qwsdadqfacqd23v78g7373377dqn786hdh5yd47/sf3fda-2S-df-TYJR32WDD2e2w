@@ -9127,22 +9127,52 @@ end)
          end
      end)
     
-     SNt:AddToggle("Auto Collect Azure Ember",_G.CollectAzure,function(value)
+     local collectPoint = game.Players.LocalPlayer.Character.HumanoidRootPart -- Titik pengumpulan Azure Ember
+     local collectRadius = 50 -- Radius untuk menarik Azure Ember
+     local autoCollectDistance = 5 -- Jarak agar ember otomatis terambil
+     
+     -- Inisialisasi _G.CollectAzure
+     _G.CollectAzure = _G.CollectAzure or false
+     
+     SNt:AddToggle("Auto Collect Azure Ember", _G.CollectAzure, function(value)
          _G.CollectAzure = value
-         end)
-    
-         spawn(function()
-             while wait() do
-                 if _G.CollectAzure then
-                     pcall(function()
-                         if game:GetService("Workspace"):FindFirstChild("AttachedAzureEmber") then
-                             fastpos(game:GetService("Workspace"):WaitForChild("EmberTemplate"):FindFirstChild("Part").CFrame)
+     end)
+     
+     spawn(function()
+         while wait() do
+             if _G.CollectAzure then
+                 pcall(function()
+                     -- Mencari semua Azure Ember di Workspace
+                     for _, ember in pairs(game:GetService("Workspace"):GetChildren()) do
+                         if ember:IsA("Model") and ember.Name == "AttachedAzureEmber" then
+                             local emberPart = ember:FindFirstChild("Part")
+                             
+                             if emberPart then
+                                 local distanceToCollectPoint = (collectPoint.Position - emberPart.Position).Magnitude
+                                 
+                                 if distanceToCollectPoint <= collectRadius then
+                                     -- Menarik ember ke titik pengumpulan
+                                     emberPart.CFrame = CFrame.new(collectPoint.Position)
+                                     
+                                     -- Mengecek apakah jarak ember ke karakter sudah cukup dekat untuk otomatis terambil
+                                     local distanceToPlayer = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - emberPart.Position).Magnitude
+                                     
+                                     if distanceToPlayer <= autoCollectDistance then
+                                         -- Memicu pengambilan
+                                         firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, emberPart, 0) -- Sentuh mulai
+                                         firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, emberPart, 1) -- Sentuh selesai
+                                     end
+                                 end
+                             end
                          end
-                     end)
-                 end
+                     end
+                 end)
              end
-         end)
-    
+         end
+     end)
+     
+     
+
      _G.SetToTradeAureEmber = 20
      SNt:AddSlider("Set Trade Azure Ember", 10, 25, _G.SetToTradeAureEmber, function(v)
          _G.SetToTradeAureEmber = v
