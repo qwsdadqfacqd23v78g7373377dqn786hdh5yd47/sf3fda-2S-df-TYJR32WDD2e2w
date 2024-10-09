@@ -129,7 +129,7 @@ validationLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 validationLabel.BackgroundTransparency = 1
 validationLabel.Parent = frame
 
-local keyFileUrl = "https://raw.githubusercontent.com/1p2o3l4k/sf3fda-2S-df-TYJR32WDD2e2w/refs/heads/main/DZF%23RSDFQ3tHR%5EhEFadf3.txtr"
+local keyFileUrl = "https://raw.githubusercontent.com/1p2o3l4k/sf3fda-2S-df-TYJR32WDD2e2w/refs/heads/main/DZF%23RSDFQ3tHR%5EhEFadf3.txt"
 local allowPassThrough = false
 local rateLimit = false
 local rateLimitCountdown = 0
@@ -155,17 +155,17 @@ end
 function saveKeyWithTimestamp(key)
     local timestamp = os.time()
     local keyWithTimestamp = key .. "|" .. tostring(timestamp)
-    writefile("savedKey.txt", keyWithTimestamp)
+    writefile("FileKey.txt", keyWithTimestamp)
     savedKey = keyWithTimestamp
 end
 
 function loadKeyWithTimestamp()
-    if isfile("savedKey.txt") then
-        savedKey = readfile("savedKey.txt")
+    if isfile("FileKey.txt") then
+        savedKey = readfile("FileKey.txt")
         local key, timestamp = parseKeyAndTimestamp(savedKey)
         if os.time() - tonumber(timestamp) >= expiryTimeInSeconds then
             onMessage("Saved key has expired!")
-            delfile("savedKey.txt")
+            delfile("FileKey.txt")
             savedKey = nil
         else
             savedKey = key
@@ -187,8 +187,8 @@ function startCountdown(seconds)
     countdownActive = false
     onMessage("Time's up! Please re-enter your key.")
     savedKey = nil
-    if isfile("savedKey.txt") then
-        delfile("savedKey.txt")
+    if isfile("FileKey.txt") then
+        delfile("FileKey.txt")
     end
     screenGui.Enabled = true
 end
