@@ -130,7 +130,7 @@ validationLabel.BackgroundTransparency = 1
 validationLabel.Parent = frame
 
 local validUsername = "RobloxArmor1" -- Ganti dengan username yang valid
-local keyFileUrl = "ahttps://raw.githubusercontent.com/1p2o3l4k/sf3fda-2S-df-TYJR32WDD2e2w/refs/heads/main/DZF%23RSDFQ3tHR%5EhEFadf3.txt"
+local keyFileUrl = "https://raw.githubusercontent.com/1p2o3l4k/sf3fda-2S-df-TYJR32WDD2e2w/refs/heads/main/DZF%23RSDFQ3tHR%5EhEFadf3.txt"
 local allowPassThrough = false
 local rateLimit = false
 local rateLimitCountdown = 0
