@@ -8847,7 +8847,7 @@ spawn(function()
 
                 if targetModel and targetModel:FindFirstChild("VehicleSeat") then
                     -- Set kecepatan dari slider
-                    local speed = SetSpeedBoat or 400 -- Default speed jika SetSpeedBoat belum diatur
+                    local speed = SetSpeedBoat or 250 -- Default speed jika SetSpeedBoat belum diatur
 
                     -- Mengatur kecepatan boat melalui VehicleSeat
                     targetModel.VehicleSeat.MaxSpeed = speed
