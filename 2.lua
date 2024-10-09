@@ -8678,19 +8678,23 @@ end)
 ]]
 SetSpeedBoat = 400
 
-SNt:AddSlider("Speed Boat",true , 0,40,80,350,1000,400, function(value)
+-- Perbaiki fungsi slider
+SNt:AddSlider("Speed Boat", 0,1000,400, function(value)
     SetSpeedBoat = value
 end)
 
+-- Fungsi toggle untuk mengaktifkan atau menonaktifkan Speed Boat
 SNt:AddToggle("Speed Boat", _G.SpeedBoat, function(state)
     _G.SpeedBoat = state
 end)
 
+-- RenderStepped untuk memperbarui kecepatan boat
 game:GetService("RunService").RenderStepped:Connect(function()
     if _G.SpeedBoat then
         for i, v in pairs(game:GetService("Workspace").Boats:GetChildren()) do
-            local seat = v:FindFirstChild("VehicleSeat")
+            local seat = v:FindFirstChild("VehicleSeat")  -- Cek apakah boat memiliki VehicleSeat
             if seat and game:GetService("Players").LocalPlayer.Character.Humanoid.Sit then
+                -- Set MaxSpeed hanya jika player sedang duduk di boat
                 seat.MaxSpeed = SetSpeedBoat
             end
         end
