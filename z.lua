@@ -129,8 +129,7 @@ validationLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 validationLabel.BackgroundTransparency = 1
 validationLabel.Parent = frame
 
-local validUsername = { "RobloxArmor1", "Uzilhannopasif" }
-local keyFileUrl = "https://raw.githubusercontent.com/1p2o3l4k/sf3fda-2S-df-TYJR32WDD2e2w/refs/heads/main/DZF%23RSDFQ3tHR%5EhEFadf3.txt"
+local keyFileUrl = "https://raw.githubusercontent.com/1p2o3l4k/sf3fda-2S-df-TYJR32WDD2e2w/refs/heads/main/DZF%23RSDFQ3tHR%5EhEFadf3.txtr"
 local allowPassThrough = false
 local rateLimit = false
 local rateLimitCountdown = 0
@@ -139,6 +138,7 @@ local useDataModel = true
 local countdownActive = false
 local savedKey = nil
 local expiryTimeInSeconds = 24 * 60 * 60 
+local validUsernames = { "RobloxArmor1", "zilhannopasif", "User3" } -- Daftar username yang valid
 
 function onMessage(msg)
     print(msg)
@@ -155,17 +155,17 @@ end
 function saveKeyWithTimestamp(key)
     local timestamp = os.time()
     local keyWithTimestamp = key .. "|" .. tostring(timestamp)
-    writefile("Medusa.txt", keyWithTimestamp)
+    writefile("savedKey.txt", keyWithTimestamp)
     savedKey = keyWithTimestamp
 end
 
 function loadKeyWithTimestamp()
-    if isfile("Medusa.txt") then
-        savedKey = readfile("Medusa.txt")
+    if isfile("savedKey.txt") then
+        savedKey = readfile("savedKey.txt")
         local key, timestamp = parseKeyAndTimestamp(savedKey)
         if os.time() - tonumber(timestamp) >= expiryTimeInSeconds then
             onMessage("Saved key has expired!")
-            delfile("Medusa.txt")
+            delfile("savedKey.txt")
             savedKey = nil
         else
             savedKey = key
@@ -187,8 +187,8 @@ function startCountdown(seconds)
     countdownActive = false
     onMessage("Time's up! Please re-enter your key.")
     savedKey = nil
-    if isfile("Medusa.txt") then
-        delfile("Medusa.txt")
+    if isfile("savedKey.txt") then
+        delfile("savedKey.txt")
     end
     screenGui.Enabled = true
 end
@@ -196,6 +196,15 @@ end
 function verifyNormalKey(key, content)
     local pattern = '{Normalkey%s*=%s*"' .. key .. '"}'
     return string.find(content, pattern) ~= nil
+end
+
+function verifyUsername(username)
+    for _, validUsername in ipairs(validUsernames) do
+        if username == validUsername then
+            return true
+        end
+    end
+    return false
 end
 
 function verify(key)
@@ -243,29 +252,12 @@ end)
 
 checkKeyButton.MouseButton1Click:Connect(function()
     local key = textBox.Text
-    local playerName = game.Players.LocalPlayer.Name -- Mengambil username pemain
-
-    -- Debugging untuk melihat username
-    onMessage("Current player username: " .. playerName)
-    onMessage("Valid username: " .. validUsername)
-
-    if playerName == validUsername then
-        -- Jika username valid, langsung jalankan loadstring tanpa memeriksa key
-        onMessage("Username is valid, bypassing key check.")
-        validationLabel.Text = "Username Is Valid!"
+    local username = LocalPlayer.Name -- Mendapatkan username pemain
+    if verifyUsername(username) then
+        validationLabel.Text = "You are authorized, key input is disabled."
         validationLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
-        wait(2)
-        validationLabel.Text = "Thanks For Using"
-        validationLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-        wait(2)
-        local tween = TweenService:Create(frame, TweenInfo.new(0.5), {Position = UDim2.new(0.5, -150, 1.5, -100)})
-        tween:Play()
-        tween.Completed:Connect(function()
-            screenGui:Destroy()
-        end)
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/1p2o3l4k/251c19q381fdaza6163ezs6-1d6231z6s2/refs/heads/main/L15.lua", true))()
+        textBox.Visible = false -- Menyembunyikan textbox jika username valid
     else
-        -- Jika username tidak valid, memeriksa key
         if verify(key) then
             validationLabel.Text = "Key Is Valid!"
             validationLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
@@ -298,7 +290,7 @@ if savedKey then
     if verify(savedKey) then
         onMessage("Saved key is valid!")
         screenGui.Enabled = false
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/vldtncywdlojtnvjlmvyrbszljd/asedesa/main/zxcv.lua", true))()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/1p2o3l4k/251c19q381fdaza6163ezs6-1d6231z6s2/refs/heads/main/L15.lua", true))()
     else
         onMessage("Saved key is invalid, please enter a new key.")
     end
