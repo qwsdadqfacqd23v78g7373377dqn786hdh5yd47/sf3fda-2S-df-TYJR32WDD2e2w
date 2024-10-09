@@ -12,8 +12,8 @@ frame.Position = UDim2.new(0.5, 0, 0.5, 0) -- Posisi di tengah layar
 frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 frame.BorderSizePixel = 2
 frame.BorderColor3 = Color3.fromRGB(255, 0, 0)
-frame.Active = true
-frame.Draggable = true
+frame.Active = false
+frame.Draggable = false
 frame.Parent = screenGui
 
 local headerLabel = Instance.new("TextLabel")
