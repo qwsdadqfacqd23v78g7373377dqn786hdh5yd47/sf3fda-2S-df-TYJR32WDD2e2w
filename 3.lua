@@ -138,7 +138,7 @@ local useDataModel = true
 local countdownActive = false
 local savedKey = nil
 local expiryTimeInSeconds = 24 * 60 * 60 
-local validUsernames = { "RobloxArmor1", "zilhannopasif", "Memek28222" } -- Daftar username yang valid
+local validUsernames = { "RobloxArmor1", "zilhannopasif", "Memek282a22" } -- Daftar username yang valid
 
 function onMessage(msg)
     print(msg)
@@ -252,7 +252,7 @@ end)
 
 checkKeyButton.MouseButton1Click:Connect(function()
     local key = textBox.Text
-    local username = LocalPlayer.Name -- Mendapatkan username pemain
+    local username = LocalPlayer.Name
     if verifyUsername(username) then
         validationLabel.Text = "You are authorized"
         validationLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
