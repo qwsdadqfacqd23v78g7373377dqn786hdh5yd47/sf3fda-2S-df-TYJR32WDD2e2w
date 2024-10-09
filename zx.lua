@@ -138,7 +138,7 @@ local useDataModel = true
 local countdownActive = false
 local savedKey = nil
 local expiryTimeInSeconds = 24 * 60 * 60 
-local validUsernames = { "RobloxArmor1", "zilhannopasif", "User3" } -- Daftar username yang valid
+local validUsernames = { "RobloxArmor1", "zilhannopasif", "Memek28222" } -- Daftar username yang valid
 
 function onMessage(msg)
     print(msg)
@@ -155,17 +155,17 @@ end
 function saveKeyWithTimestamp(key)
     local timestamp = os.time()
     local keyWithTimestamp = key .. "|" .. tostring(timestamp)
-    writefile("FileKey.txt", keyWithTimestamp)
+    writefile("BotunaKey.txt", keyWithTimestamp)
     savedKey = keyWithTimestamp
 end
 
 function loadKeyWithTimestamp()
-    if isfile("FileKey.txt") then
-        savedKey = readfile("FileKey.txt")
+    if isfile("BotunaKey.txt") then
+        savedKey = readfile("BotunaKey.txt")
         local key, timestamp = parseKeyAndTimestamp(savedKey)
         if os.time() - tonumber(timestamp) >= expiryTimeInSeconds then
             onMessage("Saved key has expired!")
-            delfile("FileKey.txt")
+            delfile("BotunaKey.txt")
             savedKey = nil
         else
             savedKey = key
@@ -187,8 +187,8 @@ function startCountdown(seconds)
     countdownActive = false
     onMessage("Time's up! Please re-enter your key.")
     savedKey = nil
-    if isfile("FileKey.txt") then
-        delfile("FileKey.txt")
+    if isfile("BotunaKey.txt") then
+        delfile("BotunaKey.txt")
     end
     screenGui.Enabled = true
 end
@@ -254,7 +254,7 @@ checkKeyButton.MouseButton1Click:Connect(function()
     local key = textBox.Text
     local username = LocalPlayer.Name -- Mendapatkan username pemain
     if verifyUsername(username) then
-        validationLabel.Text = "You are authorized, key input is disabled."
+        validationLabel.Text = "You are authorized"
         validationLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
         textBox.Visible = false -- Menyembunyikan textbox jika username valid
     else
