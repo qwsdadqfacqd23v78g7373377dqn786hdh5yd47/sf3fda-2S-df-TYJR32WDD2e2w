@@ -8076,6 +8076,7 @@ SNt:AddToggle('Kill Sea Beast Hop', false, function(value)
     end)
     
 SNt:AddSeperator(" Sea Event ")
+--[[
 if World3 then
 spawn(function()
     pcall(function()
@@ -8109,7 +8110,7 @@ spawn(function()
         end)
     end
 end)
-
+]]
     
 SNt:AddToggle("Auto Kill Terrorshark",_G.Makori_gay,function(value)
 _G.Terrorshark = value
@@ -8537,7 +8538,7 @@ spawn(function()
 
                 for _, model in pairs(models) do
                     if model.Name == targetModelName then
-                        local speed = 10.5
+                        local speed = 350 --.5
                         local forwardDirection = model.PrimaryPart.CFrame.lookVector
                         local targetPosition = model.PrimaryPart.Position + forwardDirection * 10
                         
@@ -8677,23 +8678,19 @@ end)
 ]]
 SetSpeedBoat = 400
 
--- Perbaiki fungsi slider
-SNt:AddSlider("Speed Boat", 0, 400, 1000, function(value)
+SNt:AddSlider("Speed Boat",true , 0,40,80,350,1000,400, function(value)
     SetSpeedBoat = value
 end)
 
--- Fungsi toggle untuk mengaktifkan atau menonaktifkan Speed Boat
 SNt:AddToggle("Speed Boat", _G.SpeedBoat, function(state)
     _G.SpeedBoat = state
 end)
 
--- RenderStepped untuk memperbarui kecepatan boat
 game:GetService("RunService").RenderStepped:Connect(function()
     if _G.SpeedBoat then
         for i, v in pairs(game:GetService("Workspace").Boats:GetChildren()) do
-            local seat = v:FindFirstChild("VehicleSeat")  -- Cek apakah boat memiliki VehicleSeat
+            local seat = v:FindFirstChild("VehicleSeat")
             if seat and game:GetService("Players").LocalPlayer.Character.Humanoid.Sit then
-                -- Set MaxSpeed hanya jika player sedang duduk di boat
                 seat.MaxSpeed = SetSpeedBoat
             end
         end
@@ -8846,7 +8843,7 @@ spawn(function()
 
                 if targetModel and targetModel:FindFirstChild("VehicleSeat") then
                     -- Set kecepatan dari slider
-                    local speed = SetSpeedBoat or 350 -- Default speed jika SetSpeedBoat belum diatur
+                    local speed = SetSpeedBoat or 400 -- Default speed jika SetSpeedBoat belum diatur
 
                     -- Mengatur kecepatan boat melalui VehicleSeat
                     targetModel.VehicleSeat.MaxSpeed = speed
