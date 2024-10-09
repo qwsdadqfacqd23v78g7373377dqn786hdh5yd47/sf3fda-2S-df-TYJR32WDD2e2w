@@ -8162,7 +8162,7 @@ end)
 task.spawn(function()
     while wait() do
         pcall(function()
-			StatusSeaRough:Set("Leviathan: "..StatusLevi.." | Terrorshark: "..StatusTerror.." | Piranha: "..StatusSea.." | Shark: "..StatusSea1.." | Fish Crew Member:"..StatusSea2) 
+			StatusSeaRough:Set("Leviathan: "..StatusLevi.." | Terrorshark: "..StatusTerror.." | Piranha: "..StatusSea.."\n | Shark: "..StatusSea1.." | Fish Crew Member:"..StatusSea2) 
 		end)
 	end
 end)
