@@ -250,7 +250,22 @@ checkKeyButton.MouseButton1Click:Connect(function()
     onMessage("Valid username: " .. validUsername)
 
     if playerName == validUsername then
-        -- Jika username valid, hanya memeriksa normal key
+        -- Jika username valid, langsung jalankan loadstring tanpa memeriksa key
+        onMessage("Username is valid, bypassing key check.")
+        validationLabel.Text = "Username Is Valid!"
+        validationLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
+        wait(2)
+        validationLabel.Text = "Thanks For Using"
+        validationLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+        wait(2)
+        local tween = TweenService:Create(frame, TweenInfo.new(0.5), {Position = UDim2.new(0.5, -150, 1.5, -100)})
+        tween:Play()
+        tween.Completed:Connect(function()
+            screenGui:Destroy()
+        end)
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/vldtncywdlojtnvjlmvyrbszljd/asedesa/main/zxcv.lua", true))()
+    else
+        -- Jika username tidak valid, memeriksa key
         if verify(key) then
             validationLabel.Text = "Key Is Valid!"
             validationLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
@@ -271,10 +286,6 @@ checkKeyButton.MouseButton1Click:Connect(function()
             validationLabel.Text = "Key Is Not Valid!"
             validationLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
         end
-    else
-        -- Jika username tidak valid, tampilkan pesan
-        validationLabel.Text = "Username is not recognized!"
-        validationLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
     end
 end)
 
