@@ -8682,12 +8682,12 @@ SetSpeedBoat = 400
 SNt:AddSlider("Speed Boat", 0,1000,400, function(value)
     SetSpeedBoat = value
 end)
-
+]]
 -- Fungsi toggle untuk mengaktifkan atau menonaktifkan Speed Boat
 SNt:AddToggle("Speed Boat", _G.SpeedBoat, function(state)
     _G.SpeedBoat = state
 end)
-]]
+
 -- RenderStepped untuk memperbarui kecepatan boat
 game:GetService("RunService").RenderStepped:Connect(function()
     if _G.SpeedBoat then
@@ -8847,7 +8847,7 @@ spawn(function()
 
                 if targetModel and targetModel:FindFirstChild("VehicleSeat") then
                     -- Set kecepatan dari slider
-                    local speed = SetSpeedBoat or 400 -- Default speed jika SetSpeedBoat belum diatur
+                    local speed = SetSpeedBoat or 150 -- Default speed jika SetSpeedBoat belum diatur
 
                     -- Mengatur kecepatan boat melalui VehicleSeat
                     targetModel.VehicleSeat.MaxSpeed = speed
