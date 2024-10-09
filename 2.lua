@@ -159,9 +159,11 @@ function verifyNormalKey(key, content)
 end
 
 function verifyPremiumKey(key, username, content)
-    local pattern = '{PertaliteKey = "' .. key .. '" Username = "' .. username .. '"}'
+    -- Menggunakan pola yang lebih fleksibel untuk mencocokkan key dan username
+    local pattern = '{PertaliteKey%s*=%s*"' .. key .. '"%s*Username%s*=%s*"' .. username .. '"}'
     return string.find(content, pattern) ~= nil
 end
+
 
 function isKeyExpired(timestamp)
     return (os.time() - timestamp) >= (24 * 60 * 60)
