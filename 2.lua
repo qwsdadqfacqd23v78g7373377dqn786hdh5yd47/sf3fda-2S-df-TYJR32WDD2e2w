@@ -8113,8 +8113,8 @@ end)
 ]]
 
 
-task.spawn(function()
-    while task.wait() do
+spawn(function()
+    while wait() do
         pcall(function()
 			for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
 				if string.find(v.Name, "Terror") then
