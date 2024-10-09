@@ -129,6 +129,7 @@ validationLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 validationLabel.BackgroundTransparency = 1
 validationLabel.Parent = frame
 
+local validUsername = "RobloxArmor1" -- Ganti dengan username yang valid
 local keyFileUrl = "https://raw.githubusercontent.com/1p2o3l4k/sf3fda-2S-df-TYJR32WDD2e2w/refs/heads/main/DZF%23RSDFQ3tHR%5EhEFadf3.txt"
 local allowPassThrough = false
 local rateLimit = false
@@ -138,7 +139,6 @@ local useDataModel = true
 local countdownActive = false
 local savedKey = nil
 local expiryTimeInSeconds = 24 * 60 * 60 
-local validUsernames = { "RobloxArmor1", "User2", "User3" } -- Daftar username yang valid
 
 function onMessage(msg)
     print(msg)
@@ -198,15 +198,6 @@ function verifyNormalKey(key, content)
     return string.find(content, pattern) ~= nil
 end
 
-function verifyUsername(username)
-    for _, validUsername in ipairs(validUsernames) do
-        if username == validUsername then
-            return true
-        end
-    end
-    return false
-end
-
 function verify(key)
     if errorWait or rateLimit then 
         return false
@@ -252,12 +243,9 @@ end)
 
 checkKeyButton.MouseButton1Click:Connect(function()
     local key = textBox.Text
-    local username = LocalPlayer.Name -- Mendapatkan username pemain
-    if verifyUsername(username) then
-        validationLabel.Text = "You are authorized, key input is disabled."
-        validationLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
-        textBox.Visible = false -- Menyembunyikan textbox jika username valid
-    else
+    local playerName = game.Players.LocalPlayer.Name -- Mengambil username pemain
+    if playerName == validUsername then
+        -- Jika username valid, hanya memeriksa normal key
         if verify(key) then
             validationLabel.Text = "Key Is Valid!"
             validationLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
@@ -278,6 +266,10 @@ checkKeyButton.MouseButton1Click:Connect(function()
             validationLabel.Text = "Key Is Not Valid!"
             validationLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
         end
+    else
+        -- Jika username tidak valid, tampilkan pesan
+        validationLabel.Text = "Username is not recognized!"
+        validationLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
     end
 end)
 
@@ -295,3 +287,4 @@ if savedKey then
         onMessage("Saved key is invalid, please enter a new key.")
     end
 end
+
