@@ -7,11 +7,10 @@ screenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")
 
 local frame = Instance.new("Frame")
 frame.Size = UDim2.new(0, 300, 0, 250)
-frame.AnchorPoint = Vector2.new(0.5, 0.5) -- Titik acuan di tengah frame
-frame.Position = UDim2.new(0.5, 0, 0.5, 0) -- Posisi di tengah layar
+frame.Position = UDim2.new(0.2, -150, 0.5, -100)
 frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 frame.BorderSizePixel = 2
-frame.BorderColor3 = Color3.fromRGB(255, 0, 0)
+frame.BorderColor3 = Color3.fromRGB(255, 255, 255)
 frame.Active = true
 frame.Draggable = true
 frame.Parent = screenGui
@@ -47,7 +46,7 @@ end)
 
 local label = Instance.new("TextLabel")
 label.Size = UDim2.new(1, 0, 0, 50)
-label.Position = UDim2.new(0, 0, 0, 20) 
+label.Position = UDim2.new(0, 0, 0, 12) 
 label.Text = "Nice To Meet You"
 label.Font = Enum.Font.SourceSansBold
 label.TextSize = 30
@@ -58,7 +57,7 @@ label.Parent = frame
 
 local label = Instance.new("TextLabel")
 label.Size = UDim2.new(1, 0, 0, 50)
-label.Position = UDim2.new(0, 0, 0, 53) 
+label.Position = UDim2.new(0, 0, 0, 35) 
 label.Text = "".. game.Players.LocalPlayer.Name
 label.Font = Enum.Font.SourceSansBold
 label.TextSize = 20
@@ -70,7 +69,7 @@ label.Parent = frame
 local label = Instance.new("TextLabel")
 label.Size = UDim2.new(1, 0, 0, 50)
 label.Position = UDim2.new(0, 0, 0, 55) 
-label.Text = ""--.. identifyexecutor()
+label.Text = "".. identifyexecutor()
 label.Font = Enum.Font.SourceSansBold
 label.TextSize = 20
 label.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -128,79 +127,115 @@ validationLabel.TextSize = 18
 validationLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 validationLabel.BackgroundTransparency = 1
 validationLabel.Parent = frame
-
-local keyFileUrl = "https://raw.githubusercontent.com/1p2o3l4k/sf3fda-2S-df-TYJR32WDD2e2w/refs/heads/main/DZF%23RSDFQ3tHR%5EhEFadf3.txt"
+local keyFileUrl = "https://raw.githubusercontent.com/vldtncywdlojtnvjlmvyrbszljd/28s92hs/main/key.txt"
+local allowPassThrough = false
+local rateLimit = false
+local rateLimitCountdown = 0
+local errorWait = false
+local useDataModel = true 
+local countdownActive = false
 local savedKey = nil
-local savedTimestamp = nil
+local expiryTimeInSeconds = 24 * 60 * 60 
 
 function onMessage(msg)
     print(msg)
 end
 
--- Menyimpan normal key ke local storage
-function saveKey(key)
-    local keyData = key .. "|" .. os.time()
-    writefile("savedKey.txt", keyData)
-    savedKey = key
-    savedTimestamp = os.time()
+function fWait(seconds)
+    wait(seconds)
 end
 
--- Memuat normal key dari local storage
-function loadKey()
+function fSpawn(func)
+    spawn(func)
+end
+
+function saveKeyWithTimestamp(key)
+    local timestamp = os.time()
+    local keyWithTimestamp = key .. "|" .. tostring(timestamp)
+    writefile("savedKey.txt", keyWithTimestamp)
+    savedKey = keyWithTimestamp
+end
+
+function loadKeyWithTimestamp()
     if isfile("savedKey.txt") then
-        local keyData = readfile("savedKey.txt")
-        savedKey, savedTimestamp = keyData:match("([^|]+)|([^|]*)")
-        savedTimestamp = tonumber(savedTimestamp)
+        savedKey = readfile("savedKey.txt")
+        local key, timestamp = parseKeyAndTimestamp(savedKey)
+        if os.time() - tonumber(timestamp) >= expiryTimeInSeconds then
+            onMessage("Saved key has expired!")
+            delfile("savedKey.txt")
+            savedKey = nil
+        else
+            savedKey = key
+        end
     end
 end
 
--- Verifikasi normal key dengan data di GitHub
-function verifyNormalKey(key, content)
-    local pattern = '{Normalkey = "' .. key .. '"}'
-    return string.find(content, pattern) ~= nil
+function parseKeyAndTimestamp(keyWithTimestamp)
+    local key, timestamp = keyWithTimestamp:match("([^|]+)|([^|]+)")
+    return key, timestamp
 end
 
--- Mengecek apakah key sudah kadaluarsa (lebih dari 24 jam)
-function isKeyExpired(timestamp)
-    return (os.time() - timestamp) >= (24 * 60 * 60)
+function startCountdown(seconds)
+    countdownActive = true
+    for i = seconds, 0, -1 do
+        onMessage("Time remaining: " .. i .. " seconds")
+        fWait(1)
+    end
+    countdownActive = false
+    onMessage("Time's up! Please re-enter your key.")
+    savedKey = nil
+    if isfile("savedKey.txt") then
+        delfile("savedKey.txt")
+    end
+    screenGui.Enabled = true
 end
 
--- Mendapatkan konten dari raw file GitHub
-function fetchKeyContent()
-    local status, content = pcall(function()
+function verify(key)
+    if errorWait or rateLimit then 
+        return false
+    end
+
+    onMessage("Checking key...")
+
+    local status, result = pcall(function() 
         return game:HttpGetAsync(keyFileUrl)
     end)
     
     if status then
-        return content
-    else
-        onMessage("Error contacting the server!")
-        return nil
-    end
-end
 
--- Verifikasi key yang dimasukkan oleh pengguna
-function verify(key)
-    local content = fetchKeyContent()
-    
-    if content then
-        if verifyNormalKey(key, content) then
-            onMessage("Normal key is valid!")
-            saveKey(key)
+        if string.find(result, key) then
+            onMessage("Key is valid!")
+            saveKeyWithTimestamp(key) 
+            if not countdownActive then
+                fSpawn(function()
+                    startCountdown(expiryTimeInSeconds) 
+                end)
+            end
             return true
         else
             onMessage("Key is invalid!")
             return false
         end
     else
-        return false
+        onMessage("An error occurred while contacting the server!")
+        return allowPassThrough
     end
 end
 
--- Ketika tombol check key diklik
+getKeyButton.MouseButton1Click:Connect(function()
+    setclipboard('https://medusastore.tech/halaman/postingan/point-key.html')
+    validationLabel.Text = "Link Get Key Copied!"
+    validationLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+end)
+
+DiscordButton.MouseButton1Click:Connect(function()
+    setclipboard('https://discord.com/invite/brutality-hub-1182005198206545941')
+    validationLabel.Text = "Link Discord Copied!"
+    validationLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+end)
+
 checkKeyButton.MouseButton1Click:Connect(function()
     local key = textBox.Text
-
     if verify(key) then
         validationLabel.Text = "Key Is Valid!"
         validationLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
@@ -213,7 +248,7 @@ checkKeyButton.MouseButton1Click:Connect(function()
         tween.Completed:Connect(function()
             screenGui:Destroy()
         end)
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/1p2o3l4k/251c19q381fdaza6163ezs6-1d6231z6s2/refs/heads/main/L15.lua"))()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/vldtncywdlojtnvjlmvyrbszljd/asedesa/main/zxcv.lua",true))()
     else
         validationLabel.Text = "Checking Key..."
         validationLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -223,26 +258,17 @@ checkKeyButton.MouseButton1Click:Connect(function()
     end
 end)
 
--- Load key yang tersimpan saat aplikasi dijalankan
-loadKey()
+wait(3)
+local tween = TweenService:Create(frame, TweenInfo.new(0.5), {Position = UDim2.new(0.5, -150, 0.5, -100)})
+tween:Play()
 
--- Ambil konten dari GitHub untuk validasi
-local content = fetchKeyContent()
-
-if savedKey and content then
-    -- Cek apakah key kadaluarsa
-    if savedTimestamp and isKeyExpired(savedTimestamp) then
-        onMessage("Your saved key has expired, please enter a new key.")
-        screenGui.Enabled = true
-    elseif verifyNormalKey(savedKey, content) then
+loadKeyWithTimestamp()
+if savedKey then
+    if verify(savedKey) then
         onMessage("Saved key is valid!")
         screenGui.Enabled = false
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/1p2o3l4k/251c19q381fdaza6163ezs6-1d6231z6s2/refs/heads/main/L15.lua"))()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/vldtncywdlojtnvjlmvyrbszljd/asedesa/main/zxcv.lua",true))()
     else
-        onMessage("Your saved key is invalid, please enter a new key.")
-        screenGui.Enabled = true
+        onMessage("Saved key is invalid, please enter a new key.")
     end
-else
-    onMessage("Please enter a key.")
-    screenGui.Enabled = true
 end
