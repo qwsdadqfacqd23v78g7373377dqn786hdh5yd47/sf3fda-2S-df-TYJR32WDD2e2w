@@ -261,6 +261,7 @@ checkKeyButton.MouseButton1Click:Connect(function()
         tween:Play()
         tween.Completed:Connect(function()
         screenGui:Destroy()
+    end)
         loadstring(game:HttpGet("https://raw.githubusercontent.com/1p2o3l4k/251c19q381fdaza6163ezs6-1d6231z6s2/refs/heads/main/L15.lua", true))()
     else
         if verify(key) then
