@@ -138,7 +138,7 @@ local useDataModel = true
 local countdownActive = false
 local savedKey = nil
 local expiryTimeInSeconds = 24 * 60 * 60 
-local validUsernames = { "User1", "User2", "User3" } -- Daftar username yang valid
+local validUsernames = { "RobloxArmor1", "User2", "User3" } -- Daftar username yang valid
 
 function onMessage(msg)
     print(msg)
