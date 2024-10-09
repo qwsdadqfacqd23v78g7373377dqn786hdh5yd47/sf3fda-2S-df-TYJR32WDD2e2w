@@ -137,6 +137,7 @@ local useDataModel = true
 local countdownActive = false
 local savedKey = nil
 local expiryTimeInSeconds = 24 * 60 * 60 
+local validUsernames = { "User1", "User2", "User3" } -- Daftar username yang valid
 
 function onMessage(msg)
     print(msg)
@@ -196,6 +197,15 @@ function verifyNormalKey(key, content)
     return string.find(content, pattern) ~= nil
 end
 
+function verifyUsername(username)
+    for _, validUsername in ipairs(validUsernames) do
+        if username == validUsername then
+            return true
+        end
+    end
+    return false
+end
+
 function verify(key)
     if errorWait or rateLimit then 
         return false
@@ -241,25 +251,32 @@ end)
 
 checkKeyButton.MouseButton1Click:Connect(function()
     local key = textBox.Text
-    if verify(key) then
-        validationLabel.Text = "Key Is Valid!"
+    local username = LocalPlayer.Name -- Mendapatkan username pemain
+    if verifyUsername(username) then
+        validationLabel.Text = "You are authorized, key input is disabled."
         validationLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
-        wait(2)
-        validationLabel.Text = "Thanks For Using"
-        validationLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-        wait(2)
-        local tween = TweenService:Create(frame, TweenInfo.new(0.5), {Position = UDim2.new(0.5, -150, 1.5, -100)})
-        tween:Play()
-        tween.Completed:Connect(function()
-            screenGui:Destroy()
-        end)
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/vldtncywdlojtnvjlmvyrbszljd/asedesa/main/zxcv.lua", true))()
+        textBox.Visible = false -- Menyembunyikan textbox jika username valid
     else
-        validationLabel.Text = "Checking Key..."
-        validationLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-        wait(1.7)
-        validationLabel.Text = "Key Is Not Valid!"
-        validationLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
+        if verify(key) then
+            validationLabel.Text = "Key Is Valid!"
+            validationLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
+            wait(2)
+            validationLabel.Text = "Thanks For Using"
+            validationLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+            wait(2)
+            local tween = TweenService:Create(frame, TweenInfo.new(0.5), {Position = UDim2.new(0.5, -150, 1.5, -100)})
+            tween:Play()
+            tween.Completed:Connect(function()
+                screenGui:Destroy()
+            end)
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/vldtncywdlojtnvjlmvyrbszljd/asedesa/main/zxcv.lua", true))()
+        else
+            validationLabel.Text = "Checking Key..."
+            validationLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+            wait(1.7)
+            validationLabel.Text = "Key Is Not Valid!"
+            validationLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
+        end
     end
 end)
 
@@ -277,3 +294,4 @@ if savedKey then
         onMessage("Saved key is invalid, please enter a new key.")
     end
 end
+
