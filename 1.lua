@@ -256,7 +256,11 @@ checkKeyButton.MouseButton1Click:Connect(function()
     if verifyUsername(username) then
         validationLabel.Text = "You are authorized"
         validationLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
-        textBox.Visible = false -- Menyembunyikan textbox jika username valid
+        wait(2)
+        local tween = TweenService:Create(frame, TweenInfo.new(0.5), {Position = UDim2.new(0.5, -150, 1.5, -100)})
+        tween:Play()
+        tween.Completed:Connect(function()
+        screenGui:Destroy()
     else
         if verify(key) then
             validationLabel.Text = "Key Is Valid!"
