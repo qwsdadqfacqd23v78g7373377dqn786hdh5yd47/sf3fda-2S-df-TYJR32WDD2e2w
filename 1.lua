@@ -7,10 +7,11 @@ screenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")
 
 local frame = Instance.new("Frame")
 frame.Size = UDim2.new(0, 300, 0, 250)
-frame.Position = UDim2.new(0.2, -150, 0.5, -100)
+frame.AnchorPoint = Vector2.new(0.5, 0.5) -- Titik acuan di tengah frame
+frame.Position = UDim2.new(0.5, 0, 0.5, 0) -- Posisi di tengah layar
 frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 frame.BorderSizePixel = 2
-frame.BorderColor3 = Color3.fromRGB(255, 255, 255)
+frame.BorderColor3 = Color3.fromRGB(255, 0, 0)
 frame.Active = true
 frame.Draggable = true
 frame.Parent = screenGui
@@ -46,7 +47,7 @@ end)
 
 local label = Instance.new("TextLabel")
 label.Size = UDim2.new(1, 0, 0, 50)
-label.Position = UDim2.new(0, 0, 0, 12) 
+label.Position = UDim2.new(0, 0, 0, 20) 
 label.Text = "Nice To Meet You"
 label.Font = Enum.Font.SourceSansBold
 label.TextSize = 30
@@ -57,7 +58,7 @@ label.Parent = frame
 
 local label = Instance.new("TextLabel")
 label.Size = UDim2.new(1, 0, 0, 50)
-label.Position = UDim2.new(0, 0, 0, 35) 
+label.Position = UDim2.new(0, 0, 0, 53) 
 label.Text = "".. game.Players.LocalPlayer.Name
 label.Font = Enum.Font.SourceSansBold
 label.TextSize = 20
@@ -69,7 +70,7 @@ label.Parent = frame
 local label = Instance.new("TextLabel")
 label.Size = UDim2.new(1, 0, 0, 50)
 label.Position = UDim2.new(0, 0, 0, 55) 
-label.Text = "".. identifyexecutor()
+label.Text = ""--.. identifyexecutor()
 label.Font = Enum.Font.SourceSansBold
 label.TextSize = 20
 label.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -276,4 +277,3 @@ if savedKey then
         onMessage("Saved key is invalid, please enter a new key.")
     end
 end
-
