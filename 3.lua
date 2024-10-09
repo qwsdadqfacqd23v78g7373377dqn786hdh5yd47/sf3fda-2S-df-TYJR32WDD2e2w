@@ -8111,6 +8111,64 @@ spawn(function()
     end
 end)
 ]]
+
+
+task.spawn(function()
+    while task.wait() do
+        pcall(function()
+			for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+				if string.find(v.Name, "Terror") then
+					StatusTerror = "🟢"
+				else 
+					StatusTerror = "🔴"
+				end
+			end
+			
+			for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+				if string.find(v.Name, "Piranha") then
+					StatusSea = "🟢"
+				else 
+					StatusSea = "🔴"
+				end
+			end
+
+            for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+				if string.find(v.Name, "Leviathan") then
+					StatusLevi = "🟢"
+				else 
+					StatusLevi = "🔴"
+				end
+			end
+			
+			for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+				if string.find(v.Name, "Shark") then
+					StatusSea1 = "🟢"
+				else 
+					StatusSea1 = "🔴"
+				end
+			end
+			
+			for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+				if string.find(v.Name, "Fish Crew Member") then
+					StatusSea2 = "🟢"
+				else 
+			StatusSea2 = "🔴"
+		end
+    end
+ end)
+end
+end)
+
+task.spawn(function()
+    while wait() do
+        pcall(function()
+			StatusSeaRough:Set("Terrorshark: "..StatusLeviathan.." |"Terrorshark: "..StatusTerror.." | Piranha: "..StatusSea.." | Shark: "..StatusSea1.." | Fish Crew Member:"..StatusSea2) 
+		end)
+	end
+end)
+
+
+StatusSeaRough = SNt:AddLabel("Sea Event : Only Third Sea")
     
 SNt:AddToggle("Auto Kill Terrorshark",_G.Makori_gay,function(value)
 _G.Terrorshark = value
