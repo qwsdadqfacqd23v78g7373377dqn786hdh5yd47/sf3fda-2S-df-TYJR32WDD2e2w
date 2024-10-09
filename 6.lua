@@ -190,6 +190,11 @@ function startCountdown(seconds)
     screenGui.Enabled = true
 end
 
+function verifyNormalKey(key, content)
+    local pattern = '{Normalkey%s*=%s*"' .. key .. '"}'
+    return string.find(content, pattern) ~= nil
+end
+
 function verify(key)
     if errorWait or rateLimit then 
         return false
@@ -202,8 +207,7 @@ function verify(key)
     end)
     
     if status then
-
-        if string.find(result, key) then
+        if verifyNormalKey(key, result) then
             onMessage("Key is valid!")
             saveKeyWithTimestamp(key) 
             if not countdownActive then
@@ -248,7 +252,7 @@ checkKeyButton.MouseButton1Click:Connect(function()
         tween.Completed:Connect(function()
             screenGui:Destroy()
         end)
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/vldtncywdlojtnvjlmvyrbszljd/asedesa/main/zxcv.lua",true))()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/vldtncywdlojtnvjlmvyrbszljd/asedesa/main/zxcv.lua", true))()
     else
         validationLabel.Text = "Checking Key..."
         validationLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -267,8 +271,9 @@ if savedKey then
     if verify(savedKey) then
         onMessage("Saved key is valid!")
         screenGui.Enabled = false
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/vldtncywdlojtnvjlmvyrbszljd/asedesa/main/zxcv.lua",true))()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/vldtncywdlojtnvjlmvyrbszljd/asedesa/main/zxcv.lua", true))()
     else
         onMessage("Saved key is invalid, please enter a new key.")
     end
 end
+
