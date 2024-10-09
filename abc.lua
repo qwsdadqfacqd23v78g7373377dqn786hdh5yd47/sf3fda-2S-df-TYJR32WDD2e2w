@@ -6483,7 +6483,6 @@ end)
 end)
 end --1 masalah done
 Mirragecheck = SNt:AddLabel("Mirage Island : Only Third Sea")
-
 SNt:AddToggle("Teleport Mystic Island",_G.AutoMysticIsland,function(value)
         _G.AutoMysticIsland = value
         StopTween(_G.AutoMysticIsland)
