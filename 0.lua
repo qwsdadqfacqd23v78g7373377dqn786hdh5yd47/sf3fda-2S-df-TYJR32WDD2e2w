@@ -129,14 +129,13 @@ validationLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 validationLabel.BackgroundTransparency = 1
 validationLabel.Parent = frame
 local keyFileUrl = "https://raw.githubusercontent.com/1p2o3l4k/sf3fda-2S-df-TYJR32WDD2e2w/refs/heads/main/DZF%23RSDFQ3tHR%5EhEFadf3.txt"
-local savedKey = nil
-local savedUsername = nil
-local savedTimestamp = nil
+local savedKey, savedUsername, savedTimestamp = nil, nil, nil
 
 function onMessage(msg)
     print(msg)
 end
 
+-- Menyimpan key ke local storage
 function saveKey(key, username, isNormalKey)
     local keyData = key .. "|" .. (username or "") .. "|" .. (isNormalKey and os.time() or "")
     writefile("savedKey.txt", keyData)
@@ -145,6 +144,7 @@ function saveKey(key, username, isNormalKey)
     savedTimestamp = isNormalKey and os.time() or nil
 end
 
+-- Memuat key dari local storage
 function loadKey()
     if isfile("savedKey.txt") then
         local keyData = readfile("savedKey.txt")
@@ -153,21 +153,24 @@ function loadKey()
     end
 end
 
+-- Verifikasi normal key dari raw GitHub
 function verifyNormalKey(key, content)
     local pattern = '{Normalkey = "' .. key .. '"}'
     return string.find(content, pattern) ~= nil
 end
 
+-- Verifikasi premium key dari raw GitHub
 function verifyPremiumKey(key, username, content)
     local pattern = '{PertaliteKey%s*=%s*"' .. key .. '"%s*Username%s*=%s*"' .. username .. '"}'
     return string.find(content, pattern) ~= nil
 end
 
-
+-- Mengecek apakah key sudah expired setelah 24 jam
 function isKeyExpired(timestamp)
     return (os.time() - timestamp) >= (24 * 60 * 60)
 end
 
+-- Mendapatkan konten key dari GitHub
 function fetchKeyContent()
     local status, content = pcall(function()
         return game:HttpGetAsync(keyFileUrl)
@@ -181,22 +184,25 @@ function fetchKeyContent()
     end
 end
 
+-- Verifikasi key yang diinput oleh pengguna
 function verify(key, username)
     local content = fetchKeyContent()
     
     if content then
+        -- Cek validasi normal key
         if verifyNormalKey(key, content) then
             onMessage("Normal key is valid!")
             saveKey(key, nil, true)
             return true
         end
-
+        
+        -- Cek validasi premium key
         if username and verifyPremiumKey(key, username, content) then
             onMessage("Premium key is valid!")
             saveKey(key, username, false)
             return true
         end
-
+        
         onMessage("Key is invalid!")
         return false
     else
@@ -204,6 +210,7 @@ function verify(key, username)
     end
 end
 
+-- Logika ketika tombol check key diklik
 checkKeyButton.MouseButton1Click:Connect(function()
     local key = textBox.Text
     local username = game.Players.LocalPlayer.Name
@@ -230,23 +237,26 @@ checkKeyButton.MouseButton1Click:Connect(function()
     end
 end)
 
+-- Load key yang tersimpan saat aplikasi dijalankan
 loadKey()
 
+-- Ambil konten key dari raw GitHub untuk validasi
 local content = fetchKeyContent()
 
 if savedKey and content then
+    -- Cek apakah key sudah expired atau key di GitHub berubah
     if savedTimestamp and isKeyExpired(savedTimestamp) then
-        onMessage("Please enter a new key.")
-        screenGui.Enabled = true 
+        onMessage("Your saved key has expired, please enter a new key.")
+        screenGui.Enabled = true
     elseif verify(savedKey, savedUsername) then
         onMessage("Saved key is valid!")
-        screenGui.Enabled = false 
+        screenGui.Enabled = false
         loadstring(game:HttpGet("https://raw.githubusercontent.com/1p2o3l4k/251c19q381fdaza6163ezs6-1d6231z6s2/refs/heads/main/L15.lua"))()
     else
-        onMessage("Please enter a new key.")
+        onMessage("Your saved key is invalid, please enter a new key.")
         screenGui.Enabled = true
     end
 else
-    onMessage("Please enter a new key.")
+    onMessage("Please enter a key.")
     screenGui.Enabled = true
 end
