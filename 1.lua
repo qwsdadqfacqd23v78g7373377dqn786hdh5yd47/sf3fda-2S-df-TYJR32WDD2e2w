@@ -128,82 +128,29 @@ validationLabel.TextSize = 18
 validationLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 validationLabel.BackgroundTransparency = 1
 validationLabel.Parent = frame
--- Constants
-local KEY_FILE_URL = "https://raw.githubusercontent.com/1p2o3l4k/sf3fda-2S-df-TYJR32WDD2e2w/refs/heads/main/DZF%23RSDFQ3tHR%5EhEFadf3.txt"
-local SAVE_FILE_NAME = "savedKey.txt"
-local KEY_EXPIRATION_TIME = 24 * 60 * 60 -- 24 jam dalam detik
-
--- Variables
+local keyFileUrl = "https://raw.githubusercontent.com/1p2o3l4k/sf3fda-2S-df-TYJR32WDD2e2w/refs/heads/main/DZF%23RSDFQ3tHR%5EhEFadf3.txt"
 local savedKey = nil
 local savedUsername = nil
 local savedTimestamp = nil
 
--- Utility Functions
 function onMessage(msg)
     print(msg)
 end
 
 function saveKey(key, username, isNormalKey)
-    local timestamp = isNormalKey and os.time() or ""
-    local keyData = string.format("%s|%s|%s", key, username or "", timestamp)
-    
-    local success, err = pcall(function()
-        writefile(SAVE_FILE_NAME, keyData)
-    end)
-    
-    if success then
-        savedKey = key
-        savedUsername = username
-        savedTimestamp = isNormalKey and os.time() or nil
-    else
-        onMessage("Failed to save key: " .. tostring(err))
-    end
+    local keyData = key .. "|" .. (username or "") .. "|" .. (isNormalKey and os.time() or "")
+    writefile("savedKey.txt", keyData)
+    savedKey = key
+    savedUsername = username
+    savedTimestamp = isNormalKey and os.time() or nil
 end
 
 function loadKey()
-    if isfile(SAVE_FILE_NAME) then
-        local success, keyData = pcall(function()
-            return readfile(SAVE_FILE_NAME)
-        end)
-        
-        if success then
-            local key, username, timestamp = keyData:match("([^|]+)|([^|]*)|([^|]*)")
-            savedKey = key
-            savedUsername = username ~= "" and username or nil
-            savedTimestamp = timestamp ~= "" and tonumber(timestamp) or nil
-        else
-            onMessage("Failed to load saved key")
-        end
+    if isfile("savedKey.txt") then
+        local keyData = readfile("savedKey.txt")
+        savedKey, savedUsername, savedTimestamp = keyData:match("([^|]+)|([^|]*)|([^|]*)")
+        savedTimestamp = tonumber(savedTimestamp)
     end
-end
-
-function isKeyExpired(timestamp)
-    if not timestamp then return true end
-    return (os.time() - timestamp) >= KEY_EXPIRATION_TIME
-end
-
-function fetchKeyContent()
-    local retries = 2
-    local content
-    
-    for i = 1, retries do
-        local success, result = pcall(function()
-            return game:HttpGetAsync(KEY_FILE_URL)
-        end)
-        
-        if success then
-            content = result
-            break
-        else
-            onMessage(string.format("Attempt %d: Failed to contact server", i))
-            if i < retries then wait(1) end
-        end
-    end
-    
-    if not content then
-        onMessage("Failed to contact server after " .. retries .. " attempts")
-    end
-    return content
 end
 
 function verifyNormalKey(key, content)
@@ -216,38 +163,52 @@ function verifyPremiumKey(key, username, content)
     return string.find(content, pattern) ~= nil
 end
 
+
+function isKeyExpired(timestamp)
+    return (os.time() - timestamp) >= (24 * 60 * 60)
+end
+
+function fetchKeyContent()
+    local status, content = pcall(function()
+        return game:HttpGetAsync(keyFileUrl)
+    end)
+    
+    if status then
+        return content
+    else
+        onMessage("Error contacting the server!")
+        return nil
+    end
+end
+
 function verify(key, username)
     local content = fetchKeyContent()
     
-    if not content then return false end
-    
-    if verifyNormalKey(key, content) then
-        onMessage("Normal key is valid!")
-        saveKey(key, nil, true)
-        return true
-    end
+    if content then
+        if verifyNormalKey(key, content) then
+            onMessage("Normal key is valid!")
+            saveKey(key, nil, true)
+            return true
+        end
 
-    if username and verifyPremiumKey(key, username, content) then
-        onMessage("Premium key is valid!")
-        saveKey(key, username, false)
-        return true
-    end
+        if username and verifyPremiumKey(key, username, content) then
+            onMessage("Premium key is valid!")
+            saveKey(key, username, false)
+            return true
+        end
 
-    onMessage("Key is invalid!")
-    return false
+        onMessage("Key is invalid!")
+        return false
+    else
+        return false
+    end
 end
 
--- Event Handler (menggunakan GUI yang sudah ada)
 checkKeyButton.MouseButton1Click:Connect(function()
     local key = textBox.Text
     local username = game.Players.LocalPlayer.Name
 
-    -- UI feedback saat memulai verifikasi
-    validationLabel.Text = "Checking Key..."
-    validationLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-
     if verify(key, username) then
-        -- Key valid - gunakan UI yang sudah ada
         validationLabel.Text = "Key Is Valid!"
         validationLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
         wait(2)
@@ -261,31 +222,31 @@ checkKeyButton.MouseButton1Click:Connect(function()
         end)
         loadstring(game:HttpGet("https://raw.githubusercontent.com/1p2o3l4k/251c19q381fdaza6163ezs6-1d6231z6s2/refs/heads/main/L15.lua"))()
     else
-        -- Key tidak valid - gunakan UI yang sudah ada
+        validationLabel.Text = "Checking Key..."
+        validationLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
         wait(1.7)
         validationLabel.Text = "Key Is Not Valid!"
         validationLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
     end
 end)
 
--- Initialization
 loadKey()
 
 local content = fetchKeyContent()
 
 if savedKey and content then
     if savedTimestamp and isKeyExpired(savedTimestamp) then
-        onMessage("Saved key has expired. Please enter a new key.")
-        screenGui.Enabled = true
+        onMessage("Please enter a new key.")
+        screenGui.Enabled = true 
     elseif verify(savedKey, savedUsername) then
         onMessage("Saved key is valid!")
-        screenGui.Enabled = false
+        screenGui.Enabled = false 
         loadstring(game:HttpGet("https://raw.githubusercontent.com/1p2o3l4k/251c19q381fdaza6163ezs6-1d6231z6s2/refs/heads/main/L15.lua"))()
     else
-        onMessage("Saved key is no longer valid. Please enter a new key.")
+        onMessage("Please enter a new key.")
         screenGui.Enabled = true
     end
 else
-    onMessage("Please enter a key.")
+    onMessage("Please enter a new key.")
     screenGui.Enabled = true
 end
