@@ -240,7 +240,7 @@ checkKeyButton.MouseButton1Click:Connect(function()
     local key = textBox.Text
     local username = Players.LocalPlayer.Name
     if verifyUsername(username) then
-        textBox.Text = "You are authorized"
+        textBox.Text = "User premium actived"
         textBox.TextColor3 = Color3.fromRGB(0, 255, 0)
         wait(2)
         local tween = TweenService:Create(frame, TweenInfo.new(0.5), {Position = UDim2.new(0.5, -225, 0.5, -150)})
@@ -282,10 +282,11 @@ tween:Play()
 loadKeyWithTimestamp()
 if savedKey then
     if verify(savedKey) then
-        onMessage("Saved key is valid!")
+        --onMessage("Saved key is valid!")
+        textBox.Text = "Saved key is valid!"
         screenGui.Enabled = false
         loadstring(game:HttpGet("https://raw.githubusercontent.com/1p2o3l4k/251c19q381fdaza6163ezs6-1d6231z6s2/refs/heads/main/L15.lua", true))()
     else
-        onMessage("Please enter a new key.")
+        textBox.Text = "Please enter new key"
     end
 end
