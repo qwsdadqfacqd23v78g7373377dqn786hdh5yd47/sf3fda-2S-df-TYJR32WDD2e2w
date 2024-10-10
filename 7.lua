@@ -84,7 +84,7 @@ KeyTextBox.ClearTextOnFocus = false
 ButtonsContainer.Name = "ButtonsContainer"
 ButtonsContainer.Parent = KeySection
 ButtonsContainer.BackgroundTransparency = 1
-ButtonsContainer.Position = UDim2.new(0.1, 0, 0.2, 0)
+ButtonsContainer.Position = UDim2.new(0.1, 0, 0.6, 0)
 ButtonsContainer.Size = UDim2.new(0.8, 0, 0.5, 0)
 
 ButtonsLayout.Parent = ButtonsContainer
