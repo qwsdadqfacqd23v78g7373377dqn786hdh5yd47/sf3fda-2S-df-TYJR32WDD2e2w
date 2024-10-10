@@ -158,7 +158,7 @@ end
 
 local function copyLink()
     setclipboard("https://your-link-here.com")
-    showMessage("Link copied!")
+    showMessage("Link get key copied!")
 end
 
 local function copyDiscordLink()
