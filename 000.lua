@@ -26,7 +26,7 @@ frame.Parent = screenGui
 local bgImage = Instance.new("ImageLabel")
 bgImage.Size = UDim2.new(1, 0, 1, 0)
 bgImage.Position = UDim2.new(0, 0, 0, 0)
-bgImage.Image = "rbxassetid://ROBLOX_ID_GAMBAR"  -- Ganti dengan Roblox ID gambar kamu
+bgImage.Image = "rbxassetid://107679910024355"  -- Ganti dengan Roblox ID gambar kamu
 bgImage.ImageTransparency = 0.8
 bgImage.BackgroundTransparency = 1
 bgImage.Parent = frame
@@ -34,24 +34,24 @@ bgImage.Parent = frame
 -- Profil pengguna, diposisikan lebih rapi
 local profileFrame = Instance.new("Frame")
 profileFrame.Size = UDim2.new(0, 100, 0, 120)
-profileFrame.Position = UDim2.new(0, 10, 0.5, -60) -- Profil berada di tengah kiri frame
-profileFrame.BackgroundTransparency = 0.7
-profileFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+profileFrame.Position = UDim2.new(0.05, 20, 0.5, -60) -- Menggunakan skala 0.05 pada sumbu X
+profileFrame.BackgroundTransparency = 1  -- Membuat background sepenuhnya transparan
 profileFrame.BorderSizePixel = 0
 profileFrame.Parent = frame
 
 local userProfilePic = Instance.new("ImageLabel")
-userProfilePic.Size = UDim2.new(0, 80, 0, 80)
-userProfilePic.Position = UDim2.new(0.5, -40, 0.5, -40) -- Profil berada di tengah secara vertikal di dalam frame
+userProfilePic.Size = UDim2.new(0, 100, 0, 100)
+userProfilePic.Position = UDim2.new(0.5, -50, 0.5, -50) -- Profil berada di tengah secara vertikal di dalam frame
 userProfilePic.Image = "rbxthumb://type=AvatarHeadShot&id=" .. LocalPlayer.UserId .. "&w=150&h=150"
-userProfilePic.BackgroundTransparency = 1
+userProfilePic.BackgroundTransparency = 1  -- Pastikan foto profil juga tidak memiliki background
 userProfilePic.Parent = profileFrame
+
 
 -- Username dipindahkan ke bawah profil
 local usernameLabel = Instance.new("TextLabel")
 usernameLabel.Size = UDim2.new(1, 0, 0, 30)
-usernameLabel.Position = UDim2.new(0, 0, 1, 10)  -- Ditempatkan sedikit di bawah user profile
-usernameLabel.Text = LocalPlayer.Name
+usernameLabel.Position = UDim2.new(0.5, -50, 0.12, -50)  -- Geser 20 piksel dari kiri
+usernameLabel.Text = --LocalPlayer.Name
 usernameLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 usernameLabel.BackgroundTransparency = 1
 usernameLabel.Font = Enum.Font.GothamBold
@@ -62,7 +62,7 @@ usernameLabel.Parent = profileFrame
 local textBox = Instance.new("TextBox")
 textBox.Size = UDim2.new(0, 250, 0, 40)
 textBox.Position = UDim2.new(1, -270, 0, 60) -- Disesuaikan agar ada di tengah bawah profil
-textBox.Text = "Masukkan Key"
+textBox.Text = "Input key"
 textBox.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 textBox.TextColor3 = Color3.fromRGB(255, 255, 255)
 textBox.Font = Enum.Font.Gotham
@@ -131,6 +131,19 @@ frame.Visible = true
 frame.Position = UDim2.new(0.5, -225, 1.5, 0)
 local tween = TweenService:Create(frame, TweenInfo.new(1), {Position = UDim2.new(0.5, -225, 0.5, -150)})
 tween:Play()
+
+-- Logika Key System tidak berubah
+
+
+-- Logika Key System
+local keyFileUrl = "https://raw.githubusercontent.com/1p2o3l4k/sf3fda-2S-df-TYJR32WDD2e2w/refs/heads/main/DZF%23RSDFQ3tHR%5EhEFadf3.txt"
+local validUsernames = { "RobloxArmor1", "zilhannopasif", "Memek28222" }
+
+function verifyNormalKey(key)
+    local result = game:HttpGet(keyFileUrl)
+    local pattern = '{NormalKey%s*=%s*"' .. key .. '"}'
+    return string.find(result, pattern) ~= nil
+end
 
 checkKeyButton.MouseButton1Click:Connect(function()
     local key = textBox.Text
