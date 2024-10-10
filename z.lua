@@ -136,8 +136,103 @@ tween:Play()
 
 
 -- Logika Key System
-local keyFileUrl = "https://raw.githubusercontent.com/1p2o3l4k/sf3fda-2S-df-TYJR32WDD2e2w/refs/heads/main/DZF%23RSDFQ3tHR%5EhEFadf3.txt"
-local validUsernames = { "RobloxArmor1", "zilhannopasif", "Memek28222" }
+function onMessage(msg)
+    print(msg)
+end
+
+function fWait(seconds)
+    wait(seconds)
+end
+
+function fSpawn(func)
+    spawn(func)
+end
+
+function saveKeyWithTimestamp(key)
+    local timestamp = os.time()
+    local keyWithTimestamp = key .. "|" .. tostring(timestamp)
+    writefile("BotunaKey.txt", keyWithTimestamp)
+    savedKey = keyWithTimestamp
+end
+
+function loadKeyWithTimestamp()
+    if isfile("BotunaKey.txt") then
+        savedKey = readfile("BotunaKey.txt")
+        local key, timestamp = parseKeyAndTimestamp(savedKey)
+        if os.time() - tonumber(timestamp) >= expiryTimeInSeconds then
+            onMessage("Saved key has expired!")
+            delfile("BotunaKey.txt")
+            savedKey = nil
+        else
+            savedKey = key
+        end
+    end
+end
+
+function parseKeyAndTimestamp(keyWithTimestamp)
+    local key, timestamp = keyWithTimestamp:match("([^|]+)|([^|]+)")
+    return key, timestamp
+end
+
+function startCountdown(seconds)
+    countdownActive = true
+    for i = seconds, 0, -1 do
+        onMessage("Time remaining: " .. i .. " seconds")
+        fWait(1)
+    end
+    countdownActive = false
+    onMessage("Time's up! Please re-enter your key.")
+    savedKey = nil
+    if isfile("BotunaKey.txt") then
+        delfile("BotunaKey.txt")
+    end
+    screenGui.Enabled = true
+end
+
+function verifyNormalKey(key, content)
+    local pattern = '{Normalkey%s*=%s*"' .. key .. '"}'
+    return string.find(content, pattern) ~= nil
+end
+
+function verifyUsername(username)
+    for _, validUsername in ipairs(validUsernames) do
+        if username == validUsername then
+            return true
+        end
+    end
+    return false
+end
+
+function verify(key)
+    if errorWait or rateLimit then 
+        return false
+    end
+
+    onMessage("Checking key...")
+
+    local status, result = pcall(function() 
+        return game:HttpGetAsync(keyFileUrl)
+    end)
+    
+    if status then
+        if verifyNormalKey(key, result) then
+            onMessage("Key is valid!")
+            saveKeyWithTimestamp(key) 
+            if not countdownActive then
+                fSpawn(function()
+                    startCountdown(expiryTimeInSeconds) 
+                end)
+            end
+            return true
+        else
+            onMessage("Key is invalid!")
+            return false
+        end
+    else
+        onMessage("An error occurred while contacting the server!")
+        return allowPassThrough
+    end
+end
 
 function verifyNormalKey(key)
     local result = game:HttpGet(keyFileUrl)
