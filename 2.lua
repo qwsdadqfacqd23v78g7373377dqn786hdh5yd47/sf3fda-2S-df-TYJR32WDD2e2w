@@ -186,11 +186,13 @@ local function checkKey()
     end
 end
 
+CopyLinkButton.MouseButton1Click:Connect(copyLink)
 local function copyLink()
     setclipboard("https://your-link-here.com")
     showMessage("Link get key copied!")
 end
 
+CopyDiscordButton.MouseButton1Click:Connect(copyDiscordLink)
 local function copyDiscordLink()
     setclipboard("https://discord.gg/your-discord")
     showMessage("Discord link copied!")
@@ -198,8 +200,44 @@ end
 
 
 CheckKeyButton.MouseButton1Click:Connect(checkKey)
-CopyLinkButton.MouseButton1Click:Connect(copyLink)
-CopyDiscordButton.MouseButton1Click:Connect(copyDiscordLink)
+checkKeyButton.MouseButton1Click:Connect(function()
+    local key = textBox.Text
+    if verify(checkKey) then
+        MessageLabel.Text = "Key Is Valid!"
+        MessageLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
+        wait(2)
+        MessageLabel.Text = "Thanks For Using"
+        MessageLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+        wait(2)
+        local tween = TweenService:Create(frame, TweenInfo.new(0.5), {Position = UDim2.new(0.5, -150, 1.5, -100)})
+        tween:Play()
+        tween.Completed:Connect(function()
+            screenGui:Destroy()
+        end)
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/vldtncywdlojtnvjlmvyrbszljd/asedesa/main/zxcv.lua", true))()
+    else
+        MessageLabel.Text = "Checking Key..."
+        MessageLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+        wait(1.7)
+        MessageLabel.Text = "Key Is Not Valid!"
+        MessageLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
+    end
+end)
+
+wait(3)
+local tween = TweenService:Create(frame, TweenInfo.new(0.5), {Position = UDim2.new(0.5, -150, 0.5, -100)})
+tween:Play()
+
+loadKeyWithTimestamp()
+if savedKey then
+    if verify(savedKey) then
+        onMessage("Saved key is valid!")
+        screenGui.Enabled = false
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/vldtncywdlojtnvjlmvyrbszljd/asedesa/main/zxcv.lua", true))()
+    else
+        onMessage("Saved key is invalid, please enter a new key.")
+    end
+end
 
 
 
