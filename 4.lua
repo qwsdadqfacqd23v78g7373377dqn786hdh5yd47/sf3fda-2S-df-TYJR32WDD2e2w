@@ -81,6 +81,7 @@ ButtonsContainer.Name = "ButtonsContainer"
 ButtonsContainer.Parent = KeySection
 ButtonsContainer.Position = UDim2.new(0.05, 0, 0.5, 0)
 ButtonsContainer.Size = UDim2.new(0.9, 0, 0.3, 0)
+ButtonsLayout.Padding = UDim.new(0, 15)
 ButtonsLayout.Parent = ButtonsContainer
 ButtonsLayout.FillDirection = Enum.FillDirection.Vertical
 ButtonsLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
@@ -91,6 +92,16 @@ GetKeyButton.Name = "GetKeyButton"
 GetKeyButton.Parent = ButtonsContainer
 GetKeyButton.Size = UDim2.new(1, 0, 0.3, 0)
 GetKeyButton.Text = "Get Key"
+
+-- Buttons Container
+ButtonsContainer.Name = "ButtonsContainer"
+ButtonsContainer.Parent = KeySection
+ButtonsContainer.BackgroundTransparency = 1
+ButtonsContainer.Position = UDim2.new(0.1, 0, 0.4, 0)
+ButtonsContainer.Size = UDim2.new(0.8, 0, 0.5, 0)
+ButtonContainer.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+
+
 
 -- Check Key Button
 CheckKeyButton.Name = "CheckKeyButton"
