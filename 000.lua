@@ -7,10 +7,10 @@ local screenGui = Instance.new("ScreenGui")
 screenGui.Parent = game.CoreGui
 screenGui.IgnoreGuiInset = true
 
--- Membuat frame utama dengan tampilan elegan
+-- Membuat frame utama
 local frame = Instance.new("Frame")
-frame.Size = UDim2.new(0, 450, 0, 300)
-frame.Position = UDim2.new(0.5, -225, 0.5, -150)
+frame.Size = UDim2.new(0, 550, 0, 300)
+frame.Position = UDim2.new(0.5, -275, 0.5, -150)
 frame.BackgroundTransparency = 0.2
 frame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
 frame.BorderSizePixel = 0
@@ -28,43 +28,44 @@ shadow.SliceCenter = Rect.new(10, 10, 118, 118)
 shadow.BackgroundTransparency = 1
 shadow.Parent = frame
 
--- Menambahkan background image dengan opacity
+-- Menambahkan background image
 local bgImage = Instance.new("ImageLabel")
 bgImage.Size = UDim2.new(1, 0, 1, 0)
 bgImage.Position = UDim2.new(0, 0, 0, 0)
-bgImage.Image = "rbxassetid://ROBLOX_ID_GAMBAR"  -- Ganti dengan Roblox ID gambar kamu
+bgImage.Image = "rbxassetid://ROBLOX_ID_GAMBAR"
 bgImage.ImageTransparency = 0.8
 bgImage.Parent = frame
 
 -- Profil pengguna
 local profileFrame = Instance.new("Frame")
-profileFrame.Size = UDim2.new(0, 100, 0, 120)
-profileFrame.Position = UDim2.new(0, 10, 0, 10)
+profileFrame.Size = UDim2.new(0, 120, 0, 120)
+profileFrame.Position = UDim2.new(0, 15, 0, 15)
 profileFrame.BackgroundTransparency = 0.7
 profileFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
 profileFrame.BorderSizePixel = 0
 profileFrame.Parent = frame
 
 local userProfilePic = Instance.new("ImageLabel")
-userProfilePic.Size = UDim2.new(0, 80, 0, 80)
-userProfilePic.Position = UDim2.new(0.5, -40, 0, 10)
+userProfilePic.Size = UDim2.new(0, 100, 0, 100)
+userProfilePic.Position = UDim2.new(0.5, -50, 0, 10)
 userProfilePic.Image = "rbxthumb://type=AvatarHeadShot&id=" .. LocalPlayer.UserId .. "&w=150&h=150"
 userProfilePic.Parent = profileFrame
 
+-- Username pengguna
 local usernameLabel = Instance.new("TextLabel")
-usernameLabel.Size = UDim2.new(1, 0, 0, 30)
-usernameLabel.Position = UDim2.new(0, 0, 1, -40)
+usernameLabel.Size = UDim2.new(0, 120, 0, 30)
+usernameLabel.Position = UDim2.new(0, 15, 0, 140)
 usernameLabel.Text = LocalPlayer.Name
 usernameLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 usernameLabel.BackgroundTransparency = 1
 usernameLabel.Font = Enum.Font.GothamBold
 usernameLabel.TextSize = 16
-usernameLabel.Parent = profileFrame
+usernameLabel.Parent = frame
 
 -- Textbox untuk input key
 local textBox = Instance.new("TextBox")
-textBox.Size = UDim2.new(0, 250, 0, 40)
-textBox.Position = UDim2.new(1, -270, 0, 40)
+textBox.Size = UDim2.new(0, 300, 0, 40)
+textBox.Position = UDim2.new(1, -320, 0, 60)
 textBox.Text = "Masukkan Key"
 textBox.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 textBox.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -75,8 +76,8 @@ textBox.Parent = frame
 
 -- Tombol Check Key
 local checkKeyButton = Instance.new("TextButton")
-checkKeyButton.Size = UDim2.new(0, 250, 0, 40)
-checkKeyButton.Position = UDim2.new(1, -270, 0, 90)
+checkKeyButton.Size = UDim2.new(0, 300, 0, 40)
+checkKeyButton.Position = UDim2.new(1, -320, 0, 110)
 checkKeyButton.Text = "Check Key"
 checkKeyButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 checkKeyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -87,8 +88,8 @@ checkKeyButton.Parent = frame
 
 -- Tombol Copy Link Key
 local copyLinkKeyButton = Instance.new("TextButton")
-copyLinkKeyButton.Size = UDim2.new(0, 250, 0, 40)
-copyLinkKeyButton.Position = UDim2.new(1, -270, 0, 140)
+copyLinkKeyButton.Size = UDim2.new(0, 300, 0, 40)
+copyLinkKeyButton.Position = UDim2.new(1, -320, 0, 160)
 copyLinkKeyButton.Text = "Copy Link Key"
 copyLinkKeyButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 copyLinkKeyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -99,8 +100,8 @@ copyLinkKeyButton.Parent = frame
 
 -- Tombol Copy Link Discord
 local copyDiscordButton = Instance.new("TextButton")
-copyDiscordButton.Size = UDim2.new(0, 250, 0, 40)
-copyDiscordButton.Position = UDim2.new(1, -270, 0, 190)
+copyDiscordButton.Size = UDim2.new(0, 300, 0, 40)
+copyDiscordButton.Position = UDim2.new(1, -320, 0, 210)
 copyDiscordButton.Text = "Copy Link Discord"
 copyDiscordButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 copyDiscordButton.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -127,8 +128,8 @@ animationText.Visible = false
 frame.Visible = true
 
 -- Tween untuk smooth transition
-frame.Position = UDim2.new(0.5, -225, 1.5, 0)
-local tween = TweenService:Create(frame, TweenInfo.new(1), {Position = UDim2.new(0.5, -225, 0.5, -150)})
+frame.Position = UDim2.new(0.5, -275, 1.5, 0)
+local tween = TweenService:Create(frame, TweenInfo.new(1), {Position = UDim2.new(0.5, -275, 0.5, -150)})
 tween:Play()
 
 -- Logika Key System
