@@ -1,4 +1,3 @@
-
 -- Inisialisasi GUI
 local ScreenGui = Instance.new("ScreenGui")
 local MainFrame = Instance.new("Frame")
@@ -11,12 +10,6 @@ local ButtonsContainer = Instance.new("Frame")
 local ButtonsLayout = Instance.new("UIListLayout")
 local UICorner_Main = Instance.new("UICorner")
 local UICorner_Profile = Instance.new("UICorner")
-
--- Permanent key definition
-local permanentKey = "BrutalityHubV4_CnV2Sdwwjr"
-local savedUsername = nil
-local expiryTime = nil
-local usernameValidDuration = 24 * 60 * 60  -- 24 hours in seconds
 
 -- GUI Configuration
 ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
@@ -126,40 +119,29 @@ local function createStylishButton(name, text, color)
 end
 
 local CheckKeyButton, CheckKeyButtonContainer = createStylishButton("CheckKeyButton", "Check Key", Color3.fromRGB(46, 204, 113))
+local CopyLinkButton, CopyLinkButtonContainer = createStylishButton("CopyLinkButton", "Copy Link", Color3.fromRGB(46, 204, 113))
+local CopyDiscordButton, CopyDiscordButtonContainer = createStylishButton("CopyDiscordButton", "Copy Discord Link", Color3.fromRGB(52, 152, 219))
 
--- Button Functions
-local function checkKey()
-    local inputKey = KeyTextBox.Text
+-- Tambahkan TextLabel untuk menampilkan pesan di atas TextBox
+local MessageLabel = Instance.new("TextLabel")
+MessageLabel.Name = "MessageLabel"
+MessageLabel.Parent = KeySection
+MessageLabel.BackgroundTransparency = 1
+MessageLabel.Position = UDim2.new(0.1, 0, 0.10, 0) -- Di atas TextBox
+MessageLabel.Size = UDim2.new(0.8, 0, 0, 30)
+MessageLabel.Font = Enum.Font.GothamBold
+MessageLabel.Text = ""
+MessageLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+MessageLabel.TextSize = 16
+MessageLabel.Visible = false -- Awalnya tidak terlihat
 
-    -- Check if the input key matches the permanent key
-    if inputKey == permanentKey then
-        -- Save the username and the current time
-        savedUsername = game.Players.LocalPlayer.Name
-        expiryTime = os.time() + usernameValidDuration
-        print("Key correct! Username saved:", savedUsername)
-    else
-        print("Invalid key!")
-    end
+-- Fungsi untuk menampilkan pesan di atas TextBox
+local function showMessage(text)
+    MessageLabel.Text = text
+    MessageLabel.Visible = true
+    wait(5)  -- Pesan akan muncul selama 2 detik
+    MessageLabel.Visible = false
 end
-
--- Check if the username needs to be reset (24-hour expiry)
-local function checkUsernameExpiry()
-    if savedUsername and os.time() >= expiryTime then
-        savedUsername = nil
-        expiryTime = nil
-        print("Username has expired. Key input required again.")
-    end
-end
-
--- Continuously check for expiry
-spawn(function()
-    while true do
-        checkUsernameExpiry()
-        wait(60) -- Check every minute
-    end
-end)
-
-CheckKeyButton.MouseButton1Click:Connect(checkKey)
 
 -- Update username and profile picture
 local player = game.Players.LocalPlayer
@@ -171,3 +153,57 @@ local thumbType = Enum.ThumbnailType.HeadShot
 local thumbSize = Enum.ThumbnailSize.Size420x420
 local content, isReady = game.Players:GetUserThumbnailAsync(userId, thumbType, thumbSize)
 ProfileImage.Image = content
+
+-- Add hover effects
+local function addHoverEffect(buttonContainer)
+    local originalColor = buttonContainer.BackgroundColor3
+    local button = buttonContainer:FindFirstChildOfClass("TextButton")
+    
+    button.MouseEnter:Connect(function()
+        game:GetService("TweenService"):Create(buttonContainer, TweenInfo.new(0.3), {
+            BackgroundColor3 = originalColor:Lerp(Color3.fromRGB(255, 255, 255), 0.2)
+        }):Play()
+    end)
+    
+    button.MouseLeave:Connect(function()
+        game:GetService("TweenService"):Create(buttonContainer, TweenInfo.new(0.3), {
+            BackgroundColor3 = originalColor
+        }):Play()
+    end)
+end
+
+
+-- Button Functions
+local function checkKey()
+    -- Logika pengecekan key di sini
+    print("Checking key: " .. KeyTextBox.Text)
+    
+    -- Menampilkan pesan di atas TextBox
+    if KeyTextBox.Text == "" then
+        showMessage("Please enter a key!")
+    else
+        showMessage("Key submitted: " .. KeyTextBox.Text)
+    end
+end
+
+local function copyLink()
+    setclipboard("https://your-link-here.com")
+    showMessage("Link get key copied!")
+end
+
+local function copyDiscordLink()
+    setclipboard("https://discord.gg/your-discord")
+    showMessage("Discord link copied!")
+end
+
+
+CheckKeyButton.MouseButton1Click:Connect(checkKey)
+CopyLinkButton.MouseButton1Click:Connect(copyLink)
+CopyDiscordButton.MouseButton1Click:Connect(copyDiscordLink)
+
+
+
+
+addHoverEffect(CheckKeyButtonContainer)
+addHoverEffect(CopyLinkButtonContainer)
+addHoverEffect(CopyDiscordButtonContainer)
