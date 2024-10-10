@@ -203,31 +203,15 @@ function verifyUsername(username)
     return false
 end
 
--- Event handler tombol
-checkKeyButton.MouseButton1Click:Connect(function()
-    local key = textBox.Text
-    if verify(key) then
-        screenGui.Enabled = false
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/vldtncywdlojtnvjlmvyrbszljd/asedesa/main/zxcv.lua", true))()
-    end
-end)
-
-copyLinkKeyButton.MouseButton1Click:Connect(function()
-    setclipboard("https://key-link.com") -- Ganti dengan link key yang valid
-end)
-
-copyDiscordButton.MouseButton1Click:Connect(function()
-    setclipboard("https://discord-link.com") -- Ganti dengan link Discord yang valid
-end)
-
--- Muat key yang tersimpan
+-- Memuat key tersimpan saat permainan dimulai
 loadKeyWithTimestamp()
-if savedKey then
-    if verify(savedKey) then
-        onMessage("Saved key is valid!")
-        screenGui.Enabled = false
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/vldtncywdlojtnvjlmvyrbszljd/asedesa/main/zxcv.lua", true))()
+
+-- Logika saat tombol Check Key diklik
+checkKeyButton.MouseButton1Click:Connect(function()
+    local inputKey = textBox.Text
+    if verify(inputKey) then
+        onMessage("Successfully entered with key: " .. inputKey)
     else
-        onMessage("Please enter a new key.")
+        onMessage("Invalid key!")
     end
-end
+end)
