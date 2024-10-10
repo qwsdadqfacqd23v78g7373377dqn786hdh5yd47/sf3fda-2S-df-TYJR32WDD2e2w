@@ -123,31 +123,18 @@ function verifyNormalKey(key)
 end
 
 checkKeyButton.MouseButton1Click:Connect(function()
-    local key = textBox.Text
-    local username = LocalPlayer.Name
-
-    if table.find(validUsernames, username) then
-        if verifyNormalKey(key) then
-            textBox.Text = "Key Valid!"
-            textBox.TextColor3 = Color3.fromRGB(0, 255, 0)
-        else
-            textBox.Text = "Key Tidak Valid!"
-            textBox.TextColor3 = Color3.fromRGB(255, 0, 0)
-        end
-    else
-        textBox.Text = "Username Tidak Dikenali!"
-        textBox.TextColor3 = Color3.fromRGB(255, 0, 0)
-    end
+    setclipboard("https://discord.com/invite/brutality-hub-1182005198206545941")
+    textBox.Text = "Key invalid!"
 end)
 
 -- Tombol salin link key
 copyLinkKeyButton.MouseButton1Click:Connect(function()
     setclipboard("https://medusastore.tech/halaman/postingan/point-key.html")
-    copyLinkKeyButton.Text = "Link Key Copied!"
+    textBox.Text = "Link Get Key Copied!"
 end)
 
 -- Tombol salin link Discord
 copyDiscordButton.MouseButton1Click:Connect(function()
     setclipboard("https://discord.com/invite/brutality-hub-1182005198206545941")
-    copyDiscordButton.Text = "Link Discord Copied!"
+    textBox.Text = "Link Discord Copied!"
 end)
