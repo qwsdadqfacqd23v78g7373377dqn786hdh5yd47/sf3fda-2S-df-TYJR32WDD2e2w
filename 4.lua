@@ -105,6 +105,7 @@ wait(2)
 animationText.Text = "Subscribe Medusa Script"
 wait(2)
 animationText.Text = "Thanks For Using"
+wait(2)
 animationText.Visible = false
 frame.Visible = true
 
