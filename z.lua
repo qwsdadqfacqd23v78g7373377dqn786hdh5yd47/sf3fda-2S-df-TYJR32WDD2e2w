@@ -39,7 +39,7 @@ bgImage.Parent = frame
 -- Profil pengguna
 local profileFrame = Instance.new("Frame")
 profileFrame.Size = UDim2.new(0, 120, 0, 120)
-profileFrame.Position = UDim2.new(0, 15, 0.5, -60)  -- Berada di tengah secara vertikal (bagian kiri)
+profileFrame.Position = UDim2.new(0, 15, 0.5, -60)  -- Posisi di tengah secara vertikal pada bagian kiri
 profileFrame.AnchorPoint = Vector2.new(0, 0.5) -- Mengatur agar ditengah vertikal dari posisinya
 profileFrame.BackgroundTransparency = 0.7
 profileFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
@@ -64,7 +64,6 @@ usernameLabel.BackgroundTransparency = 1
 usernameLabel.Font = Enum.Font.GothamBold
 usernameLabel.TextSize = 16
 usernameLabel.Parent = frame
-
 
 -- Textbox untuk input key
 local textBox = Instance.new("TextBox")
@@ -113,6 +112,7 @@ copyDiscordButton.Font = Enum.Font.GothamBold
 copyDiscordButton.TextSize = 18
 copyDiscordButton.BorderSizePixel = 0
 copyDiscordButton.Parent = frame
+
 
 -- Animasi Brutality Hub V4 -> Thanks For Using
 local animationText = Instance.new("TextLabel")
