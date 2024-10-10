@@ -84,7 +84,7 @@ KeyTextBox.ClearTextOnFocus = false
 ButtonsContainer.Name = "ButtonsContainer"
 ButtonsContainer.Parent = KeySection
 ButtonsContainer.BackgroundTransparency = 1
-ButtonsContainer.Position = UDim2.new(0.1, 0, 0.5, 0)
+ButtonsContainer.Position = UDim2.new(0.1, 0, 0.4, 0)
 ButtonsContainer.Size = UDim2.new(0.8, 0, 0.5, 0)
 
 ButtonsLayout.Parent = ButtonsContainer
@@ -119,8 +119,8 @@ local function createStylishButton(name, text, color)
 end
 
 local CheckKeyButton, CheckKeyButtonContainer = createStylishButton("CheckKeyButton", "Check Key", Color3.fromRGB(46, 204, 113))
-local CopyLinkButton, CopyLinkButtonContainer = createStylishButton("CopyLinkButton", "Copy Link", Color3.fromRGB(52, 152, 219))
-local CopyDiscordButton, CopyDiscordButtonContainer = createStylishButton("CopyDiscordButton", "Copy Discord Link", Color3.fromRGB(155, 89, 182))
+local CopyLinkButton, CopyLinkButtonContainer = createStylishButton("CopyLinkButton", "Copy Link", Color3.fromRGB(46, 204, 113))
+local CopyDiscordButton, CopyDiscordButtonContainer = createStylishButton("CopyDiscordButton", "Copy Discord Link", Color3.fromRGB(52, 152, 219))
 
 -- Tambahkan TextLabel untuk menampilkan pesan di atas TextBox
 local MessageLabel = Instance.new("TextLabel")
