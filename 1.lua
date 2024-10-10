@@ -17,7 +17,7 @@ frame.BorderSizePixel = 0
 frame.Visible = false
 frame.Parent = screenGui
 
--- Menambahkan shadow efek
+-- Menambahkan efek bayangan
 local shadow = Instance.new("ImageLabel")
 shadow.Size = UDim2.new(1, 30, 1, 30)
 shadow.Position = UDim2.new(0, -15, 0, -15)
@@ -36,10 +36,10 @@ bgImage.Image = "rbxassetid://ROBLOX_ID_GAMBAR"  -- Ganti dengan Roblox ID gamba
 bgImage.ImageTransparency = 0.8
 bgImage.Parent = frame
 
--- Profil pengguna
+-- Profil pengguna, dipindah lebih ke bawah
 local profileFrame = Instance.new("Frame")
 profileFrame.Size = UDim2.new(0, 100, 0, 120)
-profileFrame.Position = UDim2.new(0, 10, 0, 10)
+profileFrame.Position = UDim2.new(0, 10, 0, 50) -- Dipindahkan sedikit ke bawah
 profileFrame.BackgroundTransparency = 0.7
 profileFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
 profileFrame.BorderSizePixel = 0
@@ -51,9 +51,10 @@ userProfilePic.Position = UDim2.new(0.5, -40, 0, 10)
 userProfilePic.Image = "rbxthumb://type=AvatarHeadShot&id=" .. LocalPlayer.UserId .. "&w=150&h=150"
 userProfilePic.Parent = profileFrame
 
+-- Username dipindahkan ke bawah profil
 local usernameLabel = Instance.new("TextLabel")
 usernameLabel.Size = UDim2.new(1, 0, 0, 30)
-usernameLabel.Position = UDim2.new(0, 0, 1, -40)
+usernameLabel.Position = UDim2.new(0, 0, 1, 0)  -- Ditempatkan di bawah user profile
 usernameLabel.Text = LocalPlayer.Name
 usernameLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 usernameLabel.BackgroundTransparency = 1
@@ -73,36 +74,36 @@ textBox.TextSize = 18
 textBox.BorderSizePixel = 0
 textBox.Parent = frame
 
--- Tombol Check Key
+-- Tombol Check Key, ditambahkan warna
 local checkKeyButton = Instance.new("TextButton")
 checkKeyButton.Size = UDim2.new(0, 250, 0, 40)
 checkKeyButton.Position = UDim2.new(1, -270, 0, 90)
 checkKeyButton.Text = "Check Key"
-checkKeyButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+checkKeyButton.BackgroundColor3 = Color3.fromRGB(0, 120, 255)  -- Warna biru
 checkKeyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 checkKeyButton.Font = Enum.Font.GothamBold
 checkKeyButton.TextSize = 18
 checkKeyButton.BorderSizePixel = 0
 checkKeyButton.Parent = frame
 
--- Tombol Copy Link Key
+-- Tombol Copy Link Key, ditambahkan warna
 local copyLinkKeyButton = Instance.new("TextButton")
 copyLinkKeyButton.Size = UDim2.new(0, 250, 0, 40)
 copyLinkKeyButton.Position = UDim2.new(1, -270, 0, 140)
 copyLinkKeyButton.Text = "Copy Link Key"
-copyLinkKeyButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+copyLinkKeyButton.BackgroundColor3 = Color3.fromRGB(0, 200, 100)  -- Warna hijau
 copyLinkKeyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 copyLinkKeyButton.Font = Enum.Font.GothamBold
 copyLinkKeyButton.TextSize = 18
 copyLinkKeyButton.BorderSizePixel = 0
 copyLinkKeyButton.Parent = frame
 
--- Tombol Copy Link Discord
+-- Tombol Copy Link Discord, ditambahkan warna
 local copyDiscordButton = Instance.new("TextButton")
 copyDiscordButton.Size = UDim2.new(0, 250, 0, 40)
 copyDiscordButton.Position = UDim2.new(1, -270, 0, 190)
 copyDiscordButton.Text = "Copy Link Discord"
-copyDiscordButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+copyDiscordButton.BackgroundColor3 = Color3.fromRGB(200, 100, 0)  -- Warna oranye
 copyDiscordButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 copyDiscordButton.Font = Enum.Font.GothamBold
 copyDiscordButton.TextSize = 18
@@ -126,7 +127,7 @@ wait(3)
 animationText.Visible = false
 frame.Visible = true
 
--- Tween untuk smooth transition
+-- Tween untuk transisi halus
 frame.Position = UDim2.new(0.5, -225, 1.5, 0)
 local tween = TweenService:Create(frame, TweenInfo.new(1), {Position = UDim2.new(0.5, -225, 0.5, -150)})
 tween:Play()
@@ -162,11 +163,11 @@ end)
 -- Tombol salin link key
 copyLinkKeyButton.MouseButton1Click:Connect(function()
     setclipboard("https://medusastore.tech/halaman/postingan/point-key.html")
-    copyLinkKeyButton.Text = "Link Key Copied!"
+    copyLinkKeyButton.Text = "Link Key Tersalin!"
 end)
 
 -- Tombol salin link Discord
 copyDiscordButton.MouseButton1Click:Connect(function()
     setclipboard("https://discord.com/invite/brutality-hub-1182005198206545941")
-    copyDiscordButton.Text = "Link Discord Copied!"
+    copyDiscordButton.Text = "Link Discord Tersalin!"
 end)
