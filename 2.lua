@@ -21,6 +21,18 @@ frame.BorderSizePixel = 0
 frame.Visible = false
 frame.Parent = screenGui
 
+-- Text di atas textBox, ditempatkan di tengah antara frame atas dan textBox
+local titleLabel = Instance.new("TextLabel")
+titleLabel.Size = UDim2.new(0, 250, 0, 40)
+titleLabel.Position = UDim2.new(0.5, -125, 0.15, 0) -- Ditempatkan di tengah antara bagian atas frame dan textBox
+titleLabel.Text = "BRUTALITY HUB V4"
+titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+titleLabel.BackgroundTransparency = 1
+titleLabel.Font = Enum.Font.GothamBold
+titleLabel.TextSize = 18
+titleLabel.Parent = frame
+
+
 -- Menambahkan background image dengan opacity
 local bgImage = Instance.new("ImageLabel")
 bgImage.Size = UDim2.new(1, 0, 1, 0)
