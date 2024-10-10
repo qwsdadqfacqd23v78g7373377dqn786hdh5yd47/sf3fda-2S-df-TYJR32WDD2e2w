@@ -32,7 +32,7 @@ shadow.Parent = frame
 local bgImage = Instance.new("ImageLabel")
 bgImage.Size = UDim2.new(1, 0, 1, 0)
 bgImage.Position = UDim2.new(0, 0, 0, 0)
-bgImage.Image = "rbxassetid://ROBLOX_ID_GAMBAR"
+bgImage.Image = "rbxassetid://18837785989"
 bgImage.ImageTransparency = 0.8
 bgImage.Parent = frame
 
