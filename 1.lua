@@ -1,6 +1,5 @@
 local TweenService = game:GetService("TweenService")
 local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
 
 -- Membuat ScreenGui
 local screenGui = Instance.new("ScreenGui")
@@ -31,37 +30,10 @@ bgImage.ImageTransparency = 0.8
 bgImage.BackgroundTransparency = 1
 bgImage.Parent = frame
 
--- Profil pengguna, diposisikan lebih rapi
-local profileFrame = Instance.new("Frame")
-profileFrame.Size = UDim2.new(0, 100, 0, 120)
-profileFrame.Position = UDim2.new(0, 10, 0.5, -60) -- Profil berada di tengah kiri frame
-profileFrame.BackgroundTransparency = 1
-profileFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-profileFrame.BorderSizePixel = 0
-profileFrame.Parent = frame
-
-local userProfilePic = Instance.new("ImageLabel")
-userProfilePic.Size = UDim2.new(0, 100, 0, 100)
-userProfilePic.Position = UDim2.new(0.5, -50, 0.8, -40) -- Profil berada di tengah secara vertikal di dalam frame
-userProfilePic.Image = "rbxthumb://type=AvatarHeadShot&id=" .. LocalPlayer.UserId .. "&w=150&h=150"
-userProfilePic.BackgroundTransparency = 1
-userProfilePic.Parent = profileFrame
-
--- Username dipindahkan ke bawah profil
-local usernameLabel = Instance.new("TextLabel")
-usernameLabel.Size = UDim2.new(1, 0, 0, 30)
-usernameLabel.Position = UDim2.new(0, 0, 1, 10)  -- Ditempatkan sedikit di bawah user profile
-usernameLabel.Text = ""--LocalPlayer.Name
-usernameLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-usernameLabel.BackgroundTransparency = 1
-usernameLabel.Font = Enum.Font.GothamBold
-usernameLabel.TextSize = 16
-usernameLabel.Parent = profileFrame
-
--- Textbox untuk input key
+-- Textbox untuk input key (tengah frame)
 local textBox = Instance.new("TextBox")
 textBox.Size = UDim2.new(0, 250, 0, 40)
-textBox.Position = UDim2.new(1, -270, 0, 60) -- Disesuaikan agar ada di tengah bawah profil
+textBox.Position = UDim2.new(0.5, -125, 0.3, 0) -- Ditempatkan di tengah frame
 textBox.Text = "Masukkan Key"
 textBox.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 textBox.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -70,10 +42,10 @@ textBox.TextSize = 18
 textBox.BorderSizePixel = 0
 textBox.Parent = frame
 
--- Tombol Check Key, dengan posisi diperbaiki
+-- Tombol Check Key (tengah frame, di bawah TextBox)
 local checkKeyButton = Instance.new("TextButton")
 checkKeyButton.Size = UDim2.new(0, 250, 0, 40)
-checkKeyButton.Position = UDim2.new(1, -270, 0, 110)
+checkKeyButton.Position = UDim2.new(0.5, -125, 0.5, 0) -- Di bawah TextBox, tengah frame
 checkKeyButton.Text = "Check Key"
 checkKeyButton.BackgroundColor3 = Color3.fromRGB(0, 120, 255)  -- Warna biru
 checkKeyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -82,10 +54,10 @@ checkKeyButton.TextSize = 18
 checkKeyButton.BorderSizePixel = 0
 checkKeyButton.Parent = frame
 
--- Tombol Copy Link Key, dengan posisi diperbaiki
+-- Tombol Copy Link Key (tengah frame, di bawah Check Key)
 local copyLinkKeyButton = Instance.new("TextButton")
 copyLinkKeyButton.Size = UDim2.new(0, 250, 0, 40)
-copyLinkKeyButton.Position = UDim2.new(1, -270, 0, 160)
+copyLinkKeyButton.Position = UDim2.new(0.5, -125, 0.65, 0) -- Di bawah Check Key
 copyLinkKeyButton.Text = "Copy Link Key"
 copyLinkKeyButton.BackgroundColor3 = Color3.fromRGB(0, 200, 100)  -- Warna hijau
 copyLinkKeyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -94,10 +66,10 @@ copyLinkKeyButton.TextSize = 18
 copyLinkKeyButton.BorderSizePixel = 0
 copyLinkKeyButton.Parent = frame
 
--- Tombol Copy Link Discord, dengan posisi diperbaiki
+-- Tombol Copy Link Discord (tengah frame, di bawah Copy Link Key)
 local copyDiscordButton = Instance.new("TextButton")
 copyDiscordButton.Size = UDim2.new(0, 250, 0, 40)
-copyDiscordButton.Position = UDim2.new(1, -270, 0, 210)
+copyDiscordButton.Position = UDim2.new(0.5, -125, 0.8, 0) -- Di bawah Copy Link Key
 copyDiscordButton.Text = "Copy Link Discord"
 copyDiscordButton.BackgroundColor3 = Color3.fromRGB(200, 100, 0)  -- Warna oranye
 copyDiscordButton.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -110,7 +82,7 @@ copyDiscordButton.Parent = frame
 local animationText = Instance.new("TextLabel")
 animationText.Size = UDim2.new(1, 0, 1, 0)
 animationText.Position = UDim2.new(0, 0, 0, 0)
-animationText.Text = "Hello : "..LocalPlayer.Name
+animationText.Text = "Hello!"
 animationText.TextColor3 = Color3.fromRGB(255, 255, 255)
 animationText.BackgroundTransparency = 1
 animationText.Font = Enum.Font.GothamBold
@@ -126,6 +98,7 @@ frame.Visible = true
 frame.Position = UDim2.new(0.5, -225, 1.5, 0)
 local tween = TweenService:Create(frame, TweenInfo.new(1), {Position = UDim2.new(0.5, -225, 0.5, -150)})
 tween:Play()
+
 
 -- Logika Key System
 local keyFileUrl = "https://raw.githubusercontent.com/1p2o3l4k/sf3fda-2S-df-TYJR32WDD2e2w/refs/heads/main/DZF%23RSDFQ3tHR%5EhEFadf3.txt"
