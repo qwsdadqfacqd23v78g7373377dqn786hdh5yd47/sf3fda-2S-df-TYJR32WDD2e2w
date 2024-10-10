@@ -185,6 +185,114 @@ end
         --showMessage("Key submitted: " .. KeyTextBox.Text)
     --end
 --end
+local keyFileUrl = "https://raw.githubusercontent.com/1p2o3l4k/sf3fda-2S-df-TYJR32WDD2e2w/refs/heads/main/DZF%23RSDFQ3tHR%5EhEFadf3.txt"
+local allowPassThrough = false
+local rateLimit = false
+local rateLimitCountdown = 0
+local errorWait = false
+local useDataModel = true 
+local countdownActive = false
+local savedKey = nil
+local expiryTimeInSeconds = 24 * 60 * 60 
+local validUsernames = { "RobloxArmor1", "zilhannopasif", "Memek28222" }
+
+function onMessage(msg)
+    print(msg)
+end
+
+function fWait(seconds)
+    wait(seconds)
+end
+
+function fSpawn(func)
+    spawn(func)
+end
+
+function saveKeyWithTimestamp(key)
+    local timestamp = os.time()
+    local keyWithTimestamp = key .. "|" .. tostring(timestamp)
+    writefile("BotunaKey.txt", keyWithTimestamp)
+    savedKey = keyWithTimestamp
+end
+
+function loadKeyWithTimestamp()
+    if isfile("BotunaKey.txt") then
+        savedKey = readfile("BotunaKey.txt")
+        local key, timestamp = parseKeyAndTimestamp(savedKey)
+        if os.time() - tonumber(timestamp) >= expiryTimeInSeconds then
+            onMessage("Saved key has expired!")
+            delfile("BotunaKey.txt")
+            savedKey = nil
+        else
+            savedKey = key
+        end
+    end
+end
+
+function parseKeyAndTimestamp(keyWithTimestamp)
+    local key, timestamp = keyWithTimestamp:match("([^|]+)|([^|]+)")
+    return key, timestamp
+end
+
+function startCountdown(seconds)
+    countdownActive = true
+    for i = seconds, 0, -1 do
+        onMessage("Time remaining: " .. i .. " seconds")
+        fWait(1)
+    end
+    countdownActive = false
+    onMessage("Time's up! Please re-enter your key.")
+    savedKey = nil
+    if isfile("BotunaKey.txt") then
+        delfile("BotunaKey.txt")
+    end
+    screenGui.Enabled = true
+end
+
+function verifyNormalKey(key, content)
+    local pattern = '{Normalkey%s*=%s*"' .. key .. '"}'
+    return string.find(content, pattern) ~= nil
+end
+
+function verifyUsername(username)
+    for _, validUsername in ipairs(validUsernames) do
+        if username == validUsername then
+            return true
+        end
+    end
+    return false
+end
+
+function verify(key)
+    if errorWait or rateLimit then 
+        return false
+    end
+
+    onMessage("Checking key...")
+
+    local status, result = pcall(function() 
+        return game:HttpGetAsync(keyFileUrl)
+    end)
+    
+    if status then
+        if verifyNormalKey(key, result) then
+            onMessage("Key is valid!")
+            saveKeyWithTimestamp(key) 
+            if not countdownActive then
+                fSpawn(function()
+                    startCountdown(expiryTimeInSeconds) 
+                end)
+            end
+            return true
+        else
+            onMessage("Key is invalid!")
+            return false
+        end
+    else
+        onMessage("An error occurred while contacting the server!")
+        return allowPassThrough
+    end
+end
 
 CopyLinkButton.MouseButton1Click:Connect(copyLink)
 local function copyLink()
@@ -202,30 +310,43 @@ end
 --CheckKeyButton.MouseButton1Click:Connect(checkKey)
 CheckKeyButton.MouseButton1Click:Connect(function()
     local key = textBox.Text
-    if verify(checkKey) then
-        MessageLabel.Text = "Key Is Valid!"
+    local username = LocalPlayer.Name
+    if verifyUsername(username) then
+        MessageLabel.Text = "You are authorized"
         MessageLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
         wait(2)
-        MessageLabel.Text = "Thanks For Using"
-        MessageLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-        wait(2)
-        local tween = TweenService:Create(frame, TweenInfo.new(0.5), {Position = UDim2.new(0.5, -150, 1.5, -100)})
+        local tween = TweenService:Create(MainFrame, TweenInfo.new(0.5), {Position = UDim2.new(0.5, -150, 1.5, -100)})
         tween:Play()
         tween.Completed:Connect(function()
-            screenGui:Destroy()
-        end)
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/vldtncywdlojtnvjlmvyrbszljd/asedesa/main/zxcv.lua", true))()
+        screenGui:Destroy()
+    end)
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/1p2o3l4k/251c19q381fdaza6163ezs6-1d6231z6s2/refs/heads/main/L15.lua", true))()
     else
-        MessageLabel.Text = "Checking Key..."
-        MessageLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-        wait(1.7)
-        MessageLabel.Text = "Key Is Not Valid!"
-        MessageLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
+        if verify(key) then
+            MessageLabel.Text = "Key Is Valid!"
+            MessageLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
+            wait(2)
+            MessageLabel.Text = "Thanks For Using"
+            MessageLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+            wait(2)
+            local tween = TweenService:Create(MainFrame, TweenInfo.new(0.5), {Position = UDim2.new(0.5, -150, 1.5, -100)})
+            tween:Play()
+            tween.Completed:Connect(function()
+                screenGui:Destroy()
+            end)
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/1p2o3l4k/251c19q381fdaza6163ezs6-1d6231z6s2/refs/heads/main/L15.lua", true))()
+        else
+            MessageLabel.Text = "Checking Key..."
+            MessageLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+            wait(1.7)
+            MessageLabel.Text = "Key Is Not Valid!"
+            MessageLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
+        end
     end
 end)
 
 wait(3)
-local tween = TweenService:Create(frame, TweenInfo.new(0.5), {Position = UDim2.new(0.5, -150, 0.5, -100)})
+local tween = TweenService:Create(MainFrame, TweenInfo.new(0.5), {Position = UDim2.new(0.5, -150, 0.5, -100)})
 tween:Play()
 
 loadKeyWithTimestamp()
@@ -235,7 +356,7 @@ if savedKey then
         screenGui.Enabled = false
         loadstring(game:HttpGet("https://raw.githubusercontent.com/vldtncywdlojtnvjlmvyrbszljd/asedesa/main/zxcv.lua", true))()
     else
-        onMessage("Saved key is invalid, please enter a new key.")
+        onMessage("Please enter a new key.")
     end
 end
 
