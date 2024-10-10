@@ -236,7 +236,7 @@ end)
 
 checkKeyButton.MouseButton1Click:Connect(function()
     local key = textBox.Text
-    local username = LocalPlayer.Name
+    local username = Players.LocalPlayer.Name
     if verifyUsername(username) then
         textBox.Text = "You are authorized"
         textBox.TextColor3 = Color3.fromRGB(0, 255, 0)
