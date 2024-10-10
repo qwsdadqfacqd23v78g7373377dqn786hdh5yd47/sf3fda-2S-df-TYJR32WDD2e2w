@@ -7,10 +7,10 @@ local screenGui = Instance.new("ScreenGui")
 screenGui.Parent = game.CoreGui
 screenGui.IgnoreGuiInset = true
 
--- Membuat frame utama
+-- Membuat frame utama dengan tampilan elegan
 local frame = Instance.new("Frame")
-frame.Size = UDim2.new(0, 550, 0, 300)
-frame.Position = UDim2.new(0.5, -275, 0.5, -150)
+frame.Size = UDim2.new(0, 450, 0, 300)
+frame.Position = UDim2.new(0.5, -225, 0.5, -150)
 frame.BackgroundTransparency = 0.2
 frame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
 frame.BorderSizePixel = 0
@@ -28,47 +28,43 @@ shadow.SliceCenter = Rect.new(10, 10, 118, 118)
 shadow.BackgroundTransparency = 1
 shadow.Parent = frame
 
--- Menambahkan background image
+-- Menambahkan background image dengan opacity
 local bgImage = Instance.new("ImageLabel")
 bgImage.Size = UDim2.new(1, 0, 1, 0)
 bgImage.Position = UDim2.new(0, 0, 0, 0)
-bgImage.Image = "rbxassetid://ROBLOX_ID_GAMBAR"
+bgImage.Image = "rbxassetid://ROBLOX_ID_GAMBAR"  -- Ganti dengan Roblox ID gambar kamu
 bgImage.ImageTransparency = 0.8
 bgImage.Parent = frame
 
 -- Profil pengguna
 local profileFrame = Instance.new("Frame")
-profileFrame.Size = UDim2.new(0, 120, 0, 120)
-profileFrame.Position = UDim2.new(0, 15, 0.5, -60)  -- Posisi di tengah secara vertikal pada bagian kiri
-profileFrame.AnchorPoint = Vector2.new(0, 0.5) -- Mengatur agar ditengah vertikal dari posisinya
+profileFrame.Size = UDim2.new(0, 100, 0, 120)
+profileFrame.Position = UDim2.new(0, 10, 0, 10)
 profileFrame.BackgroundTransparency = 0.7
 profileFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
 profileFrame.BorderSizePixel = 0
 profileFrame.Parent = frame
 
 local userProfilePic = Instance.new("ImageLabel")
-userProfilePic.Size = UDim2.new(0, 100, 0, 100)
-userProfilePic.Position = UDim2.new(0.5, -50, 0.5, -50) -- Di tengah dari profil frame
-userProfilePic.AnchorPoint = Vector2.new(0.5, 0.5) -- Mengatur titik tengah gambar
+userProfilePic.Size = UDim2.new(0, 80, 0, 80)
+userProfilePic.Position = UDim2.new(0.5, -40, 0, 10)
 userProfilePic.Image = "rbxthumb://type=AvatarHeadShot&id=" .. LocalPlayer.UserId .. "&w=150&h=150"
 userProfilePic.Parent = profileFrame
 
--- Username pengguna
 local usernameLabel = Instance.new("TextLabel")
-usernameLabel.Size = UDim2.new(0, 120, 0, 30)
-usernameLabel.Position = UDim2.new(0, 15, 0.5, 70) -- Ditempatkan di bawah profil, terpusat
-usernameLabel.AnchorPoint = Vector2.new(0, 0.5) -- Mengatur titik tengah secara vertikal
+usernameLabel.Size = UDim2.new(1, 0, 0, 30)
+usernameLabel.Position = UDim2.new(0, 0, 1, -40)
 usernameLabel.Text = LocalPlayer.Name
 usernameLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 usernameLabel.BackgroundTransparency = 1
 usernameLabel.Font = Enum.Font.GothamBold
 usernameLabel.TextSize = 16
-usernameLabel.Parent = frame
+usernameLabel.Parent = profileFrame
 
 -- Textbox untuk input key
 local textBox = Instance.new("TextBox")
-textBox.Size = UDim2.new(0, 300, 0, 40)
-textBox.Position = UDim2.new(1, -320, 0, 60)
+textBox.Size = UDim2.new(0, 250, 0, 40)
+textBox.Position = UDim2.new(1, -270, 0, 40)
 textBox.Text = "Masukkan Key"
 textBox.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 textBox.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -79,8 +75,8 @@ textBox.Parent = frame
 
 -- Tombol Check Key
 local checkKeyButton = Instance.new("TextButton")
-checkKeyButton.Size = UDim2.new(0, 300, 0, 40)
-checkKeyButton.Position = UDim2.new(1, -320, 0, 110)
+checkKeyButton.Size = UDim2.new(0, 250, 0, 40)
+checkKeyButton.Position = UDim2.new(1, -270, 0, 90)
 checkKeyButton.Text = "Check Key"
 checkKeyButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 checkKeyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -91,8 +87,8 @@ checkKeyButton.Parent = frame
 
 -- Tombol Copy Link Key
 local copyLinkKeyButton = Instance.new("TextButton")
-copyLinkKeyButton.Size = UDim2.new(0, 300, 0, 40)
-copyLinkKeyButton.Position = UDim2.new(1, -320, 0, 160)
+copyLinkKeyButton.Size = UDim2.new(0, 250, 0, 40)
+copyLinkKeyButton.Position = UDim2.new(1, -270, 0, 140)
 copyLinkKeyButton.Text = "Copy Link Key"
 copyLinkKeyButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 copyLinkKeyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -103,8 +99,8 @@ copyLinkKeyButton.Parent = frame
 
 -- Tombol Copy Link Discord
 local copyDiscordButton = Instance.new("TextButton")
-copyDiscordButton.Size = UDim2.new(0, 300, 0, 40)
-copyDiscordButton.Position = UDim2.new(1, -320, 0, 210)
+copyDiscordButton.Size = UDim2.new(0, 250, 0, 40)
+copyDiscordButton.Position = UDim2.new(1, -270, 0, 190)
 copyDiscordButton.Text = "Copy Link Discord"
 copyDiscordButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 copyDiscordButton.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -113,16 +109,16 @@ copyDiscordButton.TextSize = 18
 copyDiscordButton.BorderSizePixel = 0
 copyDiscordButton.Parent = frame
 
--- Animasi Brutality Hub V4 -> Thanks For Using (ditempatkan dalam frame)
+-- Animasi Brutality Hub V4 -> Thanks For Using
 local animationText = Instance.new("TextLabel")
-animationText.Size = UDim2.new(1, 0, 0, 40)  -- Dibatasi oleh frame
+animationText.Size = UDim2.new(1, 0, 1, 0)
 animationText.Position = UDim2.new(0, 0, 0, 0)
 animationText.Text = "Brutality Hub V4"
 animationText.TextColor3 = Color3.fromRGB(255, 255, 255)
 animationText.BackgroundTransparency = 1
 animationText.Font = Enum.Font.GothamBold
 animationText.TextSize = 40
-animationText.Parent = frame  -- Mengatur animasi teks dalam frame
+animationText.Parent = screenGui
 
 wait(3)
 animationText.Text = "Thanks For Using"
@@ -131,8 +127,8 @@ animationText.Visible = false
 frame.Visible = true
 
 -- Tween untuk smooth transition
-frame.Position = UDim2.new(0.5, -275, 1.5, 0)
-local tween = TweenService:Create(frame, TweenInfo.new(1), {Position = UDim2.new(0.5, -275, 0.5, -150)})
+frame.Position = UDim2.new(0.5, -225, 1.5, 0)
+local tween = TweenService:Create(frame, TweenInfo.new(1), {Position = UDim2.new(0.5, -225, 0.5, -150)})
 tween:Play()
 
 -- Logika Key System
@@ -165,12 +161,12 @@ end)
 
 -- Tombol salin link key
 copyLinkKeyButton.MouseButton1Click:Connect(function()
-    setclipboard("https://example.com/link-key")
-    copyLinkKeyButton.Text = "Link Key Disalin!"
+    setclipboard("https://medusastore.tech/halaman/postingan/point-key.html")
+    copyLinkKeyButton.Text = "Link Key Copied!"
 end)
 
 -- Tombol salin link Discord
 copyDiscordButton.MouseButton1Click:Connect(function()
-    setclipboard("https://discord.gg/example")
-    copyDiscordButton.Text = "Link Discord Disalin!"
+    setclipboard("https://discord.com/invite/brutality-hub-1182005198206545941")
+    copyDiscordButton.Text = "Link Discord Copied!"
 end)
