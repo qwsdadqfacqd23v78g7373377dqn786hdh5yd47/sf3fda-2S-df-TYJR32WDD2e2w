@@ -120,7 +120,7 @@ local useDataModel = true
 local countdownActive = false
 local savedKey = nil
 local expiryTimeInSeconds = 24 * 60 * 60 
-local validUsernames = { "RobloxArmor1", "zilhannopasif", "Memek28222" }
+local validUsernames = { "RobloxArmor1", "zilhannopasif", "Memek228222" }
 
 function onMessage(msg)
     print(msg)
@@ -232,7 +232,6 @@ copyDiscordButton.MouseButton1Click:Connect(function()
     setclipboard("https://discord.com/invite/brutality-hub-1182005198206545941")
     textBox.Text = "Link Discord Copied!"
 end)
-
 
 checkKeyButton.MouseButton1Click:Connect(function()
     local key = textBox.Text
