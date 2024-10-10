@@ -84,7 +84,7 @@ KeyTextBox.ClearTextOnFocus = false
 ButtonsContainer.Name = "ButtonsContainer"
 ButtonsContainer.Parent = KeySection
 ButtonsContainer.BackgroundTransparency = 1
-ButtonsContainer.Position = UDim2.new(0.1, 0, 0.4, 0)
+ButtonsContainer.Position = UDim2.new(0.1, 0, 0.2, 0)
 ButtonsContainer.Size = UDim2.new(0.8, 0, 0.5, 0)
 
 ButtonsLayout.Parent = ButtonsContainer
@@ -123,16 +123,11 @@ local CopyLinkButton, CopyLinkButtonContainer = createStylishButton("CopyLinkBut
 local CopyDiscordButton, CopyDiscordButtonContainer = createStylishButton("CopyDiscordButton", "Copy Discord Link", Color3.fromRGB(155, 89, 182))
 
 -- Tambahkan TextLabel untuk menampilkan pesan di atas TextBox
-local textBoxY = TextBoxContainer.Position.Y.Scale
-local textBoxHeight = TextBoxContainer.Size.Y.Scale
-
--- Posisi tengah antara atas frame dan bawah text box
-local middleY = textBoxY + (textBoxHeight / 2)
 local MessageLabel = Instance.new("TextLabel")
 MessageLabel.Name = "MessageLabel"
 MessageLabel.Parent = KeySection
 MessageLabel.BackgroundTransparency = 1
-MessageLabel.Position = UDim2.new(0.1, 0, middleY, 0)
+MessageLabel.Position = UDim2.new(0.1, 0, 0.10, 0) -- Di atas TextBox
 MessageLabel.Size = UDim2.new(0.8, 0, 0, 30)
 MessageLabel.Font = Enum.Font.GothamBold
 MessageLabel.Text = ""
