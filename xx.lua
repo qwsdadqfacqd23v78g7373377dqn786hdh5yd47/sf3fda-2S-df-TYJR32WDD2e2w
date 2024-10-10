@@ -32,7 +32,7 @@ shadow.Parent = frame
 local bgImage = Instance.new("ImageLabel")
 bgImage.Size = UDim2.new(1, 0, 1, 0)
 bgImage.Position = UDim2.new(0, 0, 0, 0)
-bgImage.Image = "rbxassetid://18837785989"
+bgImage.Image = "rbxassetid://ROBLOX_ID_GAMBAR"
 bgImage.ImageTransparency = 0.8
 bgImage.Parent = frame
 
@@ -113,17 +113,16 @@ copyDiscordButton.TextSize = 18
 copyDiscordButton.BorderSizePixel = 0
 copyDiscordButton.Parent = frame
 
-
--- Animasi Brutality Hub V4 -> Thanks For Using
+-- Animasi Brutality Hub V4 -> Thanks For Using (ditempatkan dalam frame)
 local animationText = Instance.new("TextLabel")
-animationText.Size = UDim2.new(1, 0, 1, 0)
+animationText.Size = UDim2.new(1, 0, 0, 40)  -- Dibatasi oleh frame
 animationText.Position = UDim2.new(0, 0, 0, 0)
 animationText.Text = "Brutality Hub V4"
 animationText.TextColor3 = Color3.fromRGB(255, 255, 255)
 animationText.BackgroundTransparency = 1
 animationText.Font = Enum.Font.GothamBold
 animationText.TextSize = 40
-animationText.Parent = screenGui
+animationText.Parent = frame  -- Mengatur animasi teks dalam frame
 
 wait(3)
 animationText.Text = "Thanks For Using"
@@ -166,12 +165,12 @@ end)
 
 -- Tombol salin link key
 copyLinkKeyButton.MouseButton1Click:Connect(function()
-    setclipboard("https://medusastore.tech/halaman/postingan/point-key.html")
-    copyLinkKeyButton.Text = "Link Key Copied!"
+    setclipboard("https://example.com/link-key")
+    copyLinkKeyButton.Text = "Link Key Disalin!"
 end)
 
 -- Tombol salin link Discord
 copyDiscordButton.MouseButton1Click:Connect(function()
-    setclipboard("https://discord.com/invite/brutality-hub-1182005198206545941")
-    copyDiscordButton.Text = "Link Discord Copied!"
+    setclipboard("https://discord.gg/example")
+    copyDiscordButton.Text = "Link Discord Disalin!"
 end)
