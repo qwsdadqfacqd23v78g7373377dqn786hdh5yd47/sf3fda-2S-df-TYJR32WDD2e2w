@@ -45,7 +45,7 @@ Username.BackgroundTransparency = 1
 Username.Position = UDim2.new(0, 0, 0.8, 0)
 Username.Size = UDim2.new(1, 0, 0.2, 0)
 Username.Font = Enum.Font.GothamBold
-Username.Text = ""..identiferusername
+Username.Text = "username"
 Username.TextColor3 = Color3.fromRGB(255, 255, 255)
 Username.TextSize = 18
 
