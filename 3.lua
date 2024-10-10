@@ -33,7 +33,7 @@ bgImage.Parent = frame
 
 -- Profil pengguna, diposisikan lebih rapi
 local profileFrame = Instance.new("Frame")
-profileFrame.Size = UDim2.new(0, 100, 0, 1240)
+profileFrame.Size = UDim2.new(0, 100, 0, 120)
 profileFrame.Position = UDim2.new(0, 10, 0.5, -60) -- Profil berada di tengah kiri frame
 profileFrame.BackgroundTransparency = 1
 profileFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
@@ -42,7 +42,7 @@ profileFrame.Parent = frame
 
 local userProfilePic = Instance.new("ImageLabel")
 userProfilePic.Size = UDim2.new(0, 100, 0, 100)
-userProfilePic.Position = UDim2.new(0.5, -60, 0.5, -60) -- Profil berada di tengah secara vertikal di dalam frame
+userProfilePic.Position = UDim2.new(0.5, -50, 0.5, -40) -- Profil berada di tengah secara vertikal di dalam frame
 userProfilePic.Image = "rbxthumb://type=AvatarHeadShot&id=" .. LocalPlayer.UserId .. "&w=150&h=150"
 userProfilePic.BackgroundTransparency = 1
 userProfilePic.Parent = profileFrame
