@@ -42,7 +42,7 @@ profileFrame.Parent = frame
 
 local userProfilePic = Instance.new("ImageLabel")
 userProfilePic.Size = UDim2.new(0, 100, 0, 100)
-userProfilePic.Position = UDim2.new(0.5, -50, 0.5, -40) -- Profil berada di tengah secara vertikal di dalam frame
+userProfilePic.Position = UDim2.new(0.5, -40, 0.12, -40) -- Profil berada di tengah secara vertikal di dalam frame
 userProfilePic.Image = "rbxthumb://type=AvatarHeadShot&id=" .. LocalPlayer.UserId .. "&w=150&h=150"
 userProfilePic.BackgroundTransparency = 1
 userProfilePic.Parent = profileFrame
