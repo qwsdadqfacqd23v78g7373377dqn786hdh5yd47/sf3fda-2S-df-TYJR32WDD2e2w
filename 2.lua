@@ -114,7 +114,7 @@ copyDiscordButton.Parent = frame
 local animationText = Instance.new("TextLabel")
 animationText.Size = UDim2.new(1, 0, 1, 0)
 animationText.Position = UDim2.new(0, 0, 0, 0)
-animationText.Text = "Brutality Hub V4"
+animationText.Text = "Hello : "..LocalPlayer.Name
 animationText.TextColor3 = Color3.fromRGB(255, 255, 255)
 animationText.BackgroundTransparency = 1
 animationText.Font = Enum.Font.GothamBold
@@ -123,6 +123,10 @@ animationText.Parent = screenGui
 
 wait(3)
 animationText.Text = "Thanks For Using"
+wait(3)
+animationText.Text = "Brutality Hub V4"
+wait(3)
+animationText.Text = "Please Get Key :("
 wait(3)
 animationText.Visible = false
 frame.Visible = true
@@ -163,11 +167,11 @@ end)
 -- Tombol salin link key
 copyLinkKeyButton.MouseButton1Click:Connect(function()
     setclipboard("https://medusastore.tech/halaman/postingan/point-key.html")
-    copyLinkKeyButton.Text = "Link Key Tersalin!"
+    copyLinkKeyButton.Text = "Link Key Copied!"
 end)
 
 -- Tombol salin link Discord
 copyDiscordButton.MouseButton1Click:Connect(function()
     setclipboard("https://discord.com/invite/brutality-hub-1182005198206545941")
-    copyDiscordButton.Text = "Link Discord Tersalin!"
+    copyDiscordButton.Text = "Link Discord Copied!"
 end)
