@@ -33,7 +33,7 @@ bgImage.Parent = frame
 
 -- Profil pengguna, diposisikan lebih rapi
 local profileFrame = Instance.new("Frame")
-profileFrame.Size = UDim2.new(0, 120, 0, 140)
+profileFrame.Size = UDim2.new(0, 100, 0, 1240)
 profileFrame.Position = UDim2.new(0, 10, 0.5, -60) -- Profil berada di tengah kiri frame
 profileFrame.BackgroundTransparency = 1
 profileFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
@@ -41,8 +41,8 @@ profileFrame.BorderSizePixel = 0
 profileFrame.Parent = frame
 
 local userProfilePic = Instance.new("ImageLabel")
-userProfilePic.Size = UDim2.new(0, 80, 0, 80)
-userProfilePic.Position = UDim2.new(0.5, -40, 0.5, -40) -- Profil berada di tengah secara vertikal di dalam frame
+userProfilePic.Size = UDim2.new(0, 100, 0, 100)
+userProfilePic.Position = UDim2.new(0.5, -60, 0.5, -60) -- Profil berada di tengah secara vertikal di dalam frame
 userProfilePic.Image = "rbxthumb://type=AvatarHeadShot&id=" .. LocalPlayer.UserId .. "&w=150&h=150"
 userProfilePic.BackgroundTransparency = 1
 userProfilePic.Parent = profileFrame
@@ -51,7 +51,7 @@ userProfilePic.Parent = profileFrame
 local usernameLabel = Instance.new("TextLabel")
 usernameLabel.Size = UDim2.new(1, 0, 0, 30)
 usernameLabel.Position = UDim2.new(0, 0, 1, 10)  -- Ditempatkan sedikit di bawah user profile
-usernameLabel.Text = LocalPlayer.Name
+usernameLabel.Text = ""--LocalPlayer.Name
 usernameLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 usernameLabel.BackgroundTransparency = 1
 usernameLabel.Font = Enum.Font.GothamBold
