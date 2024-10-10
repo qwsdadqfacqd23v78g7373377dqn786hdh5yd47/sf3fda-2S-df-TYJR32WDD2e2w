@@ -174,17 +174,17 @@ end
 
 
 -- Button Functions
-local function checkKey()
+--local function checkKey()
     -- Logika pengecekan key di sini
-    print("Checking key: " .. KeyTextBox.Text)
+    --print("Checking key: " .. KeyTextBox.Text)
     
     -- Menampilkan pesan di atas TextBox
-    if KeyTextBox.Text == "" then
-        showMessage("Please enter a key!")
-    else
-        showMessage("Key submitted: " .. KeyTextBox.Text)
-    end
-end
+    --if KeyTextBox.Text == "" then
+        --showMessage("Please enter a key!")
+    --else
+        --showMessage("Key submitted: " .. KeyTextBox.Text)
+    --end
+--end
 
 CopyLinkButton.MouseButton1Click:Connect(copyLink)
 local function copyLink()
@@ -199,8 +199,8 @@ local function copyDiscordLink()
 end
 
 
-CheckKeyButton.MouseButton1Click:Connect(checkKey)
-checkKeyButton.MouseButton1Click:Connect(function()
+--CheckKeyButton.MouseButton1Click:Connect(checkKey)
+CheckKeyButton.MouseButton1Click:Connect(function()
     local key = textBox.Text
     if verify(checkKey) then
         MessageLabel.Text = "Key Is Valid!"
