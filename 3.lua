@@ -117,9 +117,9 @@ local function createStylishButton(name, text, color)
     return Button, ButtonContainer
 end
 
-local CheckKeyButton = createStylishButton("CheckKeyButton", "Check Key", Color3.fromRGB(46, 204, 113))
-local CopyLinkButton = createStylishButton("CopyLinkButton", "Copy Link", Color3.fromRGB(52, 152, 219))
-local CopyDiscordButton = createStylishButton("CopyDiscordButton", "Copy Discord Link", Color3.fromRGB(155, 89, 182))
+local CheckKeyButton, CheckKeyButtonContainer = createStylishButton("CheckKeyButton", "Check Key", Color3.fromRGB(46, 204, 113))
+local CopyLinkButton, CopyLinkButtonContainer = createStylishButton("CopyLinkButton", "Copy Link", Color3.fromRGB(52, 152, 219))
+local CopyDiscordButton, CopyDiscordButtonContainer = createStylishButton("CopyDiscordButton", "Copy Discord Link", Color3.fromRGB(155, 89, 182))
 
 -- Button Functions
 local function checkKey()
@@ -135,9 +135,9 @@ local function copyDiscordLink()
     setclipboard("https://discord.gg/your-discord")
 end
 
-CheckKeyButton[1].MouseButton1Click:Connect(checkKey)
-CopyLinkButton[1].MouseButton1Click:Connect(copyLink)
-CopyDiscordButton[1].MouseButton1Click:Connect(copyDiscordLink)
+CheckKeyButton.MouseButton1Click:Connect(checkKey)
+CopyLinkButton.MouseButton1Click:Connect(copyLink)
+CopyDiscordButton.MouseButton1Click:Connect(copyDiscordLink)
 
 -- Update username and profile picture
 local player = game.Players.LocalPlayer
@@ -168,6 +168,6 @@ local function addHoverEffect(buttonContainer)
     end)
 end
 
-addHoverEffect(CheckKeyButton[2])
-addHoverEffect(CopyLinkButton[2])
-addHoverEffect(CopyDiscordButton[2])
+addHoverEffect(CheckKeyButtonContainer)
+addHoverEffect(CopyLinkButtonContainer)
+addHoverEffect(CopyDiscordButtonContainer)
