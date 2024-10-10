@@ -50,7 +50,7 @@ userProfilePic.Parent = profileFrame
 -- Username dipindahkan ke bawah profil
 local usernameLabel = Instance.new("TextLabel")
 usernameLabel.Size = UDim2.new(1, 0, 0, 30)
-usernameLabel.Position = UDim2.new(0, 10, 1, 10)  -- Geser 20 piksel dari kiri
+usernameLabel.Position = UDim2.new(0, 5, 1, 10)  -- Geser 20 piksel dari kiri
 usernameLabel.Text = LocalPlayer.Name
 usernameLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 usernameLabel.BackgroundTransparency = 1
