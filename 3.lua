@@ -127,7 +127,7 @@ local MessageLabel = Instance.new("TextLabel")
 MessageLabel.Name = "MessageLabel"
 MessageLabel.Parent = KeySection
 MessageLabel.BackgroundTransparency = 1
-MessageLabel.Position = UDim2.new(0.1, 0, 0.15, 0) -- Di atas TextBox
+MessageLabel.Position = UDim2.new(0.1, 0, 0.10, 0) -- Di atas TextBox
 MessageLabel.Size = UDim2.new(0.8, 0, 0, 30)
 MessageLabel.Font = Enum.Font.GothamBold
 MessageLabel.Text = ""
@@ -139,7 +139,7 @@ MessageLabel.Visible = false -- Awalnya tidak terlihat
 local function showMessage(text)
     MessageLabel.Text = text
     MessageLabel.Visible = true
-    wait(2)  -- Pesan akan muncul selama 2 detik
+    wait(5)  -- Pesan akan muncul selama 2 detik
     MessageLabel.Visible = false
 end
 
