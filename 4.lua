@@ -92,6 +92,8 @@ ButtonsLayout.SortOrder = Enum.SortOrder.LayoutOrder
 ButtonsLayout.Padding = UDim.new(0, 15)
 ButtonsLayout.FillDirection = Enum.FillDirection.Vertical
 
+
+
 -- Create Stylish Buttons
 local function createStylishButton(name, text, color)
     local ButtonContainer = Instance.new("Frame")
