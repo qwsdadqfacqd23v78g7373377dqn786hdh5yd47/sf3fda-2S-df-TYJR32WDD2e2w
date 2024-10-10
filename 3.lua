@@ -94,18 +94,16 @@ copyDiscordButton.Parent = frame
 local animationText = Instance.new("TextLabel")
 animationText.Size = UDim2.new(1, 0, 1, 0)
 animationText.Position = UDim2.new(0, 0, 0, 0)
-animationText.Text = "Hello :"..LocalPlayer.Name
+animationText.Text = "Welcome Brothers"
 animationText.TextColor3 = Color3.fromRGB(255, 255, 255)
 animationText.BackgroundTransparency = 1
 animationText.Font = Enum.Font.GothamBold
 animationText.TextSize = 40
 animationText.Parent = screenGui
 
-wait(1)
-animationText.Text = "Welcome Brothers"
-wait(3)
+wait(2)
 animationText.Text = "Subscribe Medusa Script"
-wait(3)
+wait(2)
 animationText.Text = "Thanks For Using"
 animationText.Visible = false
 frame.Visible = true
