@@ -140,17 +140,17 @@ end
 function saveKeyWithTimestamp(key)
     local timestamp = os.time()
     local keyWithTimestamp = key .. "|" .. tostring(timestamp)
-    writefile("BotunaKey.txt", keyWithTimestamp)
+    writefile("Botuna.txt", keyWithTimestamp)
     savedKey = keyWithTimestamp
 end
 
 function loadKeyWithTimestamp()
-    if isfile("BotunaKey.txt") then
-        savedKey = readfile("BotunaKey.txt")
+    if isfile("Botuna.txt") then
+        savedKey = readfile("Botuna.txt")
         local key, timestamp = parseKeyAndTimestamp(savedKey)
         if os.time() - tonumber(timestamp) >= expiryTimeInSeconds then
             onMessage("Saved key has expired!")
-            delfile("BotunaKey.txt")
+            delfile("Botuna.txt")
             savedKey = nil
         else
             savedKey = key
@@ -172,8 +172,8 @@ function startCountdown(seconds)
     countdownActive = false
     onMessage("Time's up! Please re-enter your key.")
     savedKey = nil
-    if isfile("BotunaKey.txt") then
-        delfile("BotunaKey.txt")
+    if isfile("Botuna.txt") then
+        delfile("Botuna.txt")
     end
     screenGui.Enabled = true
 end
