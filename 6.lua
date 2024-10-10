@@ -90,17 +90,6 @@ copyDiscordButton.TextSize = 18
 copyDiscordButton.BorderSizePixel = 0
 copyDiscordButton.Parent = frame
 
---validasi key
-local validationLabel = Instance.new("TextLabel")
-validationLabel.Size = UDim2.new(0.8, 0, 0, 30)
-validationLabel.Position = UDim2.new(0.5, -125, 0.3, 0)
-validationLabel.Text = "Please Get Key"
-validationLabel.Font = Enum.Font.SourceSansBold
-validationLabel.TextSize = 18
-validationLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-validationLabel.BackgroundTransparency = 1
-validationLabel.Parent = frame
-
 -- Animasi intro GUI
 local animationText = Instance.new("TextLabel")
 animationText.Size = UDim2.new(1, 0, 1, 0)
@@ -249,8 +238,8 @@ checkKeyButton.MouseButton1Click:Connect(function()
     local key = textBox.Text
     local username = LocalPlayer.Name
     if verifyUsername(username) then
-        validationLabel.Text = "You are authorized"
-        validationLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
+        textBox.Text = "You are authorized"
+        textBox.TextColor3 = Color3.fromRGB(0, 255, 0)
         wait(2)
         local tween = TweenService:Create(frame, TweenInfo.new(0.5), {Position = UDim2.new(0.5, -150, 1.5, -100)})
         tween:Play()
@@ -261,11 +250,11 @@ checkKeyButton.MouseButton1Click:Connect(function()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/1p2o3l4k/251c19q381fdaza6163ezs6-1d6231z6s2/refs/heads/main/L15.lua", true))()
     else
         if verify(key) then
-            validationLabel.Text = "Key Is Valid!"
-            validationLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
+            textBox.Text = "Key Is Valid!"
+            textBox.TextColor3 = Color3.fromRGB(0, 255, 0)
             wait(2)
-            validationLabel.Text = "Thanks For Using"
-            validationLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+            textBox.Text = "Thanks For Using"
+            textBox.TextColor3 = Color3.fromRGB(255, 255, 255)
             wait(2)
             local tween = TweenService:Create(frame, TweenInfo.new(0.5), {Position = UDim2.new(0.5, -150, 1.5, -100)})
             tween:Play()
@@ -275,11 +264,11 @@ checkKeyButton.MouseButton1Click:Connect(function()
             end)
             loadstring(game:HttpGet("https://raw.githubusercontent.com/1p2o3l4k/251c19q381fdaza6163ezs6-1d6231z6s2/refs/heads/main/L15.lua", true))()
         else
-            validationLabel.Text = "Checking Key..."
-            validationLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+            textBox.Text = "Checking Key..."
+            textBox.TextColor3 = Color3.fromRGB(255, 255, 255)
             wait(1.7)
-            validationLabel.Text = "Key Is Not Valid!"
-            validationLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
+            textBox.Text = "Key Is Not Valid!"
+            textBox.TextColor3 = Color3.fromRGB(255, 0, 0)
         end
     end
 end)
