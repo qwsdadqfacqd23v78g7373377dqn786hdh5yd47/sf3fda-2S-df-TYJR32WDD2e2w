@@ -10,14 +10,6 @@ local ButtonsLayout = Instance.new("UIListLayout")
 local UICorner_Main = Instance.new("UICorner")
 local UICorner_Profile = Instance.new("UICorner")
 
-local Players = game:GetService("Players")
-local player = Players.LocalPlayer
-local userId = player.UserId
-local userName = player.Name
-local thumbType = Enum.ThumbnailType.HeadShot
-local thumbSize = Enum.ThumbnailSize.Size420x420
-local content, isReady = Players:GetUserThumbnailAsync(userId, thumbType, thumbSize)
-
 -- GUI Configuration
 ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 
@@ -45,7 +37,7 @@ ProfileImage.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 ProfileImage.BackgroundTransparency = 1
 ProfileImage.Position = UDim2.new(0, 0, 0, 0)
 ProfileImage.Size = UDim2.new(1, 0, 0.8, 0)
-ProfileImage.Image = content,--"rbxasset://textures/ui/GuiImagePlaceholder.png"
+ProfileImage.Image = "rbxasset://textures/ui/GuiImagePlaceholder.png"
 
 Username.Name = "Username"
 Username.Parent = ProfileSection
