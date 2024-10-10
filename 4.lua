@@ -35,22 +35,22 @@ bgImage.Parent = frame
 local profileFrame = Instance.new("Frame")
 profileFrame.Size = UDim2.new(0, 100, 0, 120)
 profileFrame.Position = UDim2.new(0, 20, 0.5, -60) -- Profil berada di tengah kiri frame
-profileFrame.BackgroundTransparency = 0.7
---profileFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+profileFrame.BackgroundTransparency = 1  -- Membuat background sepenuhnya transparan
 profileFrame.BorderSizePixel = 0
 profileFrame.Parent = frame
 
 local userProfilePic = Instance.new("ImageLabel")
 userProfilePic.Size = UDim2.new(0, 100, 0, 100)
-userProfilePic.Position = UDim2.new(0.5, -40, 0.5, -40) -- Profil berada di tengah secara vertikal di dalam frame
+userProfilePic.Position = UDim2.new(0.5, -50, 0.5, -50) -- Profil berada di tengah secara vertikal di dalam frame
 userProfilePic.Image = "rbxthumb://type=AvatarHeadShot&id=" .. LocalPlayer.UserId .. "&w=150&h=150"
-userProfilePic.BackgroundTransparency = 1
+userProfilePic.BackgroundTransparency = 1  -- Pastikan foto profil juga tidak memiliki background
 userProfilePic.Parent = profileFrame
+
 
 -- Username dipindahkan ke bawah profil
 local usernameLabel = Instance.new("TextLabel")
 usernameLabel.Size = UDim2.new(1, 0, 0, 30)
-usernameLabel.Position = UDim2.new(0, 0, 1, 10)  -- Ditempatkan sedikit di bawah user profile
+usernameLabel.Position = UDim2.new(0, 20, 1, 10)  -- Geser 20 piksel dari kiri
 usernameLabel.Text = LocalPlayer.Name
 usernameLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 usernameLabel.BackgroundTransparency = 1
