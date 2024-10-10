@@ -26,16 +26,16 @@ frame.Parent = screenGui
 local bgImage = Instance.new("ImageLabel")
 bgImage.Size = UDim2.new(1, 0, 1, 0)
 bgImage.Position = UDim2.new(0, 0, 0, 0)
-bgImage.Image = "rbxassetid://ROBLOX_ID_GAMBAR"  -- Ganti dengan Roblox ID gambar kamu
+bgImage.Image = "rbxassetid://107679910024355"  -- Ganti dengan Roblox ID gambar kamu
 bgImage.ImageTransparency = 0.8
 bgImage.BackgroundTransparency = 1
 bgImage.Parent = frame
 
 -- Profil pengguna, diposisikan lebih rapi
 local profileFrame = Instance.new("Frame")
-profileFrame.Size = UDim2.new(0, 100, 0, 120)
+profileFrame.Size = UDim2.new(0, 120, 0, 140)
 profileFrame.Position = UDim2.new(0, 10, 0.5, -60) -- Profil berada di tengah kiri frame
-profileFrame.BackgroundTransparency = 0.7
+profileFrame.BackgroundTransparency = 1
 profileFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
 profileFrame.BorderSizePixel = 0
 profileFrame.Parent = frame
@@ -117,7 +117,7 @@ animationText.Font = Enum.Font.GothamBold
 animationText.TextSize = 40
 animationText.Parent = screenGui
 
-wait(3)
+wait(1)
 animationText.Text = "Thanks For Using"
 wait(3)
 animationText.Text = "Brutality Hub V4"
@@ -132,7 +132,6 @@ frame.Position = UDim2.new(0.5, -225, 1.5, 0)
 local tween = TweenService:Create(frame, TweenInfo.new(1), {Position = UDim2.new(0.5, -225, 0.5, -150)})
 tween:Play()
 
--- Logika Key System tidak berubah
 -- Logika Key System
 local keyFileUrl = "https://raw.githubusercontent.com/1p2o3l4k/sf3fda-2S-df-TYJR32WDD2e2w/refs/heads/main/DZF%23RSDFQ3tHR%5EhEFadf3.txt"
 local validUsernames = { "RobloxArmor1", "zilhannopasif", "Memek28222" }
