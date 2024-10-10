@@ -39,7 +39,8 @@ bgImage.Parent = frame
 -- Profil pengguna
 local profileFrame = Instance.new("Frame")
 profileFrame.Size = UDim2.new(0, 120, 0, 120)
-profileFrame.Position = UDim2.new(0, 15, 0, 15)
+profileFrame.Position = UDim2.new(0, 15, 0.5, -60)  -- Berada di tengah secara vertikal (bagian kiri)
+profileFrame.AnchorPoint = Vector2.new(0, 0.5) -- Mengatur agar ditengah vertikal dari posisinya
 profileFrame.BackgroundTransparency = 0.7
 profileFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
 profileFrame.BorderSizePixel = 0
@@ -47,20 +48,23 @@ profileFrame.Parent = frame
 
 local userProfilePic = Instance.new("ImageLabel")
 userProfilePic.Size = UDim2.new(0, 100, 0, 100)
-userProfilePic.Position = UDim2.new(0.5, -50, 0, 10)
+userProfilePic.Position = UDim2.new(0.5, -50, 0.5, -50) -- Di tengah dari profil frame
+userProfilePic.AnchorPoint = Vector2.new(0.5, 0.5) -- Mengatur titik tengah gambar
 userProfilePic.Image = "rbxthumb://type=AvatarHeadShot&id=" .. LocalPlayer.UserId .. "&w=150&h=150"
 userProfilePic.Parent = profileFrame
 
 -- Username pengguna
 local usernameLabel = Instance.new("TextLabel")
 usernameLabel.Size = UDim2.new(0, 120, 0, 30)
-usernameLabel.Position = UDim2.new(0, 15, 0, 140)
+usernameLabel.Position = UDim2.new(0, 15, 0.5, 70) -- Ditempatkan di bawah profil, terpusat
+usernameLabel.AnchorPoint = Vector2.new(0, 0.5) -- Mengatur titik tengah secara vertikal
 usernameLabel.Text = LocalPlayer.Name
 usernameLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 usernameLabel.BackgroundTransparency = 1
 usernameLabel.Font = Enum.Font.GothamBold
 usernameLabel.TextSize = 16
 usernameLabel.Parent = frame
+
 
 -- Textbox untuk input key
 local textBox = Instance.new("TextBox")
