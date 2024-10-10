@@ -34,7 +34,7 @@ bgImage.Parent = frame
 -- Profil pengguna, diposisikan lebih rapi
 local profileFrame = Instance.new("Frame")
 profileFrame.Size = UDim2.new(0, 100, 0, 120)
-profileFrame.Position = UDim2.new(0, 25, 0.5, -60) -- Profil berada di tengah kiri frame
+profileFrame.Position = UDim2.new(0.05, 20, 0.5, -60) -- Menggunakan skala 0.05 pada sumbu X
 profileFrame.BackgroundTransparency = 1  -- Membuat background sepenuhnya transparan
 profileFrame.BorderSizePixel = 0
 profileFrame.Parent = frame
