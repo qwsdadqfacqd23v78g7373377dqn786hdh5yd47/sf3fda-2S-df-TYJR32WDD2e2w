@@ -12,20 +12,26 @@ local frame = Instance.new("Frame")
 frame.Size = UDim2.new(0, 450, 0, 300)
 frame.Position = UDim2.new(0.5, -225, 0.5, -150)
 frame.BackgroundTransparency = 0.2
-frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 frame.BorderSizePixel = 0
 frame.Visible = false
 frame.Parent = screenGui
 
--- Menambahkan efek bayangan
+-- Menambahkan UICorner untuk sudut membulat
+local frameCorner = Instance.new("UICorner")
+frameCorner.CornerRadius = UDim.new(0, 10)
+frameCorner.Parent = frame
+
+-- Menambahkan efek bayangan halus
 local shadow = Instance.new("ImageLabel")
 shadow.Size = UDim2.new(1, 30, 1, 30)
 shadow.Position = UDim2.new(0, -15, 0, -15)
-shadow.Image = "" --"rbxassetid://1316045217"
+shadow.Image = "rbxassetid://1316045217"
 shadow.ImageTransparency = 0.6
 shadow.ScaleType = Enum.ScaleType.Slice
 shadow.SliceCenter = Rect.new(10, 10, 118, 118)
 shadow.BackgroundTransparency = 1
+shadow.ZIndex = 0
 shadow.Parent = frame
 
 -- Menambahkan background image dengan opacity
@@ -34,6 +40,8 @@ bgImage.Size = UDim2.new(1, 0, 1, 0)
 bgImage.Position = UDim2.new(0, 0, 0, 0)
 bgImage.Image = "rbxassetid://ROBLOX_ID_GAMBAR"  -- Ganti dengan Roblox ID gambar kamu
 bgImage.ImageTransparency = 0.8
+bgImage.BackgroundTransparency = 1
+bgImage.ZIndex = 1
 bgImage.Parent = frame
 
 -- Profil pengguna, dipindah lebih ke bawah
@@ -43,12 +51,18 @@ profileFrame.Position = UDim2.new(0, 10, 0, 50) -- Dipindahkan sedikit ke bawah
 profileFrame.BackgroundTransparency = 0.7
 profileFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
 profileFrame.BorderSizePixel = 0
+profileFrame.ZIndex = 2
 profileFrame.Parent = frame
+
+local profileCorner = Instance.new("UICorner")
+profileCorner.CornerRadius = UDim.new(0, 10)
+profileCorner.Parent = profileFrame
 
 local userProfilePic = Instance.new("ImageLabel")
 userProfilePic.Size = UDim2.new(0, 80, 0, 80)
 userProfilePic.Position = UDim2.new(0.5, -40, 0, 10)
 userProfilePic.Image = "rbxthumb://type=AvatarHeadShot&id=" .. LocalPlayer.UserId .. "&w=150&h=150"
+userProfilePic.BackgroundTransparency = 1
 userProfilePic.Parent = profileFrame
 
 -- Username dipindahkan ke bawah profil
@@ -74,7 +88,11 @@ textBox.TextSize = 18
 textBox.BorderSizePixel = 0
 textBox.Parent = frame
 
--- Tombol Check Key, ditambahkan warna
+local textBoxCorner = Instance.new("UICorner")
+textBoxCorner.CornerRadius = UDim.new(0, 8)
+textBoxCorner.Parent = textBox
+
+-- Tombol Check Key, dengan gradient warna
 local checkKeyButton = Instance.new("TextButton")
 checkKeyButton.Size = UDim2.new(0, 250, 0, 40)
 checkKeyButton.Position = UDim2.new(1, -270, 0, 90)
@@ -85,30 +103,6 @@ checkKeyButton.Font = Enum.Font.GothamBold
 checkKeyButton.TextSize = 18
 checkKeyButton.BorderSizePixel = 0
 checkKeyButton.Parent = frame
-
--- Tombol Copy Link Key, ditambahkan warna
-local copyLinkKeyButton = Instance.new("TextButton")
-copyLinkKeyButton.Size = UDim2.new(0, 250, 0, 40)
-copyLinkKeyButton.Position = UDim2.new(1, -270, 0, 140)
-copyLinkKeyButton.Text = "Copy Link Key"
-copyLinkKeyButton.BackgroundColor3 = Color3.fromRGB(0, 200, 100)  -- Warna hijau
-copyLinkKeyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-copyLinkKeyButton.Font = Enum.Font.GothamBold
-copyLinkKeyButton.TextSize = 18
-copyLinkKeyButton.BorderSizePixel = 0
-copyLinkKeyButton.Parent = frame
-
--- Tombol Copy Link Discord, ditambahkan warna
-local copyDiscordButton = Instance.new("TextButton")
-copyDiscordButton.Size = UDim2.new(0, 250, 0, 40)
-copyDiscordButton.Position = UDim2.new(1, -270, 0, 190)
-copyDiscordButton.Text = "Copy Link Discord"
-copyDiscordButton.BackgroundColor3 = Color3.fromRGB(200, 100, 0)  -- Warna oranye
-copyDiscordButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-copyDiscordButton.Font = Enum.Font.GothamBold
-copyDiscordButton.TextSize = 18
-copyDiscordButton.BorderSizePixel = 0
-copyDiscordButton.Parent = frame
 
 -- Animasi Brutality Hub V4 -> Thanks For Using
 local animationText = Instance.new("TextLabel")
@@ -132,8 +126,9 @@ animationText.Visible = false
 frame.Visible = true
 
 -- Tween untuk transisi halus
-frame.Position = UDim2.new(0.5, -225, 1.5, 0)
-local tween = TweenService:Create(frame, TweenInfo.new(1), {Position = UDim2.new(0.5, -225, 0.5, -150)})
+local tweenInfo = TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+local tween = TweenService:Create(frame, tweenInfo, {BackgroundTransparency = 0})
+frame.Visible = true
 tween:Play()
 
 -- Logika Key System
