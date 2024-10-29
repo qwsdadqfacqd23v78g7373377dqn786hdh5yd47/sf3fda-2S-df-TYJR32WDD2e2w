@@ -1,4 +1,3 @@
-{Normalkey = "SpotifyHub_B1mAePlqCe"}
 {Normalkey = "SpotifyHub_Q6Xrx0zXVa"}
 {Normalkey = "SpotifyHub_i2lQwuAdV8"}
 {Normalkey = "SpotifyHub_D2qrZ9nfE2"}
